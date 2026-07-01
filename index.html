@@ -1,554 +1,1270 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Cinematic Birthday · Manar</title>
-  <!-- Premium Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-  <!-- GSAP & Plugins -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.16"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منار.. أسطورة 12 يوليو الخالدة ✨💫</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700;900&family=El+Messiri:wght@400;600;700&family=Reem+Kufi+Fun:wght@400;700&display=swap');
+        
+        :root {
+            --gold: #facc15;
+            --rose: #f43f5e;
+            --purple: #a855f7;
+            --deep: #020010;
+        }
 
-    body {
-      background: #03030a;
-      overflow-x: hidden;
-      font-family: 'Inter', sans-serif;
-      cursor: default;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Canvas layers for depth */
-    #galaxy-canvas, #particle-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #0a0020 0%, #020010 50%, #000008 100%);
+            font-family: 'Cairo', sans-serif;
+            color: #fff;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
 
-    main {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      min-height: 100vh;
-    }
+        /* طبقات الخلفية المتعددة */
+        #nebula-layer {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(168,85,247,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(244,63,94,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(250,204,21,0.04) 0%, transparent 50%);
+            animation: nebulaDrift 20s ease-in-out infinite;
+        }
 
-    /* Glassmorphism card base */
-    .glass-panel {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,215,0,0.2);
-      border-radius: 2.5rem;
-      padding: 2rem;
-      color: #f8f3e6;
-    }
+        @keyframes nebulaDrift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(1deg); }
+            50% { transform: scale(1.05) rotate(-1deg); }
+            75% { transform: scale(1.08) rotate(0.5deg); }
+        }
 
-    .scene {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 2rem;
-      position: relative;
-    }
+        #starfield {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
 
-    h1, h2, .elegant-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-    }
+        #particle-layer {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
 
-    button, .interactive {
-      cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
-    }
+        /* نظام المشاهد المتقدم */
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
 
-    button:hover, .interactive:hover {
-      transform: scale(1.02);
-      filter: brightness(1.2);
-    }
+        .scene.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    /* Heart portal styles */
-    #heartCanvas {
-      width: 280px;
-      height: 280px;
-      max-width: 70vw;
-      max-height: 70vw;
-      border-radius: 50%;
-      background: transparent;
-      cursor: pointer;
-      filter: drop-shadow(0 0 40px rgba(255, 80, 120, 0.7));
-      transition: filter 0.3s;
-    }
+        /* تصميم زجاجي فاخر متطور */
+        .glass-card {
+            background: linear-gradient(135deg, 
+                rgba(255,255,255,0.05) 0%, 
+                rgba(255,255,255,0.02) 50%, 
+                rgba(255,255,255,0.08) 100%);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 32px;
+            box-shadow: 
+                0 25px 60px rgba(0,0,0,0.5),
+                0 0 80px rgba(244,63,94,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .hidden {
-      display: none !important;
-    }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            animation: glassShine 8s ease-in-out infinite;
+            pointer-events: none;
+        }
 
-    .flex-center {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
+        @keyframes glassShine {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(10%, 10%); }
+        }
 
-    @media (max-width: 600px) {
-      .glass-panel {
-        padding: 1.5rem;
-        border-radius: 2rem;
-      }
-    }
-  </style>
+        /* تأثير النيون المتطور */
+        .neon-glow {
+            text-shadow: 
+                0 0 10px rgba(244,63,94,0.8),
+                0 0 30px rgba(236,72,153,0.6),
+                0 0 60px rgba(217,70,239,0.4),
+                0 0 100px rgba(168,85,247,0.3);
+        }
+
+        .gold-glow {
+            text-shadow: 
+                0 0 15px rgba(250,204,21,0.9),
+                0 0 40px rgba(251,191,36,0.6),
+                0 0 80px rgba(245,158,11,0.4);
+        }
+
+        /* القلب النابض المتطور */
+        #heart-portal {
+            font-size: 12rem;
+            cursor: pointer;
+            filter: drop-shadow(0 0 30px rgba(244,63,94,0.8)) drop-shadow(0 0 60px rgba(236,72,153,0.5));
+            animation: heartFloat 3s ease-in-out infinite, heartGlow 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes heartFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        @keyframes heartGlow {
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(244,63,94,0.8)) drop-shadow(0 0 60px rgba(236,72,153,0.5)); }
+            50% { filter: drop-shadow(0 0 50px rgba(244,63,94,1)) drop-shadow(0 0 100px rgba(236,72,153,0.8)); }
+        }
+
+        #heart-portal:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 60px rgba(255,20,147,1)) drop-shadow(0 0 120px rgba(255,105,180,0.8));
+        }
+
+        /* صندوق الهدايا ثلاثي الأبعاد المتطور */
+        .box-container {
+            perspective: 1500px;
+            width: 220px;
+            height: 220px;
+            cursor: grab;
+        }
+
+        .box-container:active {
+            cursor: grabbing;
+        }
+
+        .gift-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-25deg) rotateY(45deg);
+            transition: transform 0.1s ease;
+        }
+
+        .box-face {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            background: linear-gradient(135deg, #831843 0%, #9d174d 30%, #be185d 70%, #db2777 100%);
+            border: 3px solid rgba(250,204,21,0.8);
+            box-shadow: 
+                inset 0 0 40px rgba(0,0,0,0.6),
+                0 0 30px rgba(236,72,153,0.3);
+            backface-visibility: visible;
+        }
+
+        .face-front  { transform: rotateY(0deg) translateZ(110px); }
+        .face-back   { transform: rotateY(180deg) translateZ(110px); }
+        .face-right  { transform: rotateY(90deg) translateZ(110px); }
+        .face-left   { transform: rotateY(-90deg) translateZ(110px); }
+        .face-top    { 
+            transform: rotateX(90deg) translateZ(110px); 
+            background: linear-gradient(135deg, #9d174d, #be185d);
+            transform-origin: top;
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .face-bottom { transform: rotateX(-90deg) translateZ(110px); }
+
+        /* الشريط الذهبي */
+        .ribbon {
+            position: absolute;
+            width: 40px;
+            height: 120%;
+            background: linear-gradient(180deg, 
+                rgba(250,204,21,0.9) 0%, 
+                rgba(255,215,0,1) 20%, 
+                rgba(250,204,21,0.9) 50%, 
+                rgba(255,215,0,1) 80%, 
+                rgba(250,204,21,0.9) 100%);
+            left: 50%;
+            transform: translateX(-50%) translateZ(111px);
+            border-radius: 5px;
+            box-shadow: 0 0 25px rgba(250,204,21,0.5);
+            z-index: 5;
+        }
+
+        /* حلقات النبض المتطورة */
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(250,204,21,0.8);
+            border-radius: 50%;
+            animation: pulsateRing 2s ease-out infinite;
+        }
+
+        .pulse-ring:nth-child(2) {
+            animation-delay: 0.7s;
+        }
+
+        .pulse-ring:nth-child(3) {
+            animation-delay: 1.4s;
+        }
+
+        @keyframes pulsateRing {
+            0% { 
+                transform: scale(0.5); 
+                opacity: 1;
+                border-color: rgba(250,204,21,1);
+            }
+            100% { 
+                transform: scale(2); 
+                opacity: 0;
+                border-color: rgba(250,204,21,0);
+            }
+        }
+
+        /* تأثيرات الأمطار */
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            animation: petalFall linear infinite;
+        }
+
+        @keyframes petalFall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* تأثير الكتابة المتطور */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: linear-gradient(180deg, #f43f5e, #ec4899);
+            margin-right: 5px;
+            animation: cursorBlink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* زر فاخر */
+        .luxury-btn {
+            background: linear-gradient(135deg, 
+                rgba(244,63,94,0.9) 0%, 
+                rgba(236,72,153,0.9) 50%, 
+                rgba(168,85,247,0.9) 100%);
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 
+                0 10px 40px rgba(244,63,94,0.4),
+                0 0 80px rgba(236,72,153,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .luxury-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(244,63,94,0.6),
+                0 0 120px rgba(236,72,153,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        /* تأثير الظهور التدريجي */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* تخصيص للسكرول بار */
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    </style>
 </head>
 <body>
-  <canvas id="galaxy-canvas"></canvas>
-  <canvas id="particle-canvas"></canvas>
-  <main id="app">
-    <!-- Scenes injected dynamically but structure kept consistent -->
-  </main>
 
-  <script>
-    (function() {
-      // ═══════════════════════════════════════
-      // PREMIUM CINEMATIC BIRTHDAY EXPERIENCE
-      // ═══════════════════════════════════════
+    <!-- 🎵 نظام صوتي متطور -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946f1a47c7.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="sfx-heartbeat" preload="auto">
+        <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_c6c8f3d3c5.mp3" type="audio/mpeg">
+    </audio>
 
-      // ──────────────── GLOBAL STATE ────────────────
-      const APP = document.getElementById('app');
-      const galaxyCanvas = document.getElementById('galaxy-canvas');
-      const particleCanvas = document.getElementById('particle-canvas');
-      const ctxGalaxy = galaxyCanvas.getContext('2d');
-      const ctxParticles = particleCanvas.getContext('2d');
-      
-      let width, height;
-      let animationFrame;
-      let galaxyStars = [];
-      let shootingStars = [];
-      let nebulaParticles = [];
-      let auroraPoints = [];
-      
-      // Audio context for subtle sound effects (created on user gesture)
-      let audioCtx = null;
-      
-      function initAudio() {
-        if (audioCtx) return;
-        try {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        } catch (e) {
-          console.log("Audio not supported");
-        }
-      }
-      
-      function playTone(freq, type = 'sine', duration = 0.15, vol = 0.08) {
-        if (!audioCtx) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      }
-      
-      function heartbeatSound() {
-        playTone(80, 'sine', 0.2, 0.1);
-        setTimeout(() => playTone(90, 'sine', 0.15, 0.08), 150);
-      }
+    <!-- طبقات الخلفية المتعددة -->
+    <div id="nebula-layer"></div>
+    <canvas id="starfield"></canvas>
+    <canvas id="particle-layer"></canvas>
 
-      // ──────────────── RESIZE ────────────────
-      function resizeCanvases() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        galaxyCanvas.width = width;
-        galaxyCanvas.height = height;
-        particleCanvas.width = width;
-        particleCanvas.height = height;
-        initGalaxyBackground();
-      }
+    <!-- ================= المشهد الأول: البداية الأسطورية ================= -->
+    <div id="scene1" class="scene active">
+        <div class="text-center px-6 max-w-2xl z-20">
+            <div class="glass-card p-8 md:p-12 mb-8">
+                <div class="text-6xl mb-6">🌌</div>
+                <h1 id="typing-text" class="text-2xl md:text-4xl font-bold leading-relaxed min-h-[160px] text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-pink-200 to-purple-300"></h1>
+            </div>
+            <button onclick="startExperience()" 
+                    class="luxury-btn px-12 py-5 rounded-full font-black text-xl tracking-widest text-white opacity-0 transform scale-90"
+                    id="btn-start">
+                <span class="flex items-center gap-3">
+                    <span>✨</span>
+                    <span>اكتشفي عالمكِ السحري</span>
+                    <span>✨</span>
+                </span>
+            </button>
+        </div>
+    </div>
 
-      // ──────────────── GALAXY BACKGROUND ────────────────
-      function initGalaxyBackground() {
-        galaxyStars = [];
-        nebulaParticles = [];
-        auroraPoints = [];
-        const count = Math.floor(width * height * 0.00025);
-        for (let i = 0; i < count; i++) {
-          galaxyStars.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            radius: Math.random() * 2.2 + 0.3,
-            brightness: Math.random() * 0.7 + 0.3,
-            twinkleSpeed: Math.random() * 0.02 + 0.005,
-            phase: Math.random() * Math.PI * 2,
-            depth: Math.random() * 0.8 + 0.2
-          });
-        }
-        // Nebula floating dust
-        for (let i = 0; i < 150; i++) {
-          nebulaParticles.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            radius: Math.random() * 60 + 20,
-            alpha: Math.random() * 0.06,
-            color: `rgba(180, 130, 255, ${Math.random()*0.04})`,
-            vx: (Math.random() - 0.5) * 0.2,
-            vy: (Math.random() - 0.5) * 0.2
-          });
-        }
-        // Aurora base points
-        for (let i = 0; i < 30; i++) {
-          auroraPoints.push({
-            x: Math.random() * width,
-            baseY: height * (0.2 + Math.random() * 0.25),
-            amp: Math.random() * 30 + 15,
-            freq: Math.random() * 0.02 + 0.01,
-            phase: Math.random() * Math.PI*2
-          });
-        }
-      }
+    <!-- ================= المشهد الثاني: بوابة القلب المقدسة ================= -->
+    <div id="scene2" class="scene">
+        <div class="text-center z-20">
+            <div class="relative">
+                <div class="pulse-ring absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40"></div>
+                <div class="pulse-ring absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40"></div>
+                <div class="pulse-ring absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40"></div>
+                <div id="heart-portal" class="relative z-10">💖</div>
+            </div>
+            <p class="text-gray-300 mt-6 text-lg tracking-widest animate-pulse font-light">
+                المسي القلب بلطف.. 🌟
+            </p>
+            <h2 id="name-appear" class="text-5xl md:text-8xl font-black mt-8 tracking-wide neon-glow opacity-0 scale-50 font-[Reem Kufi Fun]">
+                منار المنيفي
+            </h2>
+            <p class="text-pink-300 mt-4 text-xl opacity-0" id="subtitle-appear">
+                ✨ الأسطورة التي أضاءت الكون ✨
+            </p>
+        </div>
+    </div>
 
-      function drawGalaxy() {
-        ctxGalaxy.clearRect(0, 0, width, height);
+    <!-- ================= المشهد الثالث: العد التنازلي الملحمي ================= -->
+    <div id="scene3" class="scene">
+        <div class="text-center z-20">
+            <div class="glass-card p-12 mb-6">
+                <p class="text-2xl text-pink-300 mb-4 font-light">استعدي للحظة الفارقة...</p>
+                <div id="countdown" class="text-9xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 via-amber-400 to-orange-500 scale-50 opacity-0 gold-glow">
+                    3
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= المشهد الرابع: صندوق الهدايا الأسطوري ================= -->
+    <div id="scene4" class="scene">
+        <div class="text-center z-20">
+            <h3 class="text-2xl md:text-3xl text-pink-200 mb-8 font-bold tracking-wider animate-pulse px-4">
+                🎁 صندوق صُنع من نور الكون لأجلكِ
+            </h3>
+            <p class="text-gray-400 mb-8 text-sm">اسحبي للتدوير | انقري للفتح</p>
+            <div class="box-container" id="box-container">
+                <div class="gift-box" id="gift-box" onclick="openBox()">
+                    <div class="box-face face-front"></div>
+                    <div class="box-face face-back"></div>
+                    <div class="box-face face-right"></div>
+                    <div class="box-face face-left"></div>
+                    <div class="box-face face-top" id="box-top"></div>
+                    <div class="box-face face-bottom"></div>
+                    <div class="ribbon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= المشهد الخامس: كبسولة الزمن ================= -->
+    <div id="scene5" class="scene">
+        <div class="relative w-80 md:w-96 glass-card p-6 shadow-2xl flex flex-col items-center transform -rotate-2" id="polaroid-card">
+            <div class="w-full h-72 bg-gradient-to-br from-purple-950 via-pink-900 to-rose-800 rounded-2xl flex flex-col items-center justify-center border border-white/10 relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJzdGFycyIgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48Y2lyY2xlIGN4PSIyNSIgY3k9IjI1IiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4zIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3N0YXJzKSIvPjwvc3ZnPg==')] opacity-50"></div>
+                <span class="text-8xl relative z-10 animate-bounce">👑</span>
+                <div class="absolute bottom-6 text-center z-10">
+                    <p class="text-yellow-400 font-black tracking-widest text-3xl gold-glow">2009.07.12</p>
+                    <p class="text-sm text-pink-200 mt-2 font-light">اليوم الذي ولدت فيه أسطورة</p>
+                </div>
+            </div>
+            <h4 class="mt-6 font-black text-3xl text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-purple-300">
+                منار.. 17 عاماً من النور
+            </h4>
+            <button onclick="nextScene(6)" class="luxury-btn px-10 py-4 rounded-full font-black text-base mt-6">
+                اكتشفي المفاجأة التالية ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= المشهد السادس: مجرة الرسائل ================= -->
+    <div id="scene6" class="scene">
+        <div id="top-msg-panel" class="absolute top-8 left-4 right-4 mx-auto max-w-3xl glass-card py-8 px-10 text-center border-rose-500/40 transform scale-0 opacity-0 transition-all duration-500 z-50">
+            <span class="absolute top-2 right-4 text-xs tracking-widest text-pink-400 font-bold">✧ رسالة من القلب ✧</span>
+            <p id="top-msg-text" class="text-2xl md:text-4xl font-black text-white tracking-wide leading-relaxed neon-glow"></p>
+        </div>
+
+        <div id="star-hint" class="absolute bottom-32 text-center z-30 pointer-events-none px-4">
+            <div class="inline-block bg-black/80 px-8 py-5 rounded-full border-2 border-yellow-400/60 shadow-[0_0_30px_rgba(250,204,21,0.4)] animate-bounce">
+                <span class="text-yellow-300 font-black text-lg md:text-xl">✨ اضغطي على النجوم الذهبية لتكشفي الأسرار ✨</span>
+            </div>
+        </div>
+
+        <div id="stars-container" class="w-full h-full relative z-20"></div>
+        <button onclick="nextScene(7)" class="absolute bottom-6 luxury-btn px-10 py-4 rounded-full font-black text-base z-40">
+            متابعة الرحلة 📖
+        </button>
+    </div>
+
+    <!-- ================= المشهد السابع: رسالة النور ================= -->
+    <div id="scene7" class="scene">
+        <div class="w-11/12 max-w-lg glass-card p-10 md:p-12 text-center relative shadow-2xl border border-pink-500/30 z-20">
+            <div class="text-pink-500/10 text-9xl absolute -top-6 right-6">❝</div>
+            <h3 class="text-4xl font-black mb-8 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-300 font-[El Messiri]">
+                رسالة من أعماق الروح
+            </h3>
+            <p class="leading-loose text-gray-100 text-lg md:text-xl font-medium text-justify">
+                منار يا نقاء هذا العالم وصفاءه..<br><br>
+                في مثل هذا اليوم من عام 2009، أشرقت شمس جديدة في سماء الكون، شمس لا تغيب ولا تخبو، بل تزداد إشراقاً عاماً بعد عام. وجودك في هذه الحياة ليس مجرد صدفة، بل هو قدر جميل أراده الله لنرى كيف يبدو النقاء حين يتجسد في إنسان.<br><br>
+                كل عام وأنتِ أجمل أقداري، وكل عام وابتسامتكِ تنير عتمة الأيام.
+            </p>
+            <button onclick="nextScene(8)" class="luxury-btn px-10 py-4 rounded-full font-black tracking-wider mt-8">
+                الصفحة الأخيرة 🌹
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= المشهد الثامن: مطر البتلات ================= -->
+    <div id="scene8" class="scene">
+        <div class="text-center z-20 px-4">
+            <h2 class="text-3xl md:text-5xl font-light mb-10 text-pink-200 tracking-wide leading-loose font-[El Messiri]">
+                السماء تمطر وروداً احتفاءً بكِ يا أجمل ما في الكون... 🌸
+            </h2>
+            <button onclick="triggerGrandFinale()" class="luxury-btn px-12 py-6 rounded-full text-2xl md:text-3xl font-black tracking-widest">
+                ❤️ المفاجأة الكبرى والأخيرة ❤️
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= المشهد التاسع: الختام الأسطوري ================= -->
+    <div id="scene9" class="scene bg-black">
+        <div class="text-center z-20 px-4">
+            <div class="glass-card p-12 mb-8">
+                <h1 class="text-6xl md:text-9xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-500 to-purple-400 mb-6 gold-glow font-[Reem Kufi Fun]">
+                    Happy Birthday
+                </h1>
+                <h2 class="text-4xl md:text-6xl font-black text-pink-200 tracking-wide mb-8 neon-glow">
+                    منار المنيفي
+                </h2>
+                <h3 id="final-secret-text" class="text-2xl md:text-4xl font-bold text-white tracking-wide opacity-0 transform translate-y-10 transition-all duration-1000"></h3>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== نظام الخلفية الكونية المتطور ====================
+        const starCanvas = document.getElementById('starfield');
+        const starCtx = starCanvas.getContext('2d');
+        const particleCanvas = document.getElementById('particle-layer');
+        const particleCtx = particleCanvas.getContext('2d');
         
-        // Deep space gradient
-        const grad = ctxGalaxy.createRadialGradient(width/2, height/2, 0, width/2, height/2, width*0.9);
-        grad.addColorStop(0, '#0a0a20');
-        grad.addColorStop(0.5, '#030314');
-        grad.addColorStop(1, '#01010a');
-        ctxGalaxy.fillStyle = grad;
-        ctxGalaxy.fillRect(0, 0, width, height);
+        let stars = [];
+        let shootingStars = [];
+        let floatingParticles = [];
+        let nebulaClouds = [];
         
-        // Nebula dust
-        nebulaParticles.forEach(p => {
-          ctxGalaxy.beginPath();
-          ctxGalaxy.arc(p.x, p.y, p.radius, 0, Math.PI*2);
-          ctxGalaxy.fillStyle = p.color;
-          ctxGalaxy.fill();
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-          if (p.y < 0) p.y = height;
-          if (p.y > height) p.y = 0;
+        function resizeCanvases() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', () => {
+            resizeCanvases();
+            initStars();
         });
         
-        // Aurora glow
-        ctxGalaxy.save();
-        ctxGalaxy.globalCompositeOperation = 'screen';
-        for (let i = 0; i < auroraPoints.length; i++) {
-          const p = auroraPoints[i];
-          const yOffset = Math.sin(Date.now() * p.freq + p.phase) * p.amp;
-          const gradAurora = ctxGalaxy.createLinearGradient(p.x, p.baseY - 40, p.x, p.baseY + 40);
-          gradAurora.addColorStop(0, 'rgba(100, 200, 180, 0)');
-          gradAurora.addColorStop(0.5, 'rgba(160, 210, 200, 0.08)');
-          gradAurora.addColorStop(1, 'rgba(80, 150, 170, 0)');
-          ctxGalaxy.fillStyle = gradAurora;
-          ctxGalaxy.fillRect(p.x - 25, p.baseY + yOffset - 45, 50, 90);
-        }
-        ctxGalaxy.restore();
-        
-        // Stars with twinkling
-        const now = Date.now() * 0.001;
-        galaxyStars.forEach(s => {
-          const twinkle = Math.sin(now * s.twinkleSpeed * 10 + s.phase) * 0.3 + 0.7;
-          const alpha = s.brightness * twinkle * 0.9;
-          ctxGalaxy.beginPath();
-          ctxGalaxy.arc(s.x, s.y, s.radius, 0, 2*Math.PI);
-          ctxGalaxy.fillStyle = `rgba(255, 240, 200, ${alpha})`;
-          ctxGalaxy.fill();
-          if (s.radius > 1.6) {
-            ctxGalaxy.shadowColor = 'rgba(255, 220, 180, 0.7)';
-            ctxGalaxy.shadowBlur = s.radius * 3;
-            ctxGalaxy.fill();
-            ctxGalaxy.shadowBlur = 0;
-          }
-        });
-        
-        // Shooting stars random
-        if (Math.random() < 0.02) {
-          shootingStars.push({
-            x: Math.random() * width * 0.7,
-            y: Math.random() * height * 0.4,
-            length: Math.random() * 90 + 40,
-            speed: Math.random() * 8 + 5,
-            life: 1,
-            angle: Math.PI/4 + (Math.random()-0.5)*0.3
-          });
-        }
-        shootingStars.forEach((s, idx) => {
-          s.x += Math.cos(s.angle) * s.speed;
-          s.y += Math.sin(s.angle) * s.speed;
-          s.life -= 0.015;
-          ctxGalaxy.beginPath();
-          ctxGalxy.moveTo(s.x, s.y);
-          const endX = s.x - Math.cos(s.angle) * s.length;
-          const endY = s.y - Math.sin(s.angle) * s.length;
-          ctxGalaxy.lineTo(endX, endY);
-          ctxGalaxy.strokeStyle = `rgba(255,255,255,${s.life})`;
-          ctxGalaxy.lineWidth = 1.8;
-          ctxGalaxy.stroke();
-          if (s.life <= 0 || s.x > width+50 || s.y > height+50) shootingStars.splice(idx,1);
-        });
-        
-        requestAnimationFrame(() => drawGalaxy());
-      }
+        resizeCanvases();
 
-      // ──────────────── SCENE MANAGEMENT ────────────────
-      function renderScene(sceneId) {
-        APP.innerHTML = '';
-        switch(sceneId) {
-          case 'intro': createIntroScene(); break;
-          case 'heart': createHeartScene(); break;
-          case 'countdown': createCountdownScene(); break;
-          case 'gift': createGiftScene(); break;
-          case 'timeline': createTimelineScene(); break;
-          case 'stars': createInteractiveStarsScene(); break;
-          case 'letter': createLetterScene(); break;
-          case 'roseRain': createRoseRainScene(); break;
-          case 'final': createFinalScene(); break;
-          default: createIntroScene();
-        }
-      }
-
-      // ──────────────── INTRO SCENE ────────────────
-      function createIntroScene() {
-        initAudio();
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        scene.innerHTML = `
-          <div class="glass-panel" style="max-width:700px; width:90%; opacity:0; transform: scale(0.96);" id="intro-panel">
-            <h1 style="font-size: clamp(2.8rem, 8vw, 4.5rem); margin-bottom:0.8rem; color:#fbe9d7; text-shadow:0 0 30px #d4af37;">✨ A Starlit Moment ✨</h1>
-            <div id="typed-intro" style="font-size:1.5rem; min-height:3rem; color:#e0d6c2;"></div>
-          </div>
-        `;
-        APP.appendChild(scene);
-        
-        const panel = document.getElementById('intro-panel');
-        gsap.to(panel, { opacity:1, scale:1, duration:2, ease:'power3.out', delay:0.8 });
-        
-        new Typed('#typed-intro', {
-          strings: ['For someone who lights up the world...', 'A journey through time and stars.'],
-          typeSpeed: 50,
-          backSpeed: 25,
-          startDelay: 1800,
-          backDelay: 2000,
-          showCursor: true,
-          cursorChar: '🌙',
-          onComplete: () => {
-            setTimeout(() => {
-              gsap.to(scene, { opacity:0, duration:1.2, onComplete: ()=> renderScene('heart') });
-            }, 2500);
-          }
-        });
-      }
-
-      // ──────────────── HEART PORTAL ────────────────
-      function createHeartScene() {
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        scene.innerHTML = `<canvas id="heartCanvas" width="400" height="400" class="interactive"></canvas>
-          <p style="color:#e5d5b0; margin-top:1rem; letter-spacing:2px;">touch the heart</p>`;
-        APP.appendChild(scene);
-        
-        const canvas = document.getElementById('heartCanvas');
-        const ctx = canvas.getContext('2d');
-        const w = canvas.width, h = canvas.height;
-        let particles = [];
-        let heartPulse = 0;
-        
-        function heartShape(t) {
-          const x = 16 * Math.pow(Math.sin(t), 3);
-          const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
-          return {x: x*7.5 + w/2, y: -y*7.5 + h/2.3};
-        }
-        
-        function drawHeartParticles() {
-          ctx.clearRect(0,0,w,h);
-          for (let i=0; i<400; i++) {
-            const t = (i/400)*Math.PI*2;
-            const base = heartShape(t);
-            const offsetX = (Math.random()-0.5)*4;
-            const offsetY = (Math.random()-0.5)*4;
-            ctx.beginPath();
-            ctx.arc(base.x+offsetX, base.y+offsetY, 2.5, 0, 2*Math.PI);
-            ctx.fillStyle = `rgba(255, ${100+Math.sin(Date.now()*0.01+i)*30}, 140, 0.9)`;
-            ctx.fill();
-            ctx.shadowColor = '#ff3366';
-            ctx.shadowBlur = 12;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-          }
-          requestAnimationFrame(drawHeartParticles);
-        }
-        drawHeartParticles();
-        
-        canvas.addEventListener('click', () => {
-          heartbeatSound();
-          confetti({ particleCount: 200, spread: 120, origin: {y:0.5}, colors: ['#ffd700','#ff6b9d','#b8860b'] });
-          gsap.to(scene, { opacity:0, duration:1, onComplete: ()=> renderScene('countdown') });
-        });
-      }
-
-      // ──────────────── COUNTDOWN ────────────────
-      function createCountdownScene() {
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        scene.innerHTML = `<div class="glass-panel" id="countdown-panel"><h2 style="font-size:3rem;">Get ready...</h2></div>`;
-        APP.appendChild(scene);
-        const panel = document.getElementById('countdown-panel');
-        const texts = ['3', '2', '1'];
-        let i=0;
-        function showNext() {
-          if (i<texts.length) {
-            panel.innerHTML = `<h2 style="font-size:6rem; color:#f7e05e;">${texts[i]}</h2>`;
-            gsap.from(panel, {scale:2, opacity:0, duration:0.5, ease:'back'});
-            if (i===2) {
-              setTimeout(()=>{
-                confetti({particleCount:300, spread:150});
-                gsap.to(scene, {opacity:0, duration:0.9, onComplete:()=>renderScene('gift')});
-              },600);
+        // إنشاء نظام نجمي متطور
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((starCanvas.width * starCanvas.height) / 800);
+            
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * starCanvas.width,
+                    y: Math.random() * starCanvas.height,
+                    size: Math.random() * 2.5 + 0.5,
+                    alpha: Math.random(),
+                    speed: 0.005 + Math.random() * 0.03,
+                    twinkleSpeed: 0.02 + Math.random() * 0.05,
+                    color: ['#ffffff', '#ffe4e1', '#fffacd', '#e0b0ff', '#ffb6c1'][Math.floor(Math.random() * 5)]
+                });
             }
-            i++;
-            setTimeout(showNext, 1000);
-          }
+            
+            // سحب السديم
+            nebulaClouds = [];
+            for (let i = 0; i < 5; i++) {
+                nebulaClouds.push({
+                    x: Math.random() * starCanvas.width,
+                    y: Math.random() * starCanvas.height,
+                    radius: 100 + Math.random() * 200,
+                    alpha: 0.02 + Math.random() * 0.04,
+                    color: ['rgba(168,85,247,', 'rgba(244,63,94,', 'rgba(250,204,21,'][Math.floor(Math.random() * 3)],
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2
+                });
+            }
+            
+            // جسيمات عائمة
+            floatingParticles = [];
+            for (let i = 0; i < 80; i++) {
+                floatingParticles.push({
+                    x: Math.random() * particleCanvas.width,
+                    y: Math.random() * particleCanvas.height,
+                    size: Math.random() * 3 + 1,
+                    alpha: Math.random() * 0.5,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    life: Math.random() * 100
+                });
+            }
         }
-        showNext();
-      }
 
-      // ──────────────── GIFT BOX ────────────────
-      function createGiftScene() {
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        scene.innerHTML = `
-          <div class="glass-panel interactive" id="gift-box" style="padding:3rem; background:rgba(20,15,30,0.7);">
-            <div style="font-size:5rem;">🎁</div>
-            <p style="margin-top:1rem;">open with love</p>
-          </div>`;
-        APP.appendChild(scene);
-        document.getElementById('gift-box').addEventListener('click', ()=>{
-          playTone(600,'sine',0.2);
-          confetti({particleCount:250, spread:100, origin:{y:0.4}});
-          gsap.to(scene, {opacity:0, duration:1.2, onComplete:()=>renderScene('timeline')});
+        function drawStarfield() {
+            starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+            
+            // رسم السديم
+            nebulaClouds.forEach(cloud => {
+                const gradient = starCtx.createRadialGradient(cloud.x, cloud.y, 0, cloud.x, cloud.y, cloud.radius);
+                gradient.addColorStop(0, cloud.color + '0.08)');
+                gradient.addColorStop(1, cloud.color + '0)');
+                starCtx.fillStyle = gradient;
+                starCtx.beginPath();
+                starCtx.arc(cloud.x, cloud.y, cloud.radius, 0, Math.PI * 2);
+                starCtx.fill();
+                
+                cloud.x += cloud.vx;
+                cloud.y += cloud.vy;
+                if (cloud.x < -cloud.radius) cloud.x = starCanvas.width + cloud.radius;
+                if (cloud.x > starCanvas.width + cloud.radius) cloud.x = -cloud.radius;
+                if (cloud.y < -cloud.radius) cloud.y = starCanvas.height + cloud.radius;
+                if (cloud.y > starCanvas.height + cloud.radius) cloud.y = -cloud.radius;
+            });
+            
+            // رسم النجوم
+            stars.forEach(star => {
+                star.alpha += star.twinkleSpeed;
+                if (star.alpha > 1 || star.alpha < 0.2) star.twinkleSpeed = -star.twinkleSpeed;
+                
+                starCtx.globalAlpha = Math.abs(star.alpha);
+                starCtx.fillStyle = star.color;
+                starCtx.shadowColor = star.color;
+                starCtx.shadowBlur = star.size * 4;
+                starCtx.beginPath();
+                starCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                starCtx.fill();
+                
+                if (star.size > 1.8) {
+                    starCtx.shadowBlur = star.size * 8;
+                    starCtx.fill();
+                }
+            });
+            
+            starCtx.shadowBlur = 0;
+            starCtx.globalAlpha = 1;
+            
+            // الشهب
+            if (Math.random() < 0.03) {
+                shootingStars.push({
+                    x: Math.random() * starCanvas.width * 0.7,
+                    y: Math.random() * starCanvas.height * 0.3,
+                    length: 60 + Math.random() * 120,
+                    speed: 6 + Math.random() * 12,
+                    life: 1,
+                    angle: Math.PI / 4 + (Math.random() - 0.5) * 0.4
+                });
+            }
+            
+            shootingStars.forEach((s, idx) => {
+                s.x += Math.cos(s.angle) * s.speed;
+                s.y += Math.sin(s.angle) * s.speed;
+                s.life -= 0.02;
+                
+                starCtx.strokeStyle = `rgba(255,255,255,${s.life})`;
+                starCtx.lineWidth = 2;
+                starCtx.beginPath();
+                starCtx.moveTo(s.x, s.y);
+                starCtx.lineTo(s.x - Math.cos(s.angle) * s.length, s.y - Math.sin(s.angle) * s.length);
+                starCtx.stroke();
+                
+                if (s.life <= 0 || s.x > starCanvas.width + 100 || s.y > starCanvas.height + 100) {
+                    shootingStars.splice(idx, 1);
+                }
+            });
+        }
+
+        function drawParticles() {
+            particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            
+            floatingParticles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+                
+                if (p.life <= 0 || p.x < 0 || p.x > particleCanvas.width || p.y < 0 || p.y > particleCanvas.height) {
+                    p.x = Math.random() * particleCanvas.width;
+                    p.y = Math.random() * particleCanvas.height;
+                    p.life = Math.random() * 100;
+                }
+                
+                particleCtx.globalAlpha = p.alpha;
+                particleCtx.fillStyle = '#ffffff';
+                particleCtx.beginPath();
+                particleCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                particleCtx.fill();
+            });
+            
+            particleCtx.globalAlpha = 1;
+        }
+
+        function animate() {
+            drawStarfield();
+            drawParticles();
+            requestAnimationFrame(animate);
+        }
+
+        initStars();
+        animate();
+
+        // ==================== نظام الصوت المتطور ====================
+        let audioInitialized = false;
+        
+        function initAudio() {
+            if (audioInitialized) return;
+            audioInitialized = true;
+            
+            const bgMusic = document.getElementById('bg-music');
+            bgMusic.volume = 0.3;
+            bgMusic.play().catch(() => {
+                // المحاولة مرة أخرى مع تفاعل المستخدم
+                document.addEventListener('click', () => {
+                    bgMusic.play().catch(() => {});
+                }, { once: true });
+            });
+        }
+
+        function playHeartbeatSound() {
+            const sfx = document.getElementById('sfx-heartbeat');
+            sfx.volume = 0.5;
+            sfx.currentTime = 0;
+            sfx.play().catch(() => {});
+        }
+
+        // ==================== نظام المشاهد المتطور ====================
+        function nextScene(sceneNumber) {
+            const currentActive = document.querySelector('.scene.active');
+            const nextTarget = document.getElementById(`scene${sceneNumber}`);
+            
+            if (currentActive) {
+                gsap.to(currentActive, {
+                    opacity: 0,
+                    scale: 0.92,
+                    filter: 'blur(10px)',
+                    duration: 0.8,
+                    ease: "power3.inOut",
+                    onComplete: () => {
+                        currentActive.classList.remove('active');
+                        nextTarget.classList.add('active');
+                        
+                        gsap.fromTo(nextTarget, 
+                            { opacity: 0, scale: 1.08, filter: 'blur(10px)' },
+                            { 
+                                opacity: 1, 
+                                scale: 1, 
+                                filter: 'blur(0px)',
+                                duration: 1,
+                                ease: "power3.out"
+                            }
+                        );
+                        
+                        runSceneLogic(sceneNumber);
+                    }
+                });
+            }
+        }
+
+        // ==================== تأثير الكتابة المتطور ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            const typed = new Typed('#typing-text', {
+                strings: [
+                    "في أعماق هذا الكون الفسيح...",
+                    "حيث تتراقص النجوم وتتهامس المجرات...",
+                    "هناك روح واحدة فقط تستحق أن يُحتفى بها...",
+                    "روح نقية كأول شعاع فجر...",
+                    "روح جميلة كآخر غسق مساء...",
+                    "اليوم، 12 يوليو، ليس يوماً عادياً...",
+                    "اليوم هو اليوم الذي أشرقت فيه شمس منار 🌟"
+                ],
+                typeSpeed: 45,
+                backSpeed: 20,
+                backDelay: 1500,
+                startDelay: 500,
+                showCursor: true,
+                cursorChar: '|',
+                onComplete: () => {
+                    gsap.to('#btn-start', {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 1,
+                        ease: "elastic.out(1, 0.5)",
+                        delay: 0.3
+                    });
+                }
+            });
         });
-      }
 
-      // ──────────────── TIMELINE ────────────────
-      function createTimelineScene() {
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        scene.innerHTML = `<div class="glass-panel" id="timeline-text" style="font-size:2rem;">2026 ...</div>`;
-        APP.appendChild(scene);
-        const el = document.getElementById('timeline-text');
-        const years = [2026,2025,2024,2020,2015,2010,2009];
-        let idx=0;
-        function showYear(){
-          if(idx<years.length){
-            el.textContent = years[idx];
-            gsap.fromTo(el, {scale:2, opacity:0}, {scale:1, opacity:1, duration:0.4});
-            idx++;
-            setTimeout(showYear, idx===years.length-1? 1200:350);
-          } else {
-            el.innerHTML = '<span style="color:#ffd966;">✨ 12 July 2009 ✨</span><br><span style="font-size:1.3rem;">The day the world became brighter</span>';
-            setTimeout(()=> gsap.to(scene,{opacity:0,duration:1.5, onComplete:()=>renderScene('stars')}), 2800);
-          }
+        // ==================== بدء التجربة ====================
+        function startExperience() {
+            initAudio();
+            
+            // تأثير انفجار عند البدء
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#facc15', '#f43f5e', '#a855f7', '#ffffff']
+            });
+            
+            playHeartbeatSound();
+            nextScene(2);
         }
-        showYear();
-      }
 
-      // ──────────────── INTERACTIVE STARS ────────────────
-      function createInteractiveStarsScene() {
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        scene.innerHTML = `<div id="stars-grid" style="display:flex; flex-wrap:wrap; justify-content:center; gap:2rem; max-width:700px;"></div>`;
-        APP.appendChild(scene);
-        const grid = document.getElementById('stars-grid');
-        const messages = ["You are a light","Kind soul","Beautiful memories","Endless grace","Warm heart","True friend","Radiant joy"];
-        for(let i=0;i<80;i++){
-          const star = document.createElement('div');
-          star.className = 'interactive';
-          star.style.fontSize = '2rem';
-          star.textContent = '⭐';
-          star.style.filter = 'drop-shadow(0 0 12px gold)';
-          star.addEventListener('click', (e)=>{
-            const msg = messages[i%messages.length];
-            confetti({particleCount:70, spread:60, origin:{x:e.clientX/width, y:e.clientY/height}});
-            alert(`✨ ${msg} ✨`);
-          });
-          grid.appendChild(star);
+        // ==================== منطق المشاهد ====================
+        function runSceneLogic(num) {
+            switch(num) {
+                case 2:
+                    // مشهد القلب
+                    const heartPortal = document.getElementById('heart-portal');
+                    heartPortal.onclick = function() {
+                        // انفجار كونفيتي
+                        confetti({
+                            particleCount: 200,
+                            spread: 120,
+                            origin: { y: 0.5 },
+                            colors: ['#ff69b4', '#ff1493', '#ffd700', '#ff6347', '#ffffff']
+                        });
+                        
+                        playHeartbeatSound();
+                        
+                        // ظهور الاسم بتأثير مذهل
+                        const nameEl = document.getElementById('name-appear');
+                        const subtitleEl = document.getElementById('subtitle-appear');
+                        
+                        gsap.to(nameEl, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 1.5,
+                            ease: "elastic.out(1, 0.4)",
+                        });
+                        
+                        gsap.to(subtitleEl, {
+                            opacity: 1,
+                            duration: 1,
+                            delay: 0.8,
+                            ease: "power2.out"
+                        });
+                        
+                        // اهتزاز الشاشة
+                        gsap.to('body', {
+                            x: '+=10',
+                            duration: 0.1,
+                            repeat: 5,
+                            yoyo: true,
+                            ease: "power2.inOut",
+                            onComplete: () => {
+                                gsap.to('body', { x: 0, duration: 0.1 });
+                            }
+                        });
+                        
+                        setTimeout(() => nextScene(3), 3000);
+                    };
+                    break;
+                    
+                case 3:
+                    // مشهد العد التنازلي
+                    let count = 3;
+                    const counterEl = document.getElementById('countdown');
+                    
+                    gsap.to(counterEl, {
+                        opacity: 1,
+                        scale: 1.2,
+                        duration: 0.6,
+                        ease: "back.out(1.5)"
+                    });
+                    
+                    const countdownInterval = setInterval(() => {
+                        count--;
+                        if (count > 0) {
+                            counterEl.innerText = count;
+                            gsap.fromTo(counterEl, 
+                                { scale: 0.3, opacity: 0 },
+                                { 
+                                    scale: 1.3, 
+                                    opacity: 1, 
+                                    duration: 0.5,
+                                    ease: "back.out(2)"
+                                }
+                            );
+                            
+                            // نبضة صوت مع كل رقم
+                            playHeartbeatSound();
+                        } else {
+                            clearInterval(countdownInterval);
+                            counterEl.innerText = '🎉';
+                            
+                            // انفجار هائل
+                            confetti({
+                                particleCount: 300,
+                                spread: 150,
+                                origin: { y: 0.5, x: 0.5 },
+                                colors: ['#facc15', '#f43f5e', '#a855f7', '#ffffff', '#ffd700']
+                            });
+                            
+                            // تأثير وميض
+                            const flash = document.createElement('div');
+                            flash.style.cssText = `
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                background: white;
+                                z-index: 9999;
+                                pointer-events: none;
+                            `;
+                            document.body.appendChild(flash);
+                            
+                            gsap.fromTo(flash, 
+                                { opacity: 0.8 },
+                                { 
+                                    opacity: 0, 
+                                    duration: 0.8,
+                                    onComplete: () => flash.remove()
+                                }
+                            );
+                            
+                            setTimeout(() => nextScene(4), 1500);
+                        }
+                    }, 1200);
+                    break;
+                    
+                case 5:
+                    // تأثير ظهور البطاقة
+                    gsap.from('#polaroid-card', {
+                        y: 300,
+                        rotation: -20,
+                        opacity: 0,
+                        duration: 1.2,
+                        ease: "power3.out"
+                    });
+                    break;
+                    
+                case 6:
+                    buildInteractiveStars();
+                    break;
+            }
         }
-        setTimeout(()=> gsap.to(scene,{opacity:0,duration:1.5, onComplete:()=>renderScene('letter')}), 10000);
-      }
 
-      // ──────────────── LETTER ────────────────
-      function createLetterScene() {
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        scene.innerHTML = `<div class="glass-panel" style="max-width:600px; background:rgba(245,240,230,0.1);">
-          <p style="font-family:'Cormorant Garamond'; font-size:1.8rem; line-height:1.6;">Dear Manar,<br>May your days be filled with wonder and your heart with peace. You deserve all the beauty this universe holds.</p>
-        </div>`;
-        APP.appendChild(scene);
-        setTimeout(()=> gsap.to(scene,{opacity:0,duration:1.8, onComplete:()=>renderScene('roseRain')}), 7000);
-      }
+        // ==================== نظام التدوير للصندوق ====================
+        const boxContainer = document.getElementById('box-container');
+        const giftBox = document.getElementById('gift-box');
+        let isDragging = false;
+        let prevPos = { x: 0, y: 0 };
+        let rotation = { x: -25, y: 45 };
 
-      // ──────────────── ROSE RAIN ────────────────
-      function createRoseRainScene() {
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        for(let i=0;i<50;i++){
-          const rose = document.createElement('div');
-          rose.textContent = '🌹';
-          rose.style.position = 'absolute';
-          rose.style.left = Math.random()*100+'%';
-          rose.style.top = '-5%';
-          rose.style.fontSize = '2rem';
-          rose.style.animation = `fall ${3+Math.random()*4}s linear infinite`;
-          scene.appendChild(rose);
+        if (boxContainer) {
+            boxContainer.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                prevPos = { x: e.clientX, y: e.clientY };
+                e.preventDefault();
+            });
+
+            boxContainer.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                prevPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const deltaX = e.clientX - prevPos.x;
+                const deltaY = e.clientY - prevPos.y;
+                rotation.y += deltaX * 0.5;
+                rotation.x -= deltaY * 0.5;
+                giftBox.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
+                prevPos = { x: e.clientX, y: e.clientY };
+            });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const deltaX = e.touches[0].clientX - prevPos.x;
+                const deltaY = e.touches[0].clientY - prevPos.y;
+                rotation.y += deltaX * 0.5;
+                rotation.x -= deltaY * 0.5;
+                giftBox.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
+                prevPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            });
+
+            window.addEventListener('mouseup', () => isDragging = false);
+            window.addEventListener('touchend', () => isDragging = false);
         }
-        APP.appendChild(scene);
-        setTimeout(()=> gsap.to(scene,{opacity:0,duration:1.5, onComplete:()=>renderScene('final')}), 5000);
-      }
 
-      // ──────────────── FINAL SCENE ────────────────
-      function createFinalScene() {
-        const scene = document.createElement('div');
-        scene.className = 'scene';
-        scene.innerHTML = `<div class="glass-panel"><h1 style="font-size:4rem;">Happy Birthday<br>Manar</h1><p style="margin-top:1rem;">Forever cherished, endlessly celebrated.</p></div>`;
-        APP.appendChild(scene);
-        setInterval(()=> confetti({particleCount:50, spread:70}), 2000);
-      }
+        function openBox() {
+            const boxTop = document.getElementById('box-top');
+            boxTop.style.transform = "rotateX(-140deg) translateZ(110px)";
+            
+            // تأثيرات الفتح
+            confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#facc15', '#ffd700', '#ff69b4', '#ffffff']
+            });
+            
+            // جسيمات سحرية
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 10,
+                        spread: 30,
+                        origin: { x: Math.random(), y: Math.random() * 0.5 },
+                        colors: ['#ffd700', '#ff69b4']
+                    });
+                }, i * 50);
+            }
+            
+            playHeartbeatSound();
+            
+            setTimeout(() => {
+                nextScene(5);
+            }, 2000);
+        }
 
-      // ──────────────── START ────────────────
-      window.addEventListener('resize', resizeCanvases);
-      resizeCanvases();
-      drawGalaxy();
-      renderScene('intro');
-      
-      // Style injection for rose fall
-      const style = document.createElement('style');
-      style.textContent = `@keyframes fall{0%{transform:translateY(0) rotate(0deg); opacity:1} 100%{transform:translateY(110vh) rotate(360deg); opacity:0.7}}`;
-      document.head.appendChild(style);
-    })();
-  </script>
+        // ==================== بناء النجوم التفاعلية ====================
+        const starMessages = [
+            "🌟 منار.. منذ 12 يوليو 2009 والكون يمتلك نجمة إضافية تسير بيننا بكل بهاء",
+            "💫 وجودك في حياتي يحول الأيام الرمادية إلى لوحات فنية نابضة بالألوان",
+            "✨ في عامك السابع عشر، أتمنى أن يبتسم لك القدر كما تبتسمين أنت للحياة",
+            "⭐ كل عام وأنتِ تلك المعجزة النادرة التي لا تتكرر في سماء الكون",
+            "🌙 دمتِ بقلبك النقي، ودامت ضحكتك التي تستحق كل خير وسعادة في الوجود",
+            "💖 أنتِ لستِ مجرد إنسان، أنتِ قصيدة لم تكتمل بعد، ولوحة لم تنتهِ ألوانها"
+        ];
+
+        function buildInteractiveStars() {
+            const container = document.getElementById('stars-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            const positions = [
+                { top: '15%', left: '10%' },
+                { top: '25%', left: '70%' },
+                { top: '40%', left: '25%' },
+                { top: '50%', left: '80%' },
+                { top: '65%', left: '15%' },
+                { top: '75%', left: '65%' }
+            ];
+            
+            starMessages.forEach((msg, i) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = "absolute w-16 h-16 flex items-center justify-center cursor-pointer";
+                wrapper.style.top = positions[i].top;
+                wrapper.style.left = positions[i].left;
+                wrapper.style.zIndex = "30";
+                
+                // حلقات النبض
+                for (let j = 0; j < 3; j++) {
+                    const pulse = document.createElement('div');
+                    pulse.className = "pulse-ring absolute";
+                    pulse.style.width = '100%';
+                    pulse.style.height = '100%';
+                    pulse.style.animationDelay = `${j * 0.7}s`;
+                    wrapper.appendChild(pulse);
+                }
+                
+                const starIcon = document.createElement('div');
+                starIcon.className = "text-4xl filter drop-shadow-[0_0_15px_gold] hover:scale-150 transition-transform duration-300 relative z-10";
+                starIcon.innerHTML = "🌟";
+                starIcon.style.animation = "heartFloat 2s ease-in-out infinite";
+                starIcon.style.animationDelay = `${i * 0.3}s`;
+                
+                wrapper.appendChild(starIcon);
+                
+                wrapper.onclick = function(e) {
+                    e.stopPropagation();
+                    
+                    // عرض الرسالة
+                    const panel = document.getElementById('top-msg-panel');
+                    const txt = document.getElementById('top-msg-text');
+                    txt.innerText = msg;
+                    
+                    gsap.fromTo(panel, 
+                        { scale: 0.5, opacity: 0, y: -50 },
+                        { 
+                            scale: 1, 
+                            opacity: 1, 
+                            y: 0,
+                            duration: 0.6,
+                            ease: "back.out(1.7)"
+                        }
+                    );
+                    
+                    // تأثيرات
+                    confetti({
+                        particleCount: 50,
+                        spread: 60,
+                        origin: { 
+                            x: e.clientX / window.innerWidth, 
+                            y: e.clientY / window.innerHeight 
+                        },
+                        colors: ['#facc15', '#ffd700', '#ffffff']
+                    });
+                    
+                    playHeartbeatSound();
+                    
+                    // إخفاء تلقائي بعد فترة
+                    setTimeout(() => {
+                        gsap.to(panel, {
+                            scale: 0.8,
+                            opacity: 0,
+                            duration: 0.4
+                        });
+                    }, 4000);
+                };
+                
+                container.appendChild(wrapper);
+            });
+        }
+
+        // ==================== مطر البتلات ====================
+        function createPetalRain() {
+            const petalEmojis = ['🌸', '🌹', '💮', '🏵️', '🌺', '💐', '🌷', '✿'];
+            
+            setInterval(() => {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.fontSize = (20 + Math.random() * 40) + 'px';
+                petal.style.animationDuration = (3 + Math.random() * 5) + 's';
+                petal.style.animationDelay = Math.random() * 2 + 's';
+                petal.style.opacity = (0.6 + Math.random() * 0.4);
+                
+                document.body.appendChild(petal);
+                
+                setTimeout(() => {
+                    if (petal.parentNode) {
+                        petal.remove();
+                    }
+                }, 8000);
+            }, 200);
+        }
+
+        // ==================== المشهد النهائي ====================
+        function triggerGrandFinale() {
+            nextScene(9);
+            
+            // إيقاف مطر البتلات
+            const petals = document.querySelectorAll('.petal');
+            petals.forEach(p => p.remove());
+            
+            // ألعاب نارية مستمرة
+            let duration = 8000;
+            let end = Date.now() + duration;
+            
+            const fireworksInterval = setInterval(() => {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: Math.random() },
+                    colors: ['#facc15', '#f43f5e', '#a855f7', '#ffffff']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: Math.random() },
+                    colors: ['#facc15', '#f43f5e', '#a855f7', '#ffffff']
+                });
+                
+                if (Date.now() > end) {
+                    clearInterval(fireworksInterval);
+                    revealFinalMessage();
+                }
+            }, 100);
+        }
+
+        function revealFinalMessage() {
+            const finalText = document.getElementById('final-secret-text');
+            finalText.innerHTML = "✨ كل عام وأنتِ أجمل أقداري وأروع حكاياتي ✨<br><br>💖 أحبكِ يا منار 💖";
+            
+            gsap.to(finalText, {
+                opacity: 1,
+                y: 0,
+                duration: 2,
+                ease: "power2.out",
+                delay: 0.5
+            });
+            
+            // رشة نهائية
+            confetti({
+                particleCount: 300,
+                spread: 180,
+                origin: { y: 0.5 },
+                colors: ['#facc15', '#ffd700', '#ff69b4', '#ffffff', '#a855f7'],
+                decay: 0.9
+            });
+            
+            // تأثير وميض ذهبي
+            const goldenFlash = document.createElement('div');
+            goldenFlash.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle, rgba(250,204,21,0.3) 0%, transparent 70%);
+                z-index: 9998;
+                pointer-events: none;
+            `;
+            document.body.appendChild(goldenFlash);
+            
+            gsap.fromTo(goldenFlash, 
+                { opacity: 1 },
+                { 
+                    opacity: 0, 
+                    duration: 3,
+                    onComplete: () => goldenFlash.remove()
+                }
+            );
+        }
+
+        // ==================== مراقبة المشهد الثامن لتفعيل المطر ====================
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.id === 'scene8' && mutation.target.classList.contains('active')) {
+                    createPetalRain();
+                }
+            });
+        });
+
+        const scene8 = document.getElementById('scene8');
+        if (scene8) {
+            observer.observe(scene8, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        // ==================== تأثيرات إضافية ====================
+        // وميض عشوائي في الخلفية
+        setInterval(() => {
+            if (Math.random() < 0.1) {
+                const flash = document.createElement('div');
+                flash.style.cssText = `
+                    position: fixed;
+                    top: ${Math.random() * 100}%;
+                    left: ${Math.random() * 100}%;
+                    width: 2px;
+                    height: 2px;
+                    background: white;
+                    border-radius: 50%;
+                    z-index: 5;
+                    pointer-events: none;
+                `;
+                document.body.appendChild(flash);
+                
+                gsap.to(flash, {
+                    opacity: 0,
+                    scale: 3,
+                    duration: 0.5,
+                    onComplete: () => flash.remove()
+                });
+            }
+        }, 1000);
+
+        console.log('%c✨ تجربة عيد ميلاد منار الأسطورية ✨', 
+            'color: #facc15; font-size: 20px; font-weight: bold;');
+        console.log('%c🎂 كل عام وأنتِ أجمل ما في الكون يا منار 🎂', 
+            'color: #f43f5e; font-size: 16px;');
+    </script>
 </body>
 </html>
