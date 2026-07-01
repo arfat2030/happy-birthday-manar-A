@@ -3,104 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إلى أثمن ما في الكون هداية ❤️</title>
-    <!-- Tailwind CSS للتحكم السريع بالتصميم والزجاج الحركي -->
+    <title>إلى الساحرة التي خطفت قلبي.. منار ❤️</title>
+    <!-- Tailwind CSS للتنسيق الفاخر والمؤثرات البصرية -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- GSAP للتحريكات السينمائية والانتقالات -->
+    <!-- GSAP لتحريك المشاهد سينمائياً -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- مكتبة التأثيرات الحركية للخطوط وتأثير الكتابة -->
+    <!-- Typed.js لتأثير الكتابة الحية -->
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
-    <!-- مكتبة الألعاب النارية والجسيمات الخفيفة -->
+    <!-- Canvas Confetti للألعاب النارية والجسيمات -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Playfair+Display:ital,wght@1,600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;900&family=Playfair+Display:ital,wght@1,700&display=swap');
         
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow: hidden; background-color: #05050b;
+            overflow: hidden; background-color: #020005;
             font-family: 'Cairo', sans-serif; color: #fff;
-            user-select: none;
+            user-select: none; -webkit-user-select: none;
         }
         .scene {
             position: absolute; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center;
             align-items: center; opacity: 0; pointer-events: none;
-            z-index: 10; transition: background 1s ease;
+            z-index: 10; transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .scene.active { opacity: 1; pointer-events: auto; }
         
-        /* خلفية النجوم المتحركة المتلألئة */
         #starfield {
             position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; pointer-events: none;
         }
         
-        /* تصميم الصندوق ثلاثي الأبعاد بالـ CSS */
-        .box-container {
-            perspective: 1000px; width: 200px; height: 200px; transform-style: preserve-3d; cursor: grab;
+        /* تأثير زجاجي فاخر مع توهج نيوني */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 30px;
+            box-shadow: 0 0 40px rgba(236, 72, 153, 0.2);
         }
-        .gift-box {
-            width: 100%; height: 100%; position: relative; transform-style: preserve-3d;
-            transform: rotateX(-20deg) rotateY(45deg); transition: transform 0.1s ease;
+
+        /* توهج النص المشع */
+        .neon-glow {
+            text-shadow: 0 0 10px #f43f5e, 0 0 30px #ec4899, 0 0 50px #d946ef;
         }
-        .box-face {
-            position: absolute; width: 200px; height: 200px; background: rgba(220, 38, 38, 0.9);
-            border: 4px solid #facc15; box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
-        }
+        
+        /* تصميم الصندوق ثلاثي الأبعاد بالـ CSS المطور */
+        .box-container { perspective: 1200px; width: 200px; height: 200px; transform-style: preserve-3d; cursor: grab; }
+        .gift-box { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transform: rotateX(-20deg) rotateY(45deg); }
+        .box-face { position: absolute; width: 200px; height: 200px; background: linear-gradient(135deg, #e11d48, #9d174d); border: 3px solid #facc15; box-shadow: inset 0 0 30px rgba(0,0,0,0.5); }
         .face-front  { transform: rotateY(0deg) translateZ(100px); }
         .face-back   { transform: rotateY(180deg) translateZ(100px); }
         .face-right  { transform: rotateY(90deg) translateZ(100px); }
         .face-left   { transform: rotateY(-90deg) translateZ(100px); }
-        .face-top    { transform: rotateX(90deg) translateZ(100px); background: #ef4444; transform-origin: top; transition: transform 0.8s ease; }
+        .face-top    { transform: rotateX(90deg) translateZ(100px); background: #be123c; transform-origin: top; transition: transform 1s ease; }
         .face-bottom { transform: rotateX(-90deg) translateZ(100px); }
-        
-        /* زجاج الـ Glassmorphism */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px;
+
+        /* تلميح النبض الدائري للنجوم */
+        .pulse-ring {
+            border: 2px solid rgba(250, 204, 21, 0.7); border-radius: 50%;
+            animation: pulsate 1.5s infinite ease-out;
         }
-        
-        /* خط ثلاثي الأبعاد */
-        .text-3d {
-            font-family: 'Playfair Display', serif;
-            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c5c5c5, 0 3px 0 #bbb, 0 4px 0 #b0b0b0, 0 5px 0 #a5a5a5, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+        @keyframes pulsate {
+            0% { transform: scale(0.3); opacity: 0.0; }
+            50% { opacity: 1.0; }
+            100% { transform: scale(1.3); opacity: 0.0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- موسيقى الخلفية (استبدل الرابط برابط مباشر لملف الصوت الخاص بك) -->
-    <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    <!-- الأغنية المدمجة (موسيقى ميلاد احتفالية جذابة ومبهجة) -->
+    <audio id="bg-music" loop src="https://assets.mixkit.co/active_storage/sfx/123/123.wav"></audio>
+    <audio id="backup-song" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
 
-    <!-- كانفاس النجوم والجسيمات الموحد للخلفية -->
+    <!-- الخلفية الكونية الموحدة -->
     <canvas id="starfield"></canvas>
 
-    <!-- ================= المشهد الأول: البداية ================= -->
+    <!-- ================= المشهد الأول: البداية والتشويق ================= -->
     <div id="scene1" class="scene active">
-        <div class="text-center px-6 max-w-xl">
-            <h1 id="typing-text" class="text-2xl md:text-3xl font-light leading-relaxed min-h-[120px]"></h1>
-            <button onclick="startExperience()" class="mt-8 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-bold tracking-wide shadow-[0_0_20px_rgba(168,85,247,0.5)] hover:scale-105 transition transform duration-300 opacity-0 id-btn-start">
-                ✨ اضغطِ هنا للدخول
+        <div class="text-center px-6 max-w-xl z-20">
+            <h1 id="typing-text" class="text-2xl md:text-3xl font-light leading-relaxed min-h-[140px] tracking-wide text-pink-200"></h1>
+            <button onclick="startExperience()" class="mt-8 px-10 py-4 bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 rounded-full font-black text-lg tracking-widest shadow-[0_0_30px_rgba(244,63,94,0.6)] hover:scale-110 transition transform duration-300 opacity-0 id-btn-start">
+                ✨ اضغطِ هنا لفتح عالمكِ الخاص
             </button>
         </div>
     </div>
 
-    <!-- ================= المشهد الثاني: جزيئات القلب والاسم ================= -->
+    <!-- ================= المشهد الثاني: بوابة القلب وظهور منار ================= -->
     <div id="scene2" class="scene">
-        <div class="text-center">
-            <div id="heart-portal" class="text-8xl animate-pulse cursor-pointer">❤️</div>
-            <h2 id="name-appear" class="text-5xl font-bold mt-6 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent opacity-0 scale-50">اسمها الكريم ✨</h2>
+        <div class="text-center z-20">
+            <div id="heart-portal" class="text-9xl animate-bounce cursor-pointer filter drop-shadow-[0_0_20px_rgba(244,63,94,0.8)]">❤️</div>
+            <p class="text-gray-400 mt-4 text-sm tracking-widest animate-pulse">انقري فوق القلب لتبدأ المعجزة</p>
+            <h2 id="name-appear" class="text-6xl md:text-7xl font-black mt-8 tracking-wide neon-glow font-serif opacity-0 scale-50">
+                Manar Almonify
+            </h2>
         </div>
     </div>
 
-    <!-- ================= المشهد الثالث: العد التنازلي والانفجار ================= -->
+    <!-- ================= المشهد الثالث: العد التنازلي الحماسي ================= -->
     <div id="scene3" class="scene">
-        <div id="countdown" class="text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-amber-500 scale-50 opacity-0">3</div>
+        <div id="countdown" class="text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 via-amber-400 to-orange-500 scale-50 opacity-0 filter drop-shadow-[0_0_30px_rgba(251,191,36,0.5)]">3</div>
     </div>
 
-    <!-- ================= المشهد الرابع: الصندوق التفاعلي ================= -->
+    <!-- ================= المشهد الرابع: صندوق الهدية ثلاثي الأبعاد ================= -->
     <div id="scene4" class="scene">
-        <h3 class="text-lg text-gray-300 mb-8 animate-bounce">اسحبِ لتدوير الهدية، واضغطِ لفتحها 🎁</h3>
+        <h3 class="text-xl text-pink-300 mb-10 font-bold tracking-wider animate-pulse text-center px-4">🎁 الصندوق صُنع لأجلكِ.. اسحبي لتدويره، وانقري لفتحه!</h3>
         <div class="box-container" id="box-container">
             <div class="gift-box" id="gift-box" onclick="openBox()">
                 <div class="box-face face-front"></div>
@@ -113,59 +119,76 @@
         </div>
     </div>
 
-    <!-- ================= المشهد الخامس: معرض صور البولارويد ================= -->
+    <!-- ================= المشهد الخامس: توثيق التاريخ المميز (البولارويد) ================= -->
     <div id="scene5" class="scene">
-        <div class="relative w-72 h-96 glass-card p-4 shadow-2xl flex flex-col items-center transform rotate-3" id="polaroid-card">
-            <!-- استبدل الصورة برابط صورة حقيقية لها -->
-            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500" class="w-full h-64 object-cover rounded-lg" alt="ذكريات">
-            <p class="mt-6 font-serif text-xl text-gray-800 font-bold dark:text-pink-300">أجمل ابتسامة.. 📸</p>
-            <button onclick="nextScene(6)" class="absolute -bottom-16 px-6 py-2 bg-white/10 rounded-full text-sm backdrop-blur-sm border border-white/20">التالي ✨</button>
+        <div class="relative w-80 h-[420px] glass-card p-4 shadow-2xl flex flex-col items-center transform -rotate-2" id="polaroid-card">
+            <div class="w-full h-64 bg-gradient-to-tr from-purple-900 to-pink-700 rounded-2xl flex flex-col items-center justify-center border border-white/10 relative overflow-hidden">
+                <span class="text-7xl">👑</span>
+                <div class="absolute bottom-4 text-center">
+                    <p class="text-yellow-400 font-black tracking-widest text-lg">2009 / 07 / 12</p>
+                    <p class="text-xs text-gray-300">اليوم الذي أشرق فيه كوني</p>
+                </div>
+            </div>
+            <h4 class="mt-6 font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-300">منار.. ملكة هذا اليوم</h4>
+            <button onclick="nextScene(6)" class="absolute -bottom-16 px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full font-bold text-sm shadow-xl hover:scale-105 transition transform duration-200">مشاهدة المفاجأة التالية ✨</button>
         </div>
     </div>
 
-    <!-- ================= المشهد السادس: السماء التفاعلية والنجوم ================= -->
+    <!-- ================= المشهد السادس: النجوم والرسائل العلوية الكبرى ================= -->
     <div id="scene6" class="scene">
-        <h3 class="text-center text-sm text-gray-400 mb-4 absolute top-10">المسي النجوم المتلألئة لتكتشفي أسرارها 🌟</h3>
-        <div id="stars-container" class="w-full h-full relative"></div>
-        <div id="star-message" class="absolute bottom-20 px-6 py-3 glass-card text-center max-w-xs transform scale-0 transition duration-300"></div>
-        <button onclick="nextScene(7)" class="absolute bottom-6 px-6 py-2 bg-white/10 rounded-full text-sm backdrop-blur-sm border border-white/20 z-50">تابعي الرحلة 📖</button>
+        <!-- لوحة الرسائل العلوية الكبيرة جداً والأمامية -->
+        <div id="top-msg-panel" class="absolute top-8 left-4 right-4 mx-auto max-w-2xl glass-card py-6 px-8 text-center border-rose-500/40 border transform scale-0 opacity-0 transition-all duration-500 z-50">
+            <p id="top-msg-text" class="text-2xl md:text-3xl font-black text-rose-300 tracking-wide leading-relaxed filter drop-shadow-md"></p>
+        </div>
+
+        <!-- تلميح وإرشاد واضح وجذاب جداً للضغط على النجوم -->
+        <div id="star-hint" class="absolute bottom-24 text-center z-30 pointer-events-none px-4">
+            <div class="inline-block bg-black/60 px-6 py-3 rounded-full border border-yellow-400/50 animate-bounce">
+                <span class="text-yellow-300 font-bold text-base md:text-lg">✨ انقري فوق النجوم الذهبية النابضة بالأعلى لتكشفي أسراري لكِ! ✨</span>
+            </div>
+        </div>
+
+        <div id="stars-container" class="w-full h-full relative z-20"></div>
+        <button onclick="nextScene(7)" class="absolute bottom-6 px-8 py-3 bg-white/10 rounded-full font-bold text-sm backdrop-blur-md border border-white/20 z-40 hover:bg-white/20 transition">متابعة الرحلة السرية 📖</button>
     </div>
 
-    <!-- ================= المشهد السابع: الكتاب القديم والرسالة ================= -->
+    <!-- ================= المشهد السابع: كتاب الرسالة القوية المؤثرة ================= -->
     <div id="scene7" class="scene">
-        <div class="w-11/12 max-w-md glass-card p-8 text-center relative shadow-2xl overflow-hidden border-pink-500/30 border">
-            <div class="absolute top-0 right-0 p-3 text-pink-500/20 text-7xl">❝</div>
-            <h3 class="text-2xl font-bold mb-4 text-pink-400">إلى صاحبة الأثر الجميل..</h3>
-            <p class="leading-relaxed text-gray-200 text-lg">
-                هذا اليوم لم يكن يوماً عادياً للأرض، بل كان اليوم الذي أشرقتِ فيه لتجعلي حياة من حولكِ أكثر جمالاً ونوراً. أتمنى لكِ عاماً يشبه طهر قلبكِ وعمق نقائكِ.
+        <div class="w-11/12 max-w-lg glass-card p-8 md:p-10 text-center relative shadow-2xl border border-pink-500/30 z-20">
+            <div class="text-pink-500/20 text-8xl absolute -top-4 right-4">❝</div>
+            <h3 class="text-3xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-300">رسالة انكتبت لقلبكِ النقي..</h3>
+            <p class="leading-relaxed text-gray-100 text-lg md:text-xl font-medium">
+                منار.. هناك جِمَال في هذا العالم نراه، وهناك جمال نعيشه، وأنتِ اختصار لكل معاني النقاء. دخولكِ لحياتي غير مجرى كل شيء، وجعل لأيامي طعماً أجمل. كل عام وابتسامتكِ تضيء عتمة هذا الكون، وكل عام وأنتِ أثمن وأرقى حكاية أعتز بها في قلبي.
             </p>
-            <button onclick="nextScene(8)" class="mt-6 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full text-sm font-bold shadow-lg">اقلبي الصفحة 🌹</button>
+            <button onclick="nextScene(8)" class="mt-8 px-8 py-3 bg-gradient-to-r from-rose-500 to-purple-600 rounded-full font-black tracking-wider shadow-lg hover:scale-105 transition transform">اقلبي الصفحة الختامية 🌹</button>
         </div>
     </div>
 
-    <!-- ================= المشهد الثامن: مطر الورد وزر المفاجأة ================= -->
+    <!-- ================= المشهد الثامن: أمطار البتلات والمفاجأة الكبرى ================= -->
     <div id="scene8" class="scene">
-        <div class="text-center z-20">
-            <h2 class="text-3xl font-light mb-8 text-pink-200 animate-pulse">السماء تمطر حباً لعينيكِ... 🌸</h2>
-            <button onclick="triggerGrandFinale()" class="px-8 py-4 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 rounded-full text-xl font-bold shadow-[0_0_30px_rgba(239,68,68,0.6)] hover:scale-110 transition duration-300">
-                ❤️ اضغطِ هنا للمفاجأة الأخيرة
+        <div class="text-center z-20 px-4">
+            <h2 class="text-3xl md:text-4xl font-light mb-10 text-pink-200 tracking-wide leading-loose">
+                السماء تمطر بتلات الورد ابتهاجاً بوجودكِ في هذا العالم... 🌸
+            </h2>
+            <button onclick="triggerGrandFinale()" class="px-10 py-5 bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 rounded-full text-2xl font-black tracking-widest shadow-[0_0_40px_rgba(239,68,68,0.7)] hover:scale-110 transition transform duration-300">
+                ❤️ اضغطي هنا للمفاجأة الكبرى والأخيرة
             </button>
         </div>
     </div>
 
-    <!-- ================= المشهد التاسع والأخير: الختام الأسطوري ================= -->
+    <!-- ================= المشهد التاسع والأخير: الختام الأسطوري الخيالي ================= -->
     <div id="scene9" class="scene bg-black">
-        <div class="text-center z-20">
-            <h1 class="text-6xl md:text-8xl font-black text-3xl tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-500 to-purple-400 font-serif mb-4 animate-bounce">
+        <div class="text-center z-20 px-4">
+            <h1 class="text-6xl md:text-9xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-500 to-purple-400 font-serif mb-6 filter drop-shadow-[0_0_30px_rgba(244,63,94,0.5)] animate-pulse">
                 Happy Birthday
             </h1>
-            <h2 id="final-name" class="text-4xl md:text-5xl font-bold text-white tracking-wide opacity-0">...❤️...</h2>
+            <h2 class="text-4xl md:text-5xl font-black text-pink-200 tracking-wide mt-2 mb-6">Manar</h2>
+            <h3 id="final-secret-text" class="text-3xl md:text-4xl font-bold text-white tracking-wide opacity-0 transform translate-y-10 transition-all duration-1000"></h3>
         </div>
     </div>
 
-    <!-- ================= متحكم البرمجة والمنطق التفاعلي (JavaScript) ================= -->
+    <!-- ================= الرمز البرمجي والمتحكمات الذكية (JavaScript) ================= -->
     <script>
-        // إعداد كانفاس الخلفية والنجوم المتلألئة
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -178,12 +201,12 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // بناء النجوم في الخلفية
-        for(let i=0; i<150; i++) {
+        // توليد النجوم اللامعة في الخلفية الفضائية
+        for(let i=0; i<180; i++) {
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                size: Math.random() * 2,
+                size: Math.random() * 2.5,
                 alpha: Math.random(),
                 speed: 0.01 + Math.random() * 0.02
             });
@@ -191,8 +214,6 @@
 
         function drawStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // رسم النجوم العادية المتلألئة
             ctx.fillStyle = "#fff";
             stars.forEach(star => {
                 star.alpha += star.speed;
@@ -204,12 +225,11 @@
             });
             ctx.globalAlpha = 1.0;
 
-            // تفعيل تأثير مطر الورد في المشهد الثامن والتاسع
             if (rainEffect) {
-                ctx.fillStyle = "rgba(244, 63, 94, 0.6)"; // لون بتلات الورد الوردي
-                for(let i=0; i<5; i++) {
+                ctx.fillStyle = "rgba(244, 63, 94, 0.5)";
+                for(let i=0; i<6; i++) {
                     ctx.beginPath();
-                    ctx.arc(Math.random() * canvas.width, Math.random() * -10, 4 + Math.random()*4, 0, Math.PI*2);
+                    ctx.arc(Math.random() * canvas.width, Math.random() * -20, 3 + Math.random()*5, 0, Math.PI*2);
                     ctx.fill();
                 }
             }
@@ -217,175 +237,191 @@
         }
         drawStars();
 
-        // الانتقال بين المشاهد بسلاسة باستخدام GSAP
+        // آلية الانتقال الانسيابي والسينمائي للمشاهد عبر مكتبة GSAP
         function nextScene(sceneNumber) {
             const currentActive = document.querySelector('.scene.active');
             const nextTarget = document.getElementById(`scene${sceneNumber}`);
             
             if(currentActive) {
-                gsap.to(currentActive, {opacity: 0, duration: 0.8, onComplete: () => {
+                gsap.to(currentActive, {opacity: 0, scale: 0.95, duration: 0.6, onComplete: () => {
                     currentActive.classList.remove('active');
                     nextTarget.classList.add('active');
-                    gsap.to(nextTarget, {opacity: 1, duration: 0.8});
+                    gsap.fromTo(nextTarget, {opacity: 0, scale: 1.05}, {opacity: 1, scale: 1, duration: 0.8});
                     runSceneLogic(sceneNumber);
                 }});
             }
         }
 
-        // المشهد الأول: تشغيل الموسيقى والبدء
-        var typed;
+        // تأثير الكتابة الأولي المثير
         window.onload = function() {
-            typed = new Typed('#typing-text', {
-                strings: ["هناك أشخاص يمرون في حياتنا...", "وهناك أشخاص يجعلون الحياة أجمل...", "واليوم...", "ليس يوماً عادياً..."],
-                typeSpeed: 60,
-                backSpeed: 30,
-                backDelay: 1500,
+            new Typed('#typing-text', {
+                strings: [
+                    "هناك أشخاص يمرون في حياتنا بشكل عابر...",
+                    "وهناك نِعَم تأتي على هيئة أشخاص لتجعل الكون أجمل...",
+                    "واليوم، 12 يوليو... ليس يوماً عادياً أبداً..",
+                    "اليوم هو العيد السنوي لإشراق أجمل روح.. منار ❤️"
+                ],
+                typeSpeed: 50,
+                backSpeed: 25,
+                backDelay: 1200,
                 showCursor: false,
                 onComplete: function() {
-                    gsap.to('.id-btn-start', {opacity: 1, scale: 1, duration: 0.5});
+                    gsap.to('.id-btn-start', {opacity: 1, scale: 1, duration: 0.6});
                 }
             });
         }
 
         function startExperience() {
-            // تفعيل الموسيقى بعد تفاعل المستخدم لتجنب قيود المتصفحات
-            const music = document.getElementById('bg-music');
-            music.play().catch(e => console.log("Music blocked until gesture complete."));
+            const audio1 = document.getElementById('bg-music');
+            const audio2 = document.getElementById('backup-song');
+            
+            // تشغيل الصوت وضمان تخطي قيود حظر تشغيل المتصفحات التلقائي
+            audio1.play().catch(() => {
+                audio2.play().catch(e => console.log("Audio play blocked by browser policies."));
+            });
             nextScene(2);
         }
 
-        // إدارة منطق المشاهد المتقدمة
+        // تشغيل البنى المنطقية الخاصة بكل مشهد بشكل منفصل
         function runSceneLogic(num) {
             if(num === 2) {
-                // مشهد القلب والاسم
                 document.getElementById('heart-portal').onclick = function() {
-                    confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-                    gsap.to('#name-appear', {opacity: 1, scale: 1, duration: 1, ease: "elastic.out(1, 0.5)", onComplete: () => {
-                        setTimeout(() => nextScene(3), 2000);
+                    confetti({ particleCount: 180, spread: 90, origin: { y: 0.6 } });
+                    gsap.to('#name-appear', {opacity: 1, scale: 1, duration: 1.2, ease: "elastic.out(1, 0.4)", onComplete: () => {
+                        setTimeout(() => nextScene(3), 2500);
                     }});
                 }
             } else if(num === 3) {
-                // مشهد العد التنازلي السينمائي
                 let count = 3;
                 const counterEl = document.getElementById('countdown');
-                gsap.to(counterEl, {opacity: 1, scale: 1.2, duration: 0.5});
+                gsap.to(counterEl, {opacity: 1, scale: 1.2, duration: 0.4});
                 
                 let interval = setInterval(() => {
                     count--;
                     if(count > 0) {
                         counterEl.innerText = count;
-                        gsap.fromTo(counterEl, {scale: 0.5, opacity: 0}, {scale: 1.2, opacity: 1, duration: 0.4});
+                        gsap.fromTo(counterEl, {scale: 0.4, opacity: 0}, {scale: 1.2, opacity: 1, duration: 0.4});
                     } else {
                         clearInterval(interval);
-                        // انفجار الشاشة بالكامل بالألعاب النارية
-                        confetti({ particleCount: 300, spread: 150, origin: { y: 0.5 } });
+                        confetti({ particleCount: 250, spread: 130, origin: { y: 0.5 } });
                         nextScene(4);
                     }
                 }, 1000);
             } else if(num === 5) {
-                // حركات السينما لمعرض الصور
-                gsap.from('#polaroid-card', {y: 300, rotation: -20, opacity: 0, duration: 1.2, ease: "power4.out"});
+                gsap.from('#polaroid-card', {y: 250, rotation: -15, opacity: 0, duration: 1, ease: "power3.out"});
             } else if(num === 6) {
-                // بناء النجوم التفاعلية في السماء
                 buildInteractiveStars();
             } else if(num === 8) {
-                rainEffect = true; // تفعيل مطر الورد
+                rainEffect = true;
             }
         }
 
-        // المشهد الرابع: التحكم بتدوير وفتح الصندوق ثلاثي الأبعاد
+        // المشهد الرابع: التحكم التفاعلي بالصندوق ثلاثي الأبعاد والتدوير
         const boxContainer = document.getElementById('box-container');
         const giftBox = document.getElementById('gift-box');
         let isDragging = false;
-        let previousMousePosition = { x: 0, y: 0 };
+        let prevMousePos = { x: 0, y: 0 };
         let rotation = { x: -20, y: 45 };
 
-        boxContainer.addEventListener('mousedown', (e) => { isDragging = true; });
-        boxContainer.addEventListener('touchstart', (e) => { isDragging = true; previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY }; });
+        boxContainer.addEventListener('mousedown', () => isDragging = true);
+        boxContainer.addEventListener('touchstart', (e) => { isDragging = true; prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY }; });
 
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
-            let deltaX = e.clientX - previousMousePosition.x;
-            let deltaY = e.clientY - previousMousePosition.y;
-            rotation.y += deltaX * 0.5;
-            rotation.x -= deltaY * 0.5;
+            let deltaX = e.clientX - prevMousePos.x;
+            let deltaY = e.clientY - prevMousePos.y;
+            rotation.y += deltaX * 0.6;
+            rotation.x -= deltaY * 0.6;
             giftBox.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
-            previousMousePosition = { x: e.clientX, y: e.clientY };
+            prevMousePos = { x: e.clientX, y: e.clientY };
         });
 
         window.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
-            let deltaX = e.touches[0].clientX - previousMousePosition.x;
-            let deltaY = e.touches[0].clientY - previousMousePosition.y;
-            rotation.y += deltaX * 0.5;
-            rotation.x -= deltaY * 0.5;
+            let deltaX = e.touches[0].clientX - prevMousePos.x;
+            let deltaY = e.touches[0].clientY - prevMousePos.y;
+            rotation.y += deltaX * 0.6;
+            rotation.x -= deltaY * 0.6;
             giftBox.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
-            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
         });
 
         window.addEventListener('mouseup', () => isDragging = false);
         window.addEventListener('touchend', () => isDragging = false);
 
         function openBox() {
-            document.getElementById('box-top').style.transform = "rotateX(-120deg) translateZ(100px)";
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-            setTimeout(() => { nextScene(5); }, 1500);
+            document.getElementById('box-top').style.transform = "rotateX(-130deg) translateZ(100px)";
+            confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+            setTimeout(() => { nextScene(5); }, 1600);
         }
 
-        // المشهد السادس: منطق النجوم المتلألئة الحاملة للرسائل
+        // المشهد السادس: بناء النجوم ذات الرسائل العلوية الفاخرة المضيئة
         const starMessages = [
-            "⭐ أتمنى لكِ سنة مليئة بالسعادة وتحقيق الأمنيات",
-            "⭐ ابتسامتكِ الجميلة تستحق كل الخير في هذا العالم",
-            "⭐ كل عام وأنتِ بقلب أنقى وروح أرقى",
-            "⭐ دمتِ لمن يحبكِ سنداً وفرحة لا تنتهي",
-            "⭐ جعل الله كل أيامكِ القادمة مليئة بالنور والرضا"
+            "⭐ منار.. منذ 12 يوليو 2009 والأرض تمتلك قمراً ثانياً يسير بجماله بين البشر.",
+            "⭐ وجودكِ في حياتي يملك قوة غامضة قادرة على تحويل أتعس أيامي إلى أعياد حقيقية.",
+            "⭐ في عامكِ الجديد، أتمنى أن تبتسم لكِ الدنيا دائماً كما تبتسمين أنتِ لتبتهج روحي.",
+            "⭐ كل عام وأنتِ النجمة الفريدة النادرة التي لا يوجد لها شبيه في سماء كوني المظلم.",
+            "⭐ دمتِ بقلبكِ الطاهر النقي، ودامت ضحكتكِ الفاتنة التي تستحق كل الخير والجمال."
         ];
 
         function buildInteractiveStars() {
             const container = document.getElementById('stars-container');
             container.innerHTML = '';
+            
             for(let i=0; i<starMessages.length; i++) {
-                let starNode = document.createElement('div');
-                starNode.className = "absolute text-3xl cursor-pointer animate-ping animate-duration-1000";
-                starNode.style.top = `${20 + Math.random()*50}%`;
-                starNode.style.left = `${10 + Math.random()*80}%`;
-                starNode.innerHTML = "🌟";
+                let wrapper = document.createElement('div');
+                wrapper.className = "absolute w-12 h-12 flex items-center justify-center cursor-pointer";
+                wrapper.style.top = `${20 + (i * 12) + Math.random()*8}%`;
+                wrapper.style.left = `${15 + (i * 15)}%`;
+
+                // حلقة النبض لتنبيه العين وإجبارها على الضغط
+                let pulse = document.createElement('div');
+                pulse.className = "absolute w-full h-full pulse-ring";
+
+                let starIcon = document.createElement('div');
+                starIcon.className = "text-3xl filter drop-shadow-[0_0_8px_#facc15] hover:scale-125 transition transform duration-200";
+                starIcon.innerHTML = "🌟";
                 
-                starNode.onclick = function(e) {
+                wrapper.appendChild(pulse);
+                wrapper.appendChild(starIcon);
+                
+                wrapper.onclick = function(e) {
                     e.stopPropagation();
-                    const msgBox = document.getElementById('star-message');
-                    msgBox.innerText = starMessages[i];
-                    gsap.fromTo(msgBox, {scale: 0}, {scale: 1, duration: 0.3});
-                    confetti({ particleCount: 20, angle: 90, spread: 40, origin: { x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight } });
+                    const panel = document.getElementById('top-msg-panel');
+                    const txt = document.getElementById('top-msg-text');
+                    
+                    txt.innerText = starMessages[i];
+                    
+                    // تحريك اللوحة العلوية للرسائل للظهور بشكل دراماتيكي كبير أمام عينها
+                    gsap.killTweensOf(panel);
+                    gsap.fromTo(panel, {scale: 0.7, opacity: 0}, {scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.5)"});
+                    
+                    confetti({ particleCount: 30, angle: 90, spread: 50, origin: { x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight } });
                 };
-                container.appendChild(starNode);
+                container.appendChild(wrapper);
             }
         }
 
-        // المشهد التاسع والأخير: الخاتمة الكبرى والرسالة السرية
+        // المشهد التاسع: الألعاب النارية المستمرة والمفاجأة العاطفية المخفية الأخيرة
         function triggerGrandFinale() {
             nextScene(9);
-            
-            // إطلاق مستمر ومكثف للألعاب النارية في الخلفية
-            let end = Date.now() + (5 * 1000); // 5 ثوانٍ كاملة من الاحتفال
+            let duration = 6 * 1000; // 6 ثوانٍ من الاحتفالات المكثفة المدوية
+            let end = Date.now() + duration;
 
             (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+                confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 } });
 
                 if (Date.now() < end) {
                     requestAnimationFrame(frame);
                 } else {
-                    // المفاجأة الأخيرة والرسالة السرية المخفية بعد الهدوء التام
-                    document.getElementById('scene9').style.backgroundColor = '#000';
-                    gsap.to('#scene9 h1', {opacity: 0, scale: 0.5, duration: 1, onComplete: () => {
-                        const finalName = document.getElementById('final-name');
-                        finalName.innerText = "كل عام وأنتِ أجمل حكاية... ❤️";
-                        gsap.fromTo(finalName, {opacity: 0, scale: 0.3}, {opacity: 1, scale: 1.2, duration: 1.5, ease: "power2.out"});
-                        
-                        // رشة ختامية ناعمة ذهبية
-                        confetti({ particleCount: 100, spread: 100, colors: ['#facc15', '#fbbf24', '#ffffff'] });
-                    }});
+                    // المفاجأة المخفية بعد هدوء العاصفة النارية
+                    const finalTxt = document.getElementById('final-secret-text');
+                    finalTxt.innerText = "كل عام وأنتِ أجمل حكاية تملكها روحي... ❤️";
+                    gsap.to(finalTxt, {opacity: 1, y: 0, duration: 1.5, ease: "power2.out"});
+                    
+                    // رشة ختامية ناعمة من الذهب والأبيض الفاخر
+                    confetti({ particleCount: 150, spread: 100, colors: ['#facc15', '#ffffff', '#ec4899'] });
                 }
             }());
         }
