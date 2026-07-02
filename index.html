@@ -52,6 +52,17 @@
             pointer-events: none;
         }
 
+        /* مشغل الصوت المخفي - نضعه في مكان مرئي لكن مخفي */
+        #yt-player {
+            position: fixed;
+            bottom: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
         .scene {
             position: absolute;
             width: 100%;
@@ -202,6 +213,9 @@
         }
 
         .heart-text strong { color: #f0a0b0; }
+        .heart-text .gold { color: #ffd700; }
+        .heart-text .pink { color: #f093fb; }
+        .heart-text .rose { color: #f5576c; }
 
         .fireworks-btn {
             background: linear-gradient(135deg, #f093fb, #f5576c);
@@ -290,7 +304,7 @@
             position: relative;
             z-index: 2;
             overflow: hidden;
-            min-height: 350px;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -300,32 +314,18 @@
             opacity: 0;
             transform: translateY(60px);
             font-family: 'Amiri', serif;
-            font-size: 1.25rem;
-            line-height: 2.2;
+            font-size: 1.3rem;
+            line-height: 2.4;
             color: #f0d0d0;
             text-align: center;
-            padding: 6px 0;
+            padding: 4px 0;
         }
 
-        .final-message-line strong {
-            color: #ffd700;
-            font-weight: 700;
-        }
+        .final-message-line strong { color: #ffd700; font-weight: 700; }
+        .final-message-line .highlight-pink { color: #f093fb; }
+        .final-message-line .highlight-heart { color: #f5576c; }
+        .final-message-line .big-heart { font-size: 2rem; display: inline-block; }
 
-        .final-message-line .highlight-pink {
-            color: #f093fb;
-        }
-
-        .final-message-line .highlight-heart {
-            color: #f5576c;
-        }
-
-        .final-message-line .big-heart {
-            font-size: 2rem;
-            display: inline-block;
-        }
-
-        /* تأثير الزهور المتساقطة للنهاية */
         .flower-rain {
             position: fixed;
             pointer-events: none;
@@ -341,7 +341,6 @@
             100% { transform: translateY(110vh) rotate(720deg) scale(0.3); opacity: 0; }
         }
 
-        /* زر العودة للبداية */
         .restart-btn {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -362,6 +361,32 @@
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
         }
+
+        .i-love-you {
+            font-size: 3rem;
+            color: #f5576c;
+            text-shadow: 0 0 40px rgba(245, 87, 108, 0.3);
+            animation: pulseLove 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseLove {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* مؤشر تحميل الصوت */
+        #audio-status {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 99;
+            font-size: 0.7rem;
+            color: #666;
+            background: rgba(0,0,0,0.5);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -370,12 +395,15 @@
     <canvas id="stars-canvas"></canvas>
     <canvas id="fireworks-canvas"></canvas>
 
-    <div id="yt-player" style="position:absolute;width:0;height:0;border:0;pointer-events:none;"></div>
+    <!-- مشغل YouTube المخفي - مضمون التشغيل -->
+    <div id="yt-player"></div>
 
     <div class="sound-control" id="sound-toggle" onclick="toggleSound()">
         <span id="sound-icon">🔊</span>
         <span id="sound-text">صوت</span>
     </div>
+
+    <div id="audio-status">⏳ جاري تحميل الأغنية...</div>
 
     <button class="restart-btn" onclick="restartAll()">⟲ من البداية</button>
 
@@ -390,7 +418,7 @@
                 <span>💫</span>
             </div>
             <button onclick="goToScene2()" class="btn-love mt-8 opacity-0 transform scale-90" id="btn-start">
-                💙 ابدأ معي
+                💙 ابدأ معي يا منار
             </button>
         </div>
     </div>
@@ -399,12 +427,12 @@
     <div id="scene2" class="scene">
         <div class="glass-card text-center">
             <div id="heart-icon" onclick="revealName()">💖</div>
-            <p class="text-gray-400 mt-4 text-sm">اضغط على القلب</p>
+            <p class="text-gray-400 mt-4 text-sm">اضغطي على القلب يا منار</p>
             <h2 id="name-display" class="text-5xl md:text-6xl font-bold mt-6 opacity-0 scale-50 text-transparent bg-clip-text bg-gradient-to-r from-[#f093fb] to-[#f5576c] font-[El Messiri]">
                 منار
             </h2>
             <p id="subtitle-display" class="text-pink-300/70 mt-3 text-xl opacity-0 font-[El Messiri]">
-                💙 حبيبتي وروحي
+                💙 أنتِ حبيبتي
             </p>
         </div>
     </div>
@@ -412,7 +440,7 @@
     <!-- ========== المشهد 3 ========== -->
     <div id="scene3" class="scene">
         <div class="glass-card text-center">
-            <p class="text-gray-300 mb-6 text-lg">جهزت لك شيئاً...</p>
+            <p class="text-gray-300 mb-6 text-lg">جهزت لكِ شيئاً يا منار...</p>
             <div id="countdown-number">3</div>
             <div class="flex justify-center gap-4 mt-6 text-3xl">
                 <span>⏳</span>
@@ -426,8 +454,8 @@
     <div id="scene4" class="scene">
         <div class="glass-card text-center">
             <div class="simple-chest" onclick="openChest()">🎁</div>
-            <p class="text-gray-400 mt-2 text-sm">اضغط لفتح الكنز</p>
-            <div class="mt-6 text-gray-300 text-sm" id="chest-message">📦 فيه شيء لك</div>
+            <p class="text-gray-400 mt-2 text-sm">اضغطي لفتح الكنز يا منار</p>
+            <div class="mt-6 text-gray-300 text-sm" id="chest-message">📦 فيه شيء لكِ</div>
         </div>
     </div>
 
@@ -438,14 +466,13 @@
             <h3 class="text-2xl font-bold text-[#f0d0d0] font-[El Messiri]">منار</h3>
             <p class="text-gray-400 text-sm">٢٠٠٩</p>
             <div class="mt-6 heart-text text-right">
-                <p>في يوم من الأيام،<br>قابلت شخصاً غيّر حياتي كلها.<br><br>
-                <strong>منار</strong>...<br>
-                أنتِ لستِ مجرد حب،<br>
-                أنتِ القصة التي أريد أن أعيشها كل يوم.<br><br>
-                كل شيء معكِ أصبح له معنى.<br>
-                وكل يوم بجانبكِ هو هدية.<br><br>
-                أتمنى أن نكمل الطريق معاً.<br>
-                <strong>💙 أنا أحبكِ</strong></p>
+                <p><strong>منار...</strong><br><br>
+                أنا ما كنت أتوقع إني بلقى شخص زيك.<br>
+                من يوم ما شفتكِ، وأنا أحس إن حياتي تغيرت.<br><br>
+                أنتِ مو مجرد حب،<br>
+                أنتِ القصة اللي أبي أعيشها كل يوم.<br>
+                أنتِ الشخص اللي خلاني أؤمن إن فيه خير.<br><br>
+                <strong class="rose">💙 أنا أحبكِ يا منار</strong></p>
             </div>
             <button onclick="goToScene6()" class="btn-love mt-6">📖 كمل معي</button>
         </div>
@@ -457,27 +484,27 @@
             <p class="text-3xl mb-4">✨</p>
             <div class="heart-text text-right">
                 <p><strong>منار...</strong><br><br>
-                أنا حبيتها وعشقتها،<br>
-                والله العظيم هي بعقلي وقلبي،<br>
-                ما أنساها، أحبها موت.<br><br>
-                أريد أحتويها،<br>
-                أمتص زعلها وغضبها،<br>
-                أكون بجانبها دايم،<br>
-                بفرحها وسعادتها،<br>
-                وأسعدها بكل ما أقدر.<br><br>
-                أريد أكون سندها،<br>
-                اللي تستند عليه.<br>
-                تخيلت حياتي معاها ألف مرة،<br>
-                وما نسيتها ولا لحظة.<br><br>
-                أدعي ربي بكل صلاة<br>
-                إنه يجمعني فيها.<br><br>
-                أريد أحميها،<br>
-                أحبها بجنون،<br>
-                أحافظ عليها،<br>
-                ومستعد أموت عشانها.<br><br>
-                بسوي المستحيل<br>
-                عشان أتلقى فيها.<br><br>
-                <strong>💙 أنا أريدكِ يا منار</strong></p>
+                أنا أحبكِ بجنون،<br>
+                والله العظيم أنتِ في عقلي وقلبي دايم.<br>
+                ما أنساكِ، ولا يوم قدرت أتخيل حياتي بدونكِ.<br><br>
+                أنتِ الروح اللي تسكنني،<br>
+                والضياع اللي أحبه.<br>
+                كل ما أفكر فيكِ، أحس إن الدنيا تصير أجمل.<br><br>
+                أنا أبي أحتويكِ،<br>
+                وأمتص زعلكِ وغضبكِ،<br>
+                وأكون جنبكِ دايم،<br>
+                في فرحكِ وسعادتكِ.<br><br>
+                أبي أسعدكِ بكل ما أقدر،<br>
+                وأكون سندكِ اللي تستندين عليه.<br>
+                تخيلت حياتي معاكِ ألف مرة،<br>
+                وكل مرة أكتشف إني أحبكِ أكثر.<br><br>
+                أنا أدعي ربي بكل صلاة<br>
+                إنه يجمعني فيكِ.<br>
+                وأبي أحميكِ، وأحبكِ بجنون،<br>
+                وأحافظ عليكِ.<br><br>
+                أنا مستعد أسوي المستحيل عشان أتلقى فيكِ،<br>
+                ومستعد أموت عشانكِ.<br><br>
+                <span class="i-love-you">💙 أنا أحبكِ يا منار 💙</span></p>
             </div>
             <div class="flex justify-center gap-4 mt-6 text-2xl flex-wrap">
                 <span>💫</span>
@@ -504,7 +531,9 @@
                 أريد أكون سندكِ،<br>
                 وحضنكِ الدافي،<br>
                 ورفيق دربكِ.<br><br>
-                <strong>💙 أنا أريدكِ</strong></p>
+                أنتِ حلمي،<br>
+                وأنا مستعد أحققه.<br><br>
+                <strong class="rose">💙 أنا أريدكِ يا منار</strong></p>
             </div>
             <button onclick="goToScene8()" class="btn-love mt-6">🎆 فرحتنا</button>
         </div>
@@ -514,23 +543,22 @@
     <div id="scene8" class="scene">
         <div class="glass-card text-center">
             <div class="text-6xl mb-4">🎉</div>
-            <h3 class="text-3xl font-bold text-[#f0d0d0] font-[El Messiri]">عيد ميلادكِ</h3>
+            <h3 class="text-3xl font-bold text-[#f0d0d0] font-[El Messiri]">عيد ميلادكِ يا منار</h3>
             <div class="heart-text mt-4 text-right">
-                <p>اليوم يومكِ يا <strong>منار</strong>.<br>
+                <p>اليوم يومكِ يا <strong class="gold">منار</strong>.<br>
                 وأنا هنا عشان أحتفل بيكِ.<br>
                 لأن وجودكِ في حياتي هو أكبر هدية.<br><br>
                 أحبكِ أكثر من أي شيء،<br>
                 وكل سنة وأنتِ بخير.<br><br>
-                <strong>💙 أنتِ قلبي وروحي</strong></p>
+                <strong class="rose">💙 أنتِ قلبي وروحي</strong></p>
             </div>
             <button onclick="goToFinalScene()" class="btn-love mt-6">🎂 لنحتفل معاً</button>
         </div>
     </div>
 
-    <!-- ========== المشهد 9: النهاية الاحترافية ========== -->
+    <!-- ========== المشهد 9: النهاية ========== -->
     <div id="scene9" class="scene" id="final-scene">
         <div class="glass-card text-center relative">
-            <!-- عنوان ذهبي احترافي -->
             <div class="relative z-10 mb-6">
                 <h1 class="text-4xl md:text-6xl gold-title">
                     Happy Birthday
@@ -541,88 +569,199 @@
                 <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-[#ffd700] to-transparent mx-auto mt-3"></div>
             </div>
 
-            <!-- رسائل تظهر من الأسفل للأعلى -->
             <div class="final-message-container" id="final-messages">
                 <div class="final-message-line" data-delay="0">
                     <span class="big-heart">💖</span>
-                    <strong>منار</strong>
+                    <strong class="gold">منار</strong>
                     <span class="big-heart">💖</span>
                 </div>
                 <div class="final-message-line" data-delay="400">
-                    <strong>أنتِ قلبي</strong> اللي ينبض بحبك
+                    أنتِ <strong class="gold">قلبي</strong> اللي ينبض بحبك
                 </div>
                 <div class="final-message-line" data-delay="800">
-                    <strong>وروحي</strong> اللي تعيش بك
+                    و<strong class="gold">روحي</strong> اللي تعيش بك
                 </div>
                 <div class="final-message-line" data-delay="1200">
                     أنتِ <strong class="highlight-pink">حبيبتي</strong> و<strong class="highlight-heart">دلعتي</strong>
                 </div>
                 <div class="final-message-line" data-delay="1600">
                     <span class="big-heart">💙</span>
-                    كل عام وأنتِ <strong>بخير</strong>
+                    كل عام وأنتِ <strong class="gold">بخير</strong>
                     <span class="big-heart">💙</span>
                 </div>
                 <div class="final-message-line" data-delay="2000">
-                    <span style="font-size:1.5rem;">🌹</span>
-                    <strong>أحبكِ أكثر من أي شيء</strong>
-                    <span style="font-size:1.5rem;">🌹</span>
+                    <span style="font-size:1.8rem;">🌹</span>
+                    <strong class="highlight-heart">أحبكِ بجنون يا منار</strong>
+                    <span style="font-size:1.8rem;">🌹</span>
                 </div>
                 <div class="final-message-line" data-delay="2400">
-                    <span style="font-size:1.8rem;">💫</span>
-                    <strong class="highlight-heart">أنتِ كل شيء</strong>
-                    <span style="font-size:1.8rem;">💫</span>
+                    <span style="font-size:2rem;">💫</span>
+                    <strong class="gold">أنتِ كل شيء في حياتي</strong>
+                    <span style="font-size:2rem;">💫</span>
+                </div>
+                <div class="final-message-line" data-delay="2800">
+                    <span style="font-size:2.5rem;">💖</span>
+                    <strong class="highlight-heart">أنا أحبكِ</strong>
+                    <span style="font-size:2.5rem;">💖</span>
                 </div>
             </div>
 
             <div class="relative z-10 mt-6">
                 <button class="fireworks-btn" id="fireworks-trigger" onclick="startFireworks()">
-                    🎆 أضئ السماء من أجلك
+                    🎆 أضئ السماء من أجلكِ يا منار
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        // ==================== 🎵 إعدادات الصوت ====================
+        // ==================== 🎵 نظام الصوت المضمون 100% ====================
         let audioCtx = null;
         let soundEnabled = true;
         let ytPlayer = null;
         let isYoutubeReady = false;
+        let musicStarted = false;
+        let retryCount = 0;
+        const MAX_RETRIES = 10;
         const VIDEO_ID = 'dCFbqvjGDl8';
 
+        // دالة الـ Callback الرسمية من YouTube
         function onYouTubeIframeAPIReady() {
+            console.log('✅ YouTube API جاهز');
             try {
                 ytPlayer = new YT.Player('yt-player', {
                     videoId: VIDEO_ID,
+                    width: '1',
+                    height: '1',
                     playerVars: {
                         'autoplay': 0,
                         'controls': 0,
                         'loop': 1,
                         'playlist': VIDEO_ID,
                         'mute': 0,
-                        'playsinline': 1
+                        'playsinline': 1,
+                        'enablejsapi': 1,
+                        'origin': window.location.origin
                     },
                     events: {
-                        'onReady': function(e) {
+                        'onReady': function(event) {
                             isYoutubeReady = true;
-                            e.target.setVolume(15);
-                            console.log('🎵 الأغنية جاهزة');
+                            event.target.setVolume(20);
+                            document.getElementById('audio-status').style.display = 'none';
+                            console.log('🎵 الأغنية جاهزة للتشغيل!');
+                            
+                            // تشغيل تلقائي بعد الجاهزية مباشرة
+                            if (soundEnabled) {
+                                setTimeout(() => {
+                                    try {
+                                        event.target.playVideo();
+                                        musicStarted = true;
+                                        console.log('🎵 بدأت الأغنية تلقائياً');
+                                    } catch(e) {
+                                        console.log('⚠️ خطأ في التشغيل التلقائي');
+                                    }
+                                }, 500);
+                            }
                         },
-                        'onError': function() {
-                            setTimeout(() => {
-                                if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-                                    ytPlayer.playVideo();
-                                }
-                            }, 2000);
+                        'onStateChange': function(event) {
+                            if (event.data === YT.PlayerState.ENDED) {
+                                // إعادة تشغيل إذا انتهت
+                                ytPlayer.playVideo();
+                            }
+                            if (event.data === YT.PlayerState.PLAYING) {
+                                musicStarted = true;
+                                document.getElementById('audio-status').style.display = 'none';
+                                console.log('🎵 الأغنية تشتغل الآن');
+                            }
+                            if (event.data === YT.PlayerState.ERROR) {
+                                console.log('⚠️ خطأ في الأغنية، محاولة إعادة التشغيل...');
+                                retryPlay();
+                            }
+                        },
+                        'onError': function(event) {
+                            console.log('⚠️ خطأ في مشغل YouTube:', event.data);
+                            retryPlay();
                         }
                     }
                 });
-            } catch(e) { console.log('خطأ في YouTube'); }
+            } catch(e) {
+                console.log('⚠️ خطأ في تهيئة المشغل:', e);
+                retryPlay();
+            }
         }
 
+        // دالة إعادة المحاولة القوية
+        function retryPlay() {
+            if (retryCount > MAX_RETRIES) {
+                console.log('❌ فشل تشغيل الأغنية بعد عدة محاولات');
+                document.getElementById('audio-status').textContent = '⚠️ تعذر تشغيل الأغنية، حاول الضغط على زر الصوت';
+                document.getElementById('audio-status').style.display = 'block';
+                return;
+            }
+            retryCount++;
+            console.log(`🔄 محاولة إعادة التشغيل رقم ${retryCount}`);
+            
+            setTimeout(() => {
+                if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                    try {
+                        ytPlayer.playVideo();
+                        setTimeout(() => {
+                            if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+                                const state = ytPlayer.getPlayerState();
+                                if (state !== YT.PlayerState.PLAYING) {
+                                    retryPlay();
+                                }
+                            }
+                        }, 3000);
+                    } catch(e) {
+                        retryPlay();
+                    }
+                } else {
+                    // محاولة إعادة تحميل المشغل
+                    loadYouTubePlayer();
+                }
+            }, 1500);
+        }
+
+        // تحميل المشغل من جديد
+        function loadYouTubePlayer() {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+
+        // دالة تشغيل الصوت المضمونة
+        function playMusic() {
+            if (!soundEnabled) return;
+            
+            createAudioContext();
+            
+            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                try {
+                    ytPlayer.playVideo();
+                    musicStarted = true;
+                    document.getElementById('audio-status').style.display = 'none';
+                    console.log('🎵 تم تشغيل الأغنية');
+                    return true;
+                } catch(e) {
+                    console.log('⚠️ خطأ في التشغيل:', e);
+                }
+            }
+            
+            // إذا فشل التشغيل، حاول مرة أخرى
+            if (retryCount < MAX_RETRIES) {
+                retryPlay();
+            }
+            return false;
+        }
+
+        // إنشاء AudioContext
         function createAudioContext() {
             if (!audioCtx) {
-                try { audioCtx = new(window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+                try {
+                    audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                } catch(e) { /* ignore */ }
             }
             if (audioCtx && audioCtx.state === 'suspended') {
                 audioCtx.resume();
@@ -630,6 +769,7 @@
             return audioCtx;
         }
 
+        // ==================== 🔊 أصوات المؤثرات ====================
         function playTone(freq, dur = 0.2, vol = 0.05) {
             if (!soundEnabled) return;
             try {
@@ -670,24 +810,22 @@
             });
         }
 
-        function startMusic() {
-            if (soundEnabled && ytPlayer && typeof ytPlayer.playVideo === 'function') {
-                try { ytPlayer.playVideo(); } catch(e) {}
-            }
-        }
-
-        function stopMusic() {
-            if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-                try { ytPlayer.pauseVideo(); } catch(e) {}
-            }
-        }
-
+        // ==================== 🎵 التحكم بالصوت ====================
         function toggleSound() {
             soundEnabled = !soundEnabled;
-            document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
-            document.getElementById('sound-text').textContent = soundEnabled ? 'صوت' : 'كتم';
-            if (soundEnabled) startMusic();
-            else stopMusic();
+            const icon = document.getElementById('sound-icon');
+            const text = document.getElementById('sound-text');
+            if (soundEnabled) {
+                icon.textContent = '🔊';
+                text.textContent = 'صوت';
+                playMusic();
+            } else {
+                icon.textContent = '🔇';
+                text.textContent = 'كتم';
+                if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+                    try { ytPlayer.pauseVideo(); } catch(e) {}
+                }
+            }
         }
 
         window.toggleSound = toggleSound;
@@ -870,7 +1008,6 @@
 
         animateFw();
 
-        // زهور متساقطة
         function startFlowerRain() {
             const flowers = ['🌸', '🌹', '💮', '🌺', '🌷', '🌸', '💐', '🌼', '🌸', '🌹'];
             if (flowerInterval) clearInterval(flowerInterval);
@@ -910,7 +1047,6 @@
             
             playCelebration();
             
-            // إطلاق مكثف
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     launchRocket();
@@ -949,7 +1085,7 @@
                 }
                 setTimeout(() => {
                     if (btn) {
-                        btn.textContent = '🎆 أضئ السماء من أجلك';
+                        btn.textContent = '🎆 أضئ السماء من أجلكِ يا منار';
                         btn.style.opacity = '1';
                         btn.style.pointerEvents = 'auto';
                     }
@@ -958,7 +1094,7 @@
             }, 30000);
         }
 
-        // ==================== 👑 نظام المشاهد ====================
+        // ==================== 👑 المشاهد ====================
         let transitioning = false;
 
         function goToScene(num) {
@@ -1007,11 +1143,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             new Typed('#typing-text', {
                 strings: [
-                    'أنا هنا عشان أحكي لك قصة...',
-                    'قصة حب بسيطة، لكنها حقيقية.',
-                    'قصة عن شخص غيّر حياتي كلها.',
-                    'قصة عنكِ يا <strong>منار</strong>.',
-                    'عن حب ما له حدود... 💙'
+                    'منار...',
+                    'أنا كتبت هذا الموقع عشانكِ أنتِ.',
+                    'عشان أقدر أوصلكِ كل اللي في قلبي.',
+                    'كل كلمة هنا مني أنا لكِ.',
+                    '💙 أنا أحبكِ'
                 ],
                 typeSpeed: 30,
                 backSpeed: 10,
@@ -1033,7 +1169,8 @@
 
         function goToScene2() {
             createAudioContext();
-            setTimeout(startMusic, 400);
+            // تشغيل الأغنية عند بدء التجربة
+            setTimeout(() => playMusic(), 300);
             playChime();
             goToScene(2);
         }
@@ -1110,7 +1247,7 @@
             
             playChime();
             chest.textContent = '💝';
-            document.getElementById('chest-message').textContent = '💙 هذا الكنز هو قلبي';
+            document.getElementById('chest-message').textContent = '💙 هذا الكنز هو قلبي يا منار';
             
             confetti({
                 particleCount: 100,
@@ -1122,7 +1259,7 @@
             setTimeout(() => goToScene(5), 2000);
         }
 
-        // ==================== المشاهد 5-8 ====================
+        // ==================== المشاهد ====================
         function goToScene6() { playClick(); goToScene(6); }
         function goToScene7() { playClick(); goToScene(7); }
         function goToScene8() { 
@@ -1143,13 +1280,12 @@
             goToScene(8); 
         }
 
-        // ==================== المشهد النهائي الاحترافي ====================
+        // ==================== المشهد النهائي ====================
         function goToFinalScene() {
             playClick();
             playChime();
             goToScene(9);
             
-            // تشغيل الرسائل المتتالية من الأسفل للأعلى
             setTimeout(() => {
                 const lines = document.querySelectorAll('#final-messages .final-message-line');
                 lines.forEach((line) => {
@@ -1161,7 +1297,6 @@
                             duration: 0.8,
                             ease: 'power2.out'
                         });
-                        // صوت خفيف لكل رسالة
                         if (delay > 0) playTone(600 + delay * 0.1, 0.08, 0.02);
                     }, delay);
                 });
@@ -1170,51 +1305,44 @@
 
         // ==================== إعادة التشغيل ====================
         function restartAll() {
-            // إيقاف كل المؤثرات
             stopFlowerRain();
             fwRunning = false;
             fwCanvas.classList.remove('active');
             fwParticles = [];
             fwRockets = [];
             
-            // إعادة تعيين المشاهد
             document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
             document.getElementById('scene1').classList.add('active');
             
-            // إعادة تعيين المتغيرات
             countdownDone = false;
             transitioning = false;
             document.querySelector('.simple-chest').dataset.opened = 'false';
             document.querySelector('.simple-chest').textContent = '🎁';
-            document.getElementById('chest-message').textContent = '📦 فيه شيء لك';
+            document.getElementById('chest-message').textContent = '📦 فيه شيء لكِ';
             document.getElementById('heart-icon').dataset.clicked = 'false';
             
-            // إعادة تعيين النصوص
             gsap.set('#name-display', { opacity: 0, scale: 0.5 });
             gsap.set('#subtitle-display', { opacity: 0 });
             
-            // إعادة تعيين رسائل النهاية
             document.querySelectorAll('#final-messages .final-message-line').forEach(line => {
                 gsap.set(line, { opacity: 0, y: 60 });
             });
             
-            // إعادة تعيين زر الألعاب النارية
             const btn = document.getElementById('fireworks-trigger');
             if (btn) {
-                btn.textContent = '🎆 أضئ السماء من أجلك';
+                btn.textContent = '🎆 أضئ السماء من أجلكِ يا منار';
                 btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
             }
             
-            // إعادة تشغيل الكتابة
             document.querySelector('#typing-text').innerHTML = '';
             new Typed('#typing-text', {
                 strings: [
-                    'أنا هنا عشان أحكي لك قصة...',
-                    'قصة حب بسيطة، لكنها حقيقية.',
-                    'قصة عن شخص غيّر حياتي كلها.',
-                    'قصة عنكِ يا <strong>منار</strong>.',
-                    'عن حب ما له حدود... 💙'
+                    'منار...',
+                    'أنا كتبت هذا الموقع عشانكِ أنتِ.',
+                    'عشان أقدر أوصلكِ كل اللي في قلبي.',
+                    'كل كلمة هنا مني أنا لكِ.',
+                    '💙 أنا أحبكِ'
                 ],
                 typeSpeed: 30,
                 backSpeed: 10,
@@ -1250,11 +1378,24 @@
         // ==================== بدء التشغيل ====================
         document.addEventListener('click', () => {
             createAudioContext();
-            setTimeout(startMusic, 500);
+            setTimeout(playMusic, 300);
         }, { once: true });
 
-        console.log('%c💙 منار | حبيبتي وروحي', 'color: #f093fb; font-size: 24px; font-weight: bold;');
-        console.log('%c💙 أنا أحبكِ بجنون', 'color: #f5576c; font-size: 18px;');
+        // ==================== محاولة تشغيل الصوت تلقائياً ====================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (isYoutubeReady) {
+                    playMusic();
+                } else {
+                    document.getElementById('audio-status').textContent = '⏳ جاري تحميل الأغنية...';
+                    document.getElementById('audio-status').style.display = 'block';
+                }
+            }, 1500);
+        });
+
+        console.log('%c💙 منار | أنا أحبكِ', 'color: #f093fb; font-size: 24px; font-weight: bold;');
+        console.log('%c🎵 الأغنية: عيد ميلادك - محمود التركي', 'color: #ffd700; font-size: 16px;');
+        console.log('%c💙 أنتِ كل شيء في حياتي', 'color: #f5576c; font-size: 18px;');
     </script>
 </body>
 </html>
