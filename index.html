@@ -40,7 +40,6 @@
             cursor: default;
         }
 
-        /* 🌌 طبقات الخلفية الملكية */
         #nebula-layer {
             position: fixed;
             width: 100%;
@@ -118,7 +117,22 @@
             pointer-events: none;
         }
 
-        /* 👑 نظام المشاهد الملكي */
+        #fireworks-canvas {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 25;
+            pointer-events: none;
+            display: none;
+        }
+
+        #fireworks-canvas.active {
+            display: block;
+            pointer-events: none;
+        }
+
         .scene {
             position: absolute;
             width: 100%;
@@ -138,7 +152,6 @@
             pointer-events: auto;
         }
 
-        /* 💎 تصميم زجاجي ملكي فاخر */
         .royal-glass {
             background: linear-gradient(135deg,
                     rgba(255, 255, 255, 0.08) 0%,
@@ -208,7 +221,6 @@
             }
         }
 
-        /* 👑 توهج ملكي */
         .crown-glow {
             text-shadow:
                 0 0 20px rgba(250, 204, 21, 1),
@@ -222,15 +234,10 @@
         @keyframes crownPulse {
             0%,
             100% {
-                text-shadow:
-                    0 0 20px rgba(250, 204, 21, 1),
-                    0 0 40px rgba(251, 191, 36, 0.9);
+                text-shadow: 0 0 20px rgba(250, 204, 21, 1), 0 0 40px rgba(251, 191, 36, 0.9);
             }
             50% {
-                text-shadow:
-                    0 0 40px rgba(250, 204, 21, 1.5),
-                    0 0 80px rgba(251, 191, 36, 1.2),
-                    0 0 160px rgba(245, 158, 11, 0.8);
+                text-shadow: 0 0 40px rgba(250, 204, 21, 1.5), 0 0 80px rgba(251, 191, 36, 1.2), 0 0 160px rgba(245, 158, 11, 0.8);
             }
         }
 
@@ -247,19 +254,13 @@
         @keyframes heartPulse {
             0%,
             100% {
-                text-shadow:
-                    0 0 15px rgba(244, 63, 94, 1),
-                    0 0 35px rgba(236, 72, 153, 0.9);
+                text-shadow: 0 0 15px rgba(244, 63, 94, 1), 0 0 35px rgba(236, 72, 153, 0.9);
             }
             50% {
-                text-shadow:
-                    0 0 30px rgba(244, 63, 94, 1.5),
-                    0 0 70px rgba(236, 72, 153, 1.2),
-                    0 0 140px rgba(217, 70, 239, 0.8);
+                text-shadow: 0 0 30px rgba(244, 63, 94, 1.5), 0 0 70px rgba(236, 72, 153, 1.2), 0 0 140px rgba(217, 70, 239, 0.8);
             }
         }
 
-        /* ❤️ قلب الأميرة */
         #princess-heart {
             font-size: 18rem;
             cursor: pointer;
@@ -297,7 +298,6 @@
             filter: drop-shadow(0 0 120px rgba(255, 20, 147, 1.8)) drop-shadow(0 0 200px rgba(255, 105, 180, 1.5));
         }
 
-        /* 🎁 صندوق الكنز الملكي */
         .treasure-container {
             perspective: 2000px;
             width: 280px;
@@ -338,10 +338,7 @@
             height: 280px;
             background: linear-gradient(135deg, #831843 0%, #9d174d 30%, #be185d 70%, #db2777 100%);
             border: 4px solid rgba(250, 204, 21, 1);
-            box-shadow:
-                inset 0 0 60px rgba(0, 0, 0, 0.8),
-                0 0 50px rgba(236, 72, 153, 0.5),
-                0 0 100px rgba(250, 204, 21, 0.3);
+            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(236, 72, 153, 0.5), 0 0 100px rgba(250, 204, 21, 0.3);
             backface-visibility: visible;
         }
 
@@ -367,7 +364,6 @@
             transform: rotateX(-90deg) translateZ(140px);
         }
 
-        /* الأشرطة الملكية */
         .gold-ribbon-h {
             position: absolute;
             width: 100%;
@@ -380,9 +376,7 @@
                     rgba(250, 204, 21, 1) 100%);
             top: 50%;
             transform: translateY(-50%) translateZ(141px);
-            box-shadow:
-                0 0 40px rgba(250, 204, 21, 0.8),
-                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 40px rgba(250, 204, 21, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.3);
             z-index: 6;
         }
 
@@ -398,9 +392,7 @@
                     rgba(250, 204, 21, 1) 100%);
             left: 50%;
             transform: translateX(-50%) translateZ(141px);
-            box-shadow:
-                0 0 40px rgba(250, 204, 21, 0.8),
-                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 40px rgba(250, 204, 21, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.3);
             z-index: 6;
         }
 
@@ -427,7 +419,6 @@
             }
         }
 
-        /* 💍 حلقات النبض الملكية */
         .crown-ring {
             position: absolute;
             width: 100%;
@@ -460,7 +451,6 @@
             }
         }
 
-        /* 🌹 بتلات الورد الملكية */
         .royal-petal {
             position: fixed;
             pointer-events: none;
@@ -490,18 +480,14 @@
             }
         }
 
-        /* 👑 زر ملكي */
         .royal-btn {
             background: linear-gradient(135deg,
                     rgba(250, 204, 21, 0.95) 0%,
                     rgba(244, 63, 94, 0.95) 50%,
                     rgba(168, 85, 247, 0.95) 100%);
             border: 3px solid rgba(255, 215, 0, 0.6);
-            box-shadow:
-                0 20px 60px rgba(250, 204, 21, 0.6),
-                0 0 120px rgba(244, 63, 94, 0.4),
-                0 0 200px rgba(168, 85, 247, 0.2),
-                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(250, 204, 21, 0.6), 0 0 120px rgba(244, 63, 94, 0.4), 0 0 200px rgba(168, 85, 247,
+                    0.2), inset 0 2px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             overflow: hidden;
@@ -532,13 +518,10 @@
 
         .royal-btn:hover {
             transform: translateY(-8px) scale(1.1);
-            box-shadow:
-                0 30px 80px rgba(250, 204, 21, 0.8),
-                0 0 180px rgba(244, 63, 94, 0.6),
-                0 0 250px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 30px 80px rgba(250, 204, 21, 0.8), 0 0 180px rgba(244, 63, 94, 0.6), 0 0 250px rgba(168, 85, 247,
+                    0.4);
         }
 
-        /* ✨ جسيمات ذهبية */
         .gold-particle {
             position: fixed;
             pointer-events: none;
@@ -558,7 +541,6 @@
             }
         }
 
-        /* تأثير الوميض */
         .flash-effect {
             position: fixed;
             top: 0;
@@ -570,7 +552,10 @@
             pointer-events: none;
         }
 
-        /* رسائل متحركة */
+        .floating-message {
+            animation: messageFloat 3s ease-in-out infinite;
+        }
+
         @keyframes messageFloat {
             0%,
             100% {
@@ -581,11 +566,6 @@
             }
         }
 
-        .floating-message {
-            animation: messageFloat 3s ease-in-out infinite;
-        }
-
-        /* مؤشر الصوت */
         .sound-indicator {
             position: fixed;
             bottom: 20px;
@@ -608,25 +588,110 @@
             box-shadow: 0 0 20px rgba(250, 204, 21, 0.5);
         }
 
-        /* 🎯 إصلاح مشكلة z-index للرسالة الملكية */
         #top-msg-panel {
             z-index: 1000 !important;
+        }
+
+        /* زر الألعاب النارية في المشهد الأخير */
+        .fireworks-trigger-btn {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            background: linear-gradient(135deg, #facc15, #f43f5e, #a855f7);
+            padding: 20px 50px;
+            border-radius: 60px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            border: 3px solid rgba(255, 215, 0, 0.8);
+            box-shadow: 0 0 60px rgba(250, 204, 21, 0.8), 0 0 120px rgba(244, 63, 94, 0.4);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: pulseBtn 2s ease-in-out infinite;
+        }
+
+        .fireworks-trigger-btn:hover {
+            transform: translateX(-50%) scale(1.15);
+            box-shadow: 0 0 80px rgba(250, 204, 21, 1), 0 0 160px rgba(244, 63, 94, 0.6);
+        }
+
+        @keyframes pulseBtn {
+            0%,
+            100% {
+                box-shadow: 0 0 60px rgba(250, 204, 21, 0.8), 0 0 120px rgba(244, 63, 94, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 100px rgba(250, 204, 21, 1), 0 0 200px rgba(244, 63, 94, 0.6), 0 0 300px rgba(168, 85, 247,
+                        0.4);
+            }
+        }
+
+        .fireworks-btn-container {
+            position: absolute;
+            bottom: 100px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 30;
+        }
+
+        /* تأثير اهتزاز الأرض للألعاب النارية */
+        @keyframes rumble {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            10% {
+                transform: translate(-2px, -1px);
+            }
+            20% {
+                transform: translate(2px, 1px);
+            }
+            30% {
+                transform: translate(-1px, 2px);
+            }
+            40% {
+                transform: translate(1px, -2px);
+            }
+            50% {
+                transform: translate(-2px, 1px);
+            }
+            60% {
+                transform: translate(2px, -1px);
+            }
+            70% {
+                transform: translate(-1px, -2px);
+            }
+            80% {
+                transform: translate(1px, 2px);
+            }
+            90% {
+                transform: translate(-2px, 1px);
+            }
+        }
+
+        .rumble-active {
+            animation: rumble 0.15s ease-in-out 10;
         }
     </style>
 </head>
 <body>
 
-    <!-- مشغل يوتيوب المخفي -->
     <div id="yt-player" style="position: absolute; width: 0; height: 0; border: 0; pointer-events: none;"></div>
 
-    <!-- طبقات الخلفية -->
     <div id="nebula-layer"></div>
     <canvas id="starfield"></canvas>
     <canvas id="aurora-layer"></canvas>
     <canvas id="particle-layer"></canvas>
     <canvas id="crown-layer"></canvas>
 
-    <!-- مؤشر الصوت -->
+    <!-- كانفاس الألعاب النارية الواقعية -->
+    <canvas id="fireworks-canvas"></canvas>
+
     <div class="sound-indicator" id="sound-toggle" onclick="toggleSound()">
         <span id="sound-icon">🔊</span>
         <span id="sound-text" style="color:#facc15; font-size:12px;">الصوت</span>
@@ -801,15 +866,15 @@
                 <span class="text-6xl animate-bounce" style="animation-delay: 0.8s;">🌷</span>
                 <span class="text-6xl animate-bounce" style="animation-delay: 1s;">💮</span>
             </div>
-            <button onclick="triggerGrandFinale()" class="royal-btn px-20 py-8 rounded-full text-4xl md:text-5xl font-black tracking-widest">
+            <button onclick="goToFinalScene()" class="royal-btn px-20 py-8 rounded-full text-4xl md:text-5xl font-black tracking-widest">
                 👑 المفاجأة الملكية الكبرى 👑
             </button>
         </div>
     </div>
 
-    <!-- ==================== المشهد 9: النهاية الكبرى ==================== -->
+    <!-- ==================== المشهد 9: النهاية الكبرى مع الألعاب النارية ==================== -->
     <div id="scene9" class="scene bg-black">
-        <div class="text-center z-20 px-4">
+        <div class="text-center z-20 px-4 relative">
             <div class="royal-glass p-20 mb-10 relative">
                 <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                     <div class="absolute top-6 left-10 text-5xl animate-pulse">⭐</div>
@@ -835,28 +900,33 @@
                 <span class="text-5xl animate-pulse" style="animation-delay: 1.2s;">🎁</span>
             </div>
         </div>
+
+        <!-- زر تشغيل الألعاب النارية -->
+        <div class="fireworks-btn-container">
+            <button class="fireworks-trigger-btn" id="fireworks-trigger" onclick="startFireworksShow()">
+                🎆 أطلقوا الألعاب النارية الملكية 🎆
+            </button>
+        </div>
     </div>
 
-    <!-- ==================== تحميل مكتبة YouTube ==================== -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-        // ==================== 🎵 نظام الصوت المتطور ====================
+        // ==================== 🎵 نظام الأصوات الواقعي المتطور ====================
         let audioCtx = null;
         let soundEnabled = true;
         let ytPlayer = null;
         let isYoutubeReady = false;
 
-        // دالة الـ Callback الرسمية لـ YouTube API
         function onYouTubeIframeAPIReady() {
             try {
                 ytPlayer = new YT.Player('yt-player', {
-                    videoId: '_bXDmZYl_BbtJswu',
+                    videoId: 'dCFbqvjGDl8',
                     playerVars: {
                         'autoplay': 0,
                         'controls': 0,
                         'loop': 1,
-                        'playlist': '_bXDmZYl_BbtJswu',
+                        'playlist': 'dCFbqvjGDl8',
                         'mute': 0,
                         'playsinline': 1
                     },
@@ -890,6 +960,301 @@
             return audioCtx;
         }
 
+        // ==================== 🔊 مؤثرات صوتية واقعية جداً ====================
+
+        // 1. صوت انفجار ناري عميق وواقعي
+        function playRealisticExplosion(volume = 0.15, delay = 0) {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime + delay;
+
+                // مكون الصوت الرئيسي: ضوضاء بيضاء مرشحة
+                const bufferSize = ctx.sampleRate * 0.4;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    const env = Math.exp(-i / (ctx.sampleRate * 0.12));
+                    data[i] = (Math.random() * 2 - 1) * env;
+                }
+
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                const gain = ctx.createGain();
+                gain.gain.setValueAtTime(volume, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+                // مرشح لجعل الصوت عميقاً
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(150, now);
+                filter.frequency.exponentialRampToValueAtTime(40, now + 0.4);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(ctx.destination);
+
+                noise.start(now);
+                noise.stop(now + 0.4);
+
+                // إضافة نغمة منخفضة للرنين
+                const osc = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(60 + Math.random() * 30, now);
+                gain2.gain.setValueAtTime(volume * 0.6, now);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+                osc.connect(gain2);
+                gain2.connect(ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.6);
+
+                // إضافة صدى عالٍ
+                const osc2 = ctx.createOscillator();
+                const gain3 = ctx.createGain();
+                osc2.type = 'sawtooth';
+                osc2.frequency.setValueAtTime(120 + Math.random() * 80, now);
+                gain3.gain.setValueAtTime(volume * 0.15, now);
+                gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+                osc2.connect(gain3);
+                gain3.connect(ctx.destination);
+
+                osc2.start(now);
+                osc2.stop(now + 0.25);
+
+                return { noise, osc, osc2 };
+            } catch (e) { /* silent fail */ }
+        }
+
+        // 2. صوت طلقة صاعدة (إطلاق الصاروخ)
+        function playRocketLaunch(volume = 0.08) {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                // صوت صفير صاعد
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.5);
+
+                gain.gain.setValueAtTime(volume, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.5);
+
+                // إضافة ضوضاء خفيفة
+                const bufferSize = ctx.sampleRate * 0.3;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    const env = Math.exp(-i / (ctx.sampleRate * 0.08));
+                    data[i] = (Math.random() * 2 - 1) * env * 0.3;
+                }
+
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                const gain2 = ctx.createGain();
+                gain2.gain.setValueAtTime(volume * 0.5, now);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+                noise.connect(gain2);
+                gain2.connect(ctx.destination);
+
+                noise.start(now);
+                noise.stop(now + 0.3);
+            } catch (e) { /* silent fail */ }
+        }
+
+        // 3. صوت ألعاب نارية متعددة (تأثير محيطي)
+        function playFireworkBurst(x = 0.5, y = 0.5) {
+            if (!soundEnabled) return;
+
+            const pan = (x - 0.5) * 0.8;
+
+            // تأخير حسب المسافة
+            const delay = 0.05 + Math.random() * 0.1;
+
+            // انفجار رئيسي
+            playRealisticExplosion(0.12 + Math.random() * 0.08, delay);
+
+            // انفجارات ثانوية أصغر
+            setTimeout(() => {
+                playRealisticExplosion(0.05 + Math.random() * 0.04, 0);
+            }, delay * 1000 + 100 + Math.random() * 200);
+
+            setTimeout(() => {
+                playRealisticExplosion(0.03 + Math.random() * 0.03, 0);
+            }, delay * 1000 + 300 + Math.random() * 250);
+
+            // صوت طقطقة (جسيمات متطايرة)
+            setTimeout(() => {
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        playTone(3000 + Math.random() * 4000, 'sine', 0.02, 0.01, 0);
+                    }, i * 15);
+                }
+            }, delay * 1000 + 150);
+        }
+
+        // 4. صوت طقطقة الخشب (للكنز)
+        function playWoodCreak() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(120, now);
+                osc.frequency.exponentialRampToValueAtTime(80, now + 0.2);
+
+                gain.gain.setValueAtTime(0.06, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.2);
+            } catch (e) { /* silent fail */ }
+        }
+
+        // 5. صوت نبض قلب عميق
+        function playHeartbeatDeep() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                // النبضة الأولى
+                const osc1 = ctx.createOscillator();
+                const gain1 = ctx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(40, now);
+                gain1.gain.setValueAtTime(0.2, now);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+                osc1.connect(gain1);
+                gain1.connect(ctx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.15);
+
+                // نبضة ثانية أعمق
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(35, now + 0.12);
+                gain2.gain.setValueAtTime(0.25, now + 0.12);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.start(now + 0.12);
+                osc2.stop(now + 0.2);
+
+                // إضافة إيقاع نبضي سفلي
+                const osc3 = ctx.createOscillator();
+                const gain3 = ctx.createGain();
+                osc3.type = 'triangle';
+                osc3.frequency.setValueAtTime(80, now);
+                gain3.gain.setValueAtTime(0.05, now);
+                gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+                osc3.connect(gain3);
+                gain3.connect(ctx.destination);
+                osc3.start(now);
+                osc3.stop(now + 0.1);
+            } catch (e) { /* silent fail */ }
+        }
+
+        // 6. صوت سحري ناعم
+        function playMagicChime() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + i * 0.08);
+
+                    const vol = 0.04 - i * 0.005;
+                    gain.gain.setValueAtTime(vol, now + i * 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.3);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc.start(now + i * 0.08);
+                    osc.stop(now + i * 0.08 + 0.3);
+                });
+
+                // إضافة هارمونيك علوي
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(1567.98, now + 0.2);
+                gain2.gain.setValueAtTime(0.015, now + 0.2);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+
+                osc2.start(now + 0.2);
+                osc2.stop(now + 0.6);
+            } catch (e) { /* silent fail */ }
+        }
+
+        // 7. صوت الجرس الملكي
+        function playRoyalBell() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                const freqs = [440, 554.37, 659.25, 880];
+                freqs.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + i * 0.06);
+
+                    const vol = 0.06 - i * 0.01;
+                    gain.gain.setValueAtTime(vol, now + i * 0.06);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.5);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc.start(now + i * 0.06);
+                    osc.stop(now + i * 0.06 + 0.5);
+                });
+            } catch (e) { /* silent fail */ }
+        }
+
+        // دالة مساعدة لنغمات بسيطة
         function playTone(frequency, type = 'sine', duration = 0.4, volume = 0.1, delay = 0) {
             if (!soundEnabled) return;
             try {
@@ -899,12 +1264,11 @@
 
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
-
                 osc.type = type;
                 osc.frequency.setValueAtTime(frequency, now);
 
                 gain.gain.setValueAtTime(0.001, now);
-                gain.gain.linearRampToValueAtTime(volume, now + 0.05);
+                gain.gain.linearRampToValueAtTime(volume, now + 0.02);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
                 osc.connect(gain);
@@ -912,28 +1276,21 @@
 
                 osc.start(now);
                 osc.stop(now + duration);
-            } catch (e) {
-                // Silent fail
-            }
+            } catch (e) { /* silent fail */ }
         }
 
+        // ==================== 🎯 الأصوات المحسّنة للاستخدام العام ====================
+
         function playMagicSound() {
-            playTone(523.25, 'sine', 0.4, 0.05, 0);
-            playTone(659.25, 'sine', 0.4, 0.05, 0.15);
-            playTone(783.99, 'sine', 0.5, 0.05, 0.3);
-            playTone(1046.50, 'sine', 0.6, 0.04, 0.45);
+            playMagicChime();
         }
 
         function playClickSound() {
-            playTone(600, 'sine', 0.08, 0.06);
+            playTone(800, 'sine', 0.05, 0.05);
         }
 
         function playFireworkSound() {
-            for (let i = 0; i < 6; i++) {
-                const freq = 150 + Math.random() * 450;
-                playTone(freq, 'triangle', 0.25, 0.04, i * 0.06);
-            }
-            playTone(80, 'sine', 0.5, 0.08, 0.02);
+            playFireworkBurst(0.5 + (Math.random() - 0.5) * 0.6, 0.3 + Math.random() * 0.4);
         }
 
         function playRoseSound() {
@@ -942,13 +1299,16 @@
         }
 
         function playHeartbeatSound() {
-            playTone(55, 'sine', 0.18, 0.12, 0);
-            playTone(50, 'sine', 0.15, 0.09, 0.12);
-            setTimeout(() => {
-                playTone(55, 'sine', 0.18, 0.12, 0);
-                playTone(50, 'sine', 0.15, 0.09, 0.12);
-            }, 350);
+            playHeartbeatDeep();
         }
+
+        function playTreasureOpenSound() {
+            playWoodCreak();
+            setTimeout(() => playRoyalBell(), 300);
+            setTimeout(() => playMagicChime(), 600);
+        }
+
+        // ==================== 🎵 نظام الموسيقى الخلفية ====================
 
         function startBackgroundMusic() {
             if (soundEnabled && ytPlayer && typeof ytPlayer.playVideo === 'function' && isYoutubeReady) {
@@ -1011,6 +1371,12 @@
                 canvas.width = w;
                 canvas.height = h;
             });
+            // إعداد كانفاس الألعاب النارية
+            const fwCanvas = document.getElementById('fireworks-canvas');
+            if (fwCanvas) {
+                fwCanvas.width = w;
+                fwCanvas.height = h;
+            }
         }
 
         window.addEventListener('resize', () => {
@@ -1260,6 +1626,390 @@
         initRoyalBackground();
         animateBackground();
 
+        // ==================== 🎆 نظام الألعاب النارية الواقعي ====================
+
+        const fwCanvas = document.getElementById('fireworks-canvas');
+        const fwCtx = fwCanvas.getContext('2d');
+
+        let fireworks = [];
+        let particles = [];
+        let fwRunning = false;
+        let fwAnimId = null;
+
+        class Firework {
+            constructor(x, y, targetX, targetY, color) {
+                this.x = x;
+                this.y = y;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.color = color || `hsl(${Math.random() * 360}, 100%, 60%)`;
+                this.speed = 3 + Math.random() * 2;
+                this.angle = Math.atan2(targetY - y, targetX - x);
+                this.vx = Math.cos(this.angle) * this.speed;
+                this.vy = Math.sin(this.angle) * this.speed;
+                this.radius = 2;
+                this.trail = [];
+                this.maxTrail = 15;
+                this.alive = true;
+                this.distToTarget = 0;
+                this.startDist = Math.hypot(targetX - x, targetY - y);
+                this.type = Math.random() > 0.3 ? 'normal' : 'willow';
+                this.sparkle = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                if (!this.alive) return;
+
+                this.trail.push({ x: this.x, y: this.y });
+                if (this.trail.length > this.maxTrail) this.trail.shift();
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // تغيير طفيف في الاتجاه لمزيد من الواقعية
+                this.vx += (Math.random() - 0.5) * 0.05;
+                this.vy += (Math.random() - 0.5) * 0.05;
+
+                // مقاومة الهواء
+                this.vx *= 0.995;
+                this.vy *= 0.995;
+
+                this.distToTarget = Math.hypot(this.targetX - this.x, this.targetY - this.y);
+
+                if (this.distToTarget < 10 || this.y < 50) {
+                    this.alive = false;
+                    this.explode();
+                }
+
+                this.sparkle += 0.1;
+            }
+
+            explode() {
+                const numParticles = 80 + Math.floor(Math.random() * 80);
+                const isWillow = this.type === 'willow';
+
+                // اهتزاز الشاشة للألعاب النارية الكبيرة
+                if (numParticles > 100) {
+                    document.body.classList.add('rumble-active');
+                    setTimeout(() => document.body.classList.remove('rumble-active'), 400);
+                }
+
+                // تشغيل صوت الانفجار الواقعي
+                playFireworkBurst(0.3 + Math.random() * 0.4, 0.2 + Math.random() * 0.3);
+
+                for (let i = 0; i < numParticles; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = isWillow ?
+                        0.5 + Math.random() * 3 :
+                        1 + Math.random() * 5;
+
+                    const colors = [
+                        this.color,
+                        `hsl(${Math.random() * 360}, 100%, 70%)`,
+                        `hsl(${Math.random() * 360}, 100%, 50%)`,
+                        '#ffffff',
+                        '#ffd700',
+                        '#ff69b4'
+                    ];
+
+                    const p = new Particle(
+                        this.x, this.y,
+                        Math.cos(angle) * speed,
+                        Math.sin(angle) * speed,
+                        colors[Math.floor(Math.random() * colors.length)],
+                        isWillow ? 1.5 + Math.random() * 1.5 : 1 + Math.random() * 2,
+                        isWillow ? 60 + Math.random() * 40 : 30 + Math.random() * 40,
+                        isWillow
+                    );
+                    particles.push(p);
+                }
+            }
+
+            draw(ctx) {
+                if (!this.alive) return;
+
+                // رسم الذيل
+                for (let i = 0; i < this.trail.length; i++) {
+                    const alpha = i / this.trail.length * 0.6;
+                    const size = this.radius * (i / this.trail.length);
+                    ctx.beginPath();
+                    ctx.arc(this.trail[i].x, this.trail[i].y, size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                    ctx.fill();
+                }
+
+                // رسم الجسم الرئيسي مع توهج
+                const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 6);
+                glow.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                glow.addColorStop(0.3, this.color);
+                glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * 6, 0, Math.PI * 2);
+                ctx.fillStyle = glow;
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, vx, vy, color, size, life, isWillow) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.color = color;
+                this.size = size;
+                this.life = life;
+                this.maxLife = life;
+                this.alive = true;
+                this.isWillow = isWillow;
+                this.gravity = isWillow ? 0.01 : 0.03;
+                this.friction = 0.99;
+                this.trail = [];
+                this.maxTrail = 5;
+                // إضافة بريق عشوائي
+                this.sparkle = Math.random() * Math.PI * 2;
+                this.sparkleSpeed = 0.05 + Math.random() * 0.1;
+            }
+
+            update() {
+                if (!this.alive) return;
+
+                this.trail.push({ x: this.x, y: this.y });
+                if (this.trail.length > this.maxTrail) this.trail.shift();
+
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+                this.vy += this.gravity;
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                this.life--;
+                this.sparkle += this.sparkleSpeed;
+
+                if (this.life <= 0 || this.y > window.innerHeight + 50) {
+                    this.alive = false;
+                }
+            }
+
+            draw(ctx) {
+                if (!this.alive) return;
+
+                const alpha = this.life / this.maxLife;
+                const size = this.size * (0.5 + 0.5 * alpha);
+
+                // رسم الذيل
+                for (let i = 0; i < this.trail.length; i++) {
+                    const trailAlpha = (i / this.trail.length) * alpha * 0.4;
+                    ctx.beginPath();
+                    ctx.arc(this.trail[i].x, this.trail[i].y, size * (i / this.trail.length) * 0.5, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color.replace(')', `,${trailAlpha})`).replace('hsl', 'hsla');
+                    if (!this.color.includes('hsl')) {
+                        ctx.fillStyle = `rgba(255, 255, 255, ${trailAlpha * 0.5})`;
+                    }
+                    ctx.fill();
+                }
+
+                // التوهج الرئيسي
+                const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, size * 6);
+                glow.addColorStop(0, `rgba(255, 255, 255, ${alpha * 0.8})`);
+                glow.addColorStop(0.3, this.color);
+                glow.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, size * 6, 0, Math.PI * 2);
+                ctx.fillStyle = glow;
+                ctx.fill();
+
+                // الجسم الرئيسي
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.9})`;
+                ctx.fill();
+
+                // بريق إضافي للجسيمات الكبيرة
+                if (size > 2 && Math.random() < 0.05) {
+                    ctx.beginPath();
+                    ctx.arc(this.x + Math.sin(this.sparkle) * size * 2, this.y + Math.cos(this.sparkle) * size * 2,
+                        size * 0.3, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.6})`;
+                    ctx.fill();
+                }
+            }
+        }
+
+        // دالة إطلاق الألعاب النارية بشكل مكثف
+        function launchFirework() {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+
+            const x = 50 + Math.random() * (w - 100);
+            const y = h - 50 - Math.random() * 100;
+
+            const targetX = 50 + Math.random() * (w - 100);
+            const targetY = 50 + Math.random() * (h * 0.5);
+
+            const colors = [
+                `hsl(${Math.random() * 60 + 30}, 100%, 55%)`, // ذهبي
+                `hsl(${Math.random() * 40 + 330}, 100%, 60%)`, // وردي
+                `hsl(${Math.random() * 40 + 260}, 100%, 60%)`, // بنفسجي
+                `hsl(${Math.random() * 60 + 180}, 100%, 55%)`, // أزرق
+                `hsl(${Math.random() * 30 + 340}, 100%, 60%)`, // أحمر وردي
+                `hsl(${Math.random() * 40 + 40}, 100%, 55%)`, // برتقالي
+                '#ffd700',
+                '#ff69b4',
+                '#ffffff'
+            ];
+
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            const fw = new Firework(x, y, targetX, targetY, color);
+            fireworks.push(fw);
+
+            // إضافة صوت إطلاق الصاروخ (أحياناً)
+            if (Math.random() < 0.3) {
+                playRocketLaunch(0.03 + Math.random() * 0.03);
+            }
+        }
+
+        // دالة تشغيل العرض الكامل للألعاب النارية
+        function startFireworksShow() {
+            if (fwRunning) return;
+            fwRunning = true;
+
+            const btn = document.getElementById('fireworks-trigger');
+            if (btn) {
+                btn.textContent = '🎆 الألعاب النارية تشتعل... 🎆';
+                btn.style.opacity = '0.5';
+                btn.style.pointerEvents = 'none';
+            }
+
+            // إظهار كانفاس الألعاب النارية
+            const canvas = document.getElementById('fireworks-canvas');
+            canvas.classList.add('active');
+
+            // إطلاق دفعة أولى قوية
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    launchFirework();
+                    if (i % 5 === 0) {
+                        // إطلاق عدة صواريخ في نفس الوقت
+                        for (let j = 0; j < 3; j++) {
+                            setTimeout(() => launchFirework(), j * 100);
+                        }
+                    }
+                }, i * 80);
+            }
+
+            // استمرار إطلاق الألعاب النارية لمدة 30 ثانية
+            let launchCount = 0;
+            const maxLaunches = 200;
+            const launchInterval = setInterval(() => {
+                if (launchCount > maxLaunches) {
+                    clearInterval(launchInterval);
+                    return;
+                }
+
+                // إطلاق مجموعات من الصواريخ
+                const numLaunches = 1 + Math.floor(Math.random() * 3);
+                for (let i = 0; i < numLaunches; i++) {
+                    setTimeout(() => {
+                        launchFirework();
+                        // في بعض الأحيان إطلاق صواريخ متعددة في نفس الوقت
+                        if (Math.random() < 0.2) {
+                            setTimeout(() => launchFirework(), 50);
+                            setTimeout(() => launchFirework(), 100);
+                        }
+                    }, i * 60);
+                }
+
+                launchCount += numLaunches;
+
+                // زيادة التردد تدريجياً
+                if (launchCount > 100) {
+                    // إطلاق مكثف في النصف الثاني
+                    if (Math.random() < 0.4) {
+                        setTimeout(() => {
+                            for (let i = 0; i < 5; i++) {
+                                setTimeout(() => launchFirework(), i * 30);
+                            }
+                        }, 100);
+                    }
+                }
+
+            }, 150);
+
+            // إيقاف العرض بعد 30 ثانية
+            setTimeout(() => {
+                clearInterval(launchInterval);
+
+                // إطلاق دفعة أخيرة مكثفة
+                for (let i = 0; i < 40; i++) {
+                    setTimeout(() => {
+                        launchFirework();
+                        if (i % 3 === 0) {
+                            for (let j = 0; j < 4; j++) {
+                                setTimeout(() => launchFirework(), j * 50);
+                            }
+                        }
+                    }, i * 60);
+                }
+
+                // إعادة زر التشغيل بعد 35 ثانية
+                setTimeout(() => {
+                    if (btn) {
+                        btn.textContent = '🎆 إعادة الألعاب النارية 🎆';
+                        btn.style.opacity = '1';
+                        btn.style.pointerEvents = 'auto';
+                    }
+                    fwRunning = false;
+                }, 3500);
+
+            }, 30000);
+
+            // إظهار الرسالة النهائية
+            setTimeout(() => {
+                revealFinalMessage();
+            }, 2000);
+        }
+
+        // حلقة رسم الألعاب النارية
+        function animateFireworks() {
+            fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+
+            // تحديث ورسم الصواريخ
+            fireworks = fireworks.filter(fw => fw.alive);
+            fireworks.forEach(fw => {
+                fw.update();
+                fw.draw(fwCtx);
+            });
+
+            // تحديث ورسم الجسيمات
+            particles = particles.filter(p => p.alive);
+            particles.forEach(p => {
+                p.update();
+                p.draw(fwCtx);
+            });
+
+            // إضافة تأثيرات إضافية
+            if (fwRunning || particles.length > 0 || fireworks.length > 0) {
+                // توهج خلفية خفيف عند وجود ألعاب نارية
+                fwCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+            }
+
+            fwAnimId = requestAnimationFrame(animateFireworks);
+        }
+
+        // بدء حلقة الألعاب النارية
+        animateFireworks();
+
         // ==================== 👑 نظام المشاهد الملكي ====================
         let isTransitioning = false;
 
@@ -1352,9 +2102,7 @@
             if (isTransitioning) return;
             createAudioContext();
 
-            // محاولة تشغيل الموسيقى
             setTimeout(() => startBackgroundMusic(), 500);
-
             playMagicSound();
 
             confetti({
@@ -1406,7 +2154,10 @@
                     break;
 
                 case 9:
-                    triggerGrandFinaleLogic();
+                    // عند دخول المشهد الأخير، تظهر الرسالة النهائية
+                    setTimeout(() => {
+                        revealFinalMessage();
+                    }, 1000);
                     break;
             }
         }
@@ -1609,8 +2360,8 @@
                 treasureTop.style.transform = "rotateX(-160deg) translateZ(140px)";
             }
 
-            playMagicSound();
-            setTimeout(() => playFireworkSound(), 400);
+            // استخدام الأصوات الواقعية
+            playTreasureOpenSound();
 
             confetti({
                 particleCount: 500,
@@ -1660,7 +2411,6 @@
             if (!container) return;
             container.innerHTML = '';
 
-            // ترتيب أفضل للنجوم
             const positions = [];
             const cols = 4;
             const rows = Math.ceil(starMessages.length / cols);
@@ -1681,7 +2431,6 @@
                 wrapper.style.left = positions[i].left;
                 wrapper.style.zIndex = "30";
 
-                // حلقات التوهج
                 for (let j = 0; j < 3; j++) {
                     const pulse = document.createElement('div');
                     pulse.className = "crown-ring absolute";
@@ -1804,63 +2553,26 @@
             document.querySelectorAll('.royal-petal').forEach(p => p.remove());
         }
 
-        // ==================== 🏰 المشهد النهائي ====================
-        function triggerGrandFinale() {
+        // ==================== 🏰 الذهاب للمشهد النهائي ====================
+        function goToFinalScene() {
             nextScene(9);
         }
 
-        window.triggerGrandFinale = triggerGrandFinale;
+        window.goToFinalScene = goToFinalScene;
 
-        function triggerGrandFinaleLogic() {
-            stopPetalRain();
-
-            playFireworkSound();
-            setTimeout(() => playFireworkSound(), 500);
-            setTimeout(() => playFireworkSound(), 1000);
-
-            let duration = 12000;
-            let end = Date.now() + duration;
-
-            const fireworksInterval = setInterval(() => {
-                confetti({
-                    particleCount: 10,
-                    angle: 60,
-                    spread: 80,
-                    origin: { x: 0, y: Math.random() },
-                    colors: ['#facc15', '#ffd700', '#f43f5e', '#a855f7', '#ffffff', '#ff69b4'],
-                    shapes: ['circle', 'star'],
-                    scalar: 2
-                });
-                confetti({
-                    particleCount: 10,
-                    angle: 120,
-                    spread: 80,
-                    origin: { x: 1, y: Math.random() },
-                    colors: ['#facc15', '#ffd700', '#f43f5e', '#a855f7', '#ffffff', '#ff69b4'],
-                    shapes: ['circle', 'star'],
-                    scalar: 2
-                });
-
-                if (Math.random() < 0.3) {
-                    playFireworkSound();
-                }
-
-                if (Date.now() > end) {
-                    clearInterval(fireworksInterval);
-                    revealFinalMessage();
-                }
-            }, 60);
-        }
-
+        // ==================== 📜 الرسالة النهائية ====================
         function revealFinalMessage() {
             const finalText = document.getElementById('final-secret-text');
             if (!finalText) return;
 
+            if (finalText.dataset.revealed === 'true') return;
+            finalText.dataset.revealed = 'true';
+
             finalText.innerHTML =
                 "👑 كل عام وأنتِ أميرتي ومالكة قلبي 👑<br><br>💖 أحبكِ يا منار.. يا نبضي ودمي وروحي 💖<br><br>🌟 دمتِ تاجاً على رأس هذا الكون 🌟";
 
+            playRoyalBell();
             playMagicSound();
-            playFireworkSound();
 
             gsap.to(finalText, {
                 opacity: 1,
@@ -1870,50 +2582,13 @@
                 delay: 1.5
             });
 
-            // تكثيف الألعاب النارية
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    confetti({
-                        particleCount: 300,
-                        spread: 200,
-                        origin: { x: Math.random(), y: Math.random() * 0.5 + 0.2 },
-                        colors: ['#facc15', '#ffd700', '#ff69b4', '#ffffff', '#a855f7', '#ff1493'],
-                        shapes: ['circle', 'star'],
-                        decay: 0.9,
-                        scalar: 2.5,
-                        ticks: 400
-                    });
-                    if (i % 3 === 0) playFireworkSound();
-                }, i * 200);
-            }
-
             // جسيمات ذهبية مكثفة
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 5; i++) {
                 setTimeout(() => {
                     createGoldenParticles();
                     createGoldenParticles();
                 }, i * 400);
             }
-
-            const goldenFlash = document.createElement('div');
-            goldenFlash.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: radial-gradient(circle, rgba(250,204,21,0.5) 0%, rgba(255,215,0,0.3) 50%, transparent 100%);
-                z-index: 9998;
-                pointer-events: none;
-            `;
-            document.body.appendChild(goldenFlash);
-
-            gsap.fromTo(goldenFlash, { opacity: 1 }, {
-                opacity: 0,
-                duration: 5,
-                ease: "power3.out",
-                onComplete: () => goldenFlash.remove()
-            });
         }
 
         // ==================== 🌟 تأثيرات إضافية ====================
@@ -1953,7 +2628,7 @@
         // ==================== رسائل المطور ====================
         console.log('%c👑🏰 مملكة الأميرة منار المنيفي 🏰👑', 'color: #facc15; font-size: 28px; font-weight: bold; text-shadow: 0 0 20px gold;');
         console.log('%c💖 كل عام وأنتِ أميرتي ومالكة قلبي وروحي 💖', 'color: #f43f5e; font-size: 22px; font-weight: bold;');
-        console.log('%c✨ تم إصلاح جميع الأخطاء وتحسين الأداء ✨', 'color: #a855f7; font-size: 18px;');
+        console.log('%c🎆 الألعاب النارية الواقعية مع أصوات انفجار حقيقية 🎆', 'color: #ff6b35; font-size: 18px;');
     </script>
 </body>
 </html>
