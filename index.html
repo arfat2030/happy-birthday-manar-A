@@ -3,23 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👑 مملكة منار | الأميرة الغالية 👑</title>
+    <title>👑 قصر الأحلام الملكي | منار 👑</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700;900&family=El+Messiri:wght@400;600;700&family=Reem+Kufi+Fun:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&display=swap');
-
-        :root {
-            --royal-gold: #facc15;
-            --deep-rose: #f43f5e;
-            --majestic-purple: #a855f7;
-            --soul-black: #020010;
-            --heart-pink: #ff69b4;
-            --pure-white: #ffffff;
-        }
 
         * {
             margin: 0;
@@ -27,112 +19,82 @@
             box-sizing: border-box;
         }
 
-        body,
-        html {
-            width: 100%;
-            height: 100%;
+        body {
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
-            background: #000005;
+            background: #0a0015;
             font-family: 'Cairo', sans-serif;
-            color: #fff;
-            user-select: none;
-            -webkit-user-select: none;
             cursor: default;
+            user-select: none;
         }
 
-        #nebula-layer {
+        /* 🌌 خلفية سحرية متحركة */
+        #magic-bg {
             position: fixed;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(168, 85, 247, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(244, 63, 94, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(250, 204, 21, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 70%, rgba(0, 255, 200, 0.05) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 30%, rgba(255, 0, 150, 0.05) 0%, transparent 40%);
+            animation: cosmicShift 15s ease-in-out infinite;
+        }
+
+        @keyframes cosmicShift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(3deg); }
+            75% { transform: scale(0.9) rotate(-3deg); }
+        }
+
+        /* ✨ نجوم متحركة ثلاثية الأبعاد */
+        #stars-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
             pointer-events: none;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(244, 63, 94, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(250, 204, 21, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 30% 30%, rgba(255, 105, 180, 0.08) 0%, transparent 40%),
-                radial-gradient(ellipse at 70% 60%, rgba(147, 51, 234, 0.06) 0%, transparent 45%);
-            animation: royalNebula 20s ease-in-out infinite;
         }
 
-        @keyframes royalNebula {
-            0%,
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 0.8;
-            }
-            25% {
-                transform: scale(1.2) rotate(2deg);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.08) rotate(-1.5deg);
-                opacity: 0.9;
-            }
-            75% {
-                transform: scale(1.15) rotate(0.8deg);
-                opacity: 1;
-            }
-        }
-
-        #starfield {
+        /* 🌊 أمواج سحرية */
+        #magic-waves {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
+            bottom: 0;
             left: 0;
+            width: 100%;
+            height: 30%;
+            z-index: 1;
+            pointer-events: none;
+            background: linear-gradient(180deg, transparent 0%, rgba(168, 85, 247, 0.05) 50%, rgba(244, 63, 94, 0.1) 100%);
+        }
+
+        /* 🏰 القصر الخيالي */
+        #palace-container {
+            position: fixed;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 2;
             pointer-events: none;
+            opacity: 0.15;
+            font-size: 10rem;
+            filter: drop-shadow(0 0 50px rgba(250, 204, 21, 0.3));
+            animation: palaceGlow 4s ease-in-out infinite;
         }
 
-        #aurora-layer {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 3;
-            pointer-events: none;
+        @keyframes palaceGlow {
+            0%, 100% { opacity: 0.15; filter: drop-shadow(0 0 50px rgba(250, 204, 21, 0.3)); }
+            50% { opacity: 0.25; filter: drop-shadow(0 0 100px rgba(250, 204, 21, 0.6)); }
         }
 
-        #particle-layer {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 4;
-            pointer-events: none;
-        }
-
-        #crown-layer {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 5;
-            pointer-events: none;
-        }
-
-        #fireworks-canvas {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 25;
-            pointer-events: none;
-            display: none;
-        }
-
-        #fireworks-canvas.active {
-            display: block;
-            pointer-events: none;
-        }
-
+        /* 👑 المشاهد الرئيسية */
         .scene {
             position: absolute;
             width: 100%;
@@ -144,7 +106,7 @@
             opacity: 0;
             pointer-events: none;
             z-index: 10;
-            transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .scene.active {
@@ -152,797 +114,564 @@
             pointer-events: auto;
         }
 
-        .royal-glass {
+        /* 🎨 تصميم زجاجي سحري */
+        .magic-glass {
             background: linear-gradient(135deg,
-                    rgba(255, 255, 255, 0.08) 0%,
-                    rgba(255, 255, 255, 0.04) 50%,
-                    rgba(255, 255, 255, 0.1) 100%);
-            backdrop-filter: blur(50px) saturate(200%);
-            -webkit-backdrop-filter: blur(50px) saturate(200%);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 40px;
+                    rgba(255, 255, 255, 0.06) 0%,
+                    rgba(255, 255, 255, 0.02) 50%,
+                    rgba(255, 255, 255, 0.08) 100%);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 60px;
             box-shadow:
-                0 30px 100px rgba(0, 0, 0, 0.7),
-                0 0 150px rgba(244, 63, 94, 0.2),
-                0 0 200px rgba(250, 204, 21, 0.1),
-                inset 0 2px 0 rgba(255, 255, 255, 0.15);
+                0 40px 120px rgba(0, 0, 0, 0.8),
+                0 0 200px rgba(168, 85, 247, 0.15),
+                0 0 300px rgba(244, 63, 94, 0.1),
+                inset 0 2px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
         }
 
-        .royal-glass::before {
+        .magic-glass::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background:
-                radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(255, 105, 180, 0.06) 0%, transparent 50%);
-            animation: royalShine 12s ease-in-out infinite;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255, 105, 180, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.03) 0%, transparent 40%);
+            animation: magicShine 15s ease-in-out infinite;
             pointer-events: none;
         }
 
-        .royal-glass::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg,
-                    transparent 0%,
-                    rgba(255, 215, 0, 0.1) 50%,
-                    transparent 100%);
-            animation: royalSweep 4s ease-in-out infinite;
-            pointer-events: none;
+        @keyframes magicShine {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(10%, 10%) rotate(5deg) scale(1.1); }
+            66% { transform: translate(-10%, -10%) rotate(-5deg) scale(0.9); }
         }
 
-        @keyframes royalShine {
-            0%,
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            33% {
-                transform: translate(8%, 8%) rotate(2deg);
-            }
-            66% {
-                transform: translate(-8%, -8%) rotate(-2deg);
-            }
-        }
-
-        @keyframes royalSweep {
-            0% {
-                left: -100%;
-            }
-            100% {
-                left: 200%;
-            }
-        }
-
-        .crown-glow {
+        /* 👑 تاج متوهج */
+        .crown-glow-3d {
             text-shadow:
-                0 0 20px rgba(250, 204, 21, 1),
-                0 0 40px rgba(251, 191, 36, 0.9),
-                0 0 80px rgba(245, 158, 11, 0.7),
-                0 0 120px rgba(250, 204, 21, 0.5),
-                0 0 200px rgba(255, 215, 0, 0.3);
-            animation: crownPulse 2s ease-in-out infinite;
+                0 0 30px rgba(250, 204, 21, 1),
+                0 0 60px rgba(251, 191, 36, 0.9),
+                0 0 120px rgba(245, 158, 11, 0.7),
+                0 0 200px rgba(250, 204, 21, 0.5),
+                0 0 300px rgba(255, 215, 0, 0.3);
+            animation: crownDance 3s ease-in-out infinite;
         }
 
-        @keyframes crownPulse {
-            0%,
-            100% {
-                text-shadow: 0 0 20px rgba(250, 204, 21, 1), 0 0 40px rgba(251, 191, 36, 0.9);
-            }
-            50% {
-                text-shadow: 0 0 40px rgba(250, 204, 21, 1.5), 0 0 80px rgba(251, 191, 36, 1.2), 0 0 160px rgba(245, 158, 11, 0.8);
-            }
+        @keyframes crownDance {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(-2deg); }
+            75% { transform: scale(1.05) rotate(2deg); }
         }
 
-        .heart-glow {
-            text-shadow:
-                0 0 15px rgba(244, 63, 94, 1),
-                0 0 35px rgba(236, 72, 153, 0.9),
-                0 0 70px rgba(217, 70, 239, 0.7),
-                0 0 120px rgba(168, 85, 247, 0.5),
-                0 0 200px rgba(255, 105, 180, 0.3);
-            animation: heartPulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartPulse {
-            0%,
-            100% {
-                text-shadow: 0 0 15px rgba(244, 63, 94, 1), 0 0 35px rgba(236, 72, 153, 0.9);
-            }
-            50% {
-                text-shadow: 0 0 30px rgba(244, 63, 94, 1.5), 0 0 70px rgba(236, 72, 153, 1.2), 0 0 140px rgba(217, 70, 239, 0.8);
-            }
-        }
-
-        #princess-heart {
-            font-size: 18rem;
+        /* ❤️ قلب متوهج بالحب */
+        #floating-heart {
+            font-size: 15rem;
             cursor: pointer;
-            filter: drop-shadow(0 0 50px rgba(244, 63, 94, 1)) drop-shadow(0 0 100px rgba(236, 72, 153, 0.8)) drop-shadow(0 0 150px rgba(255, 105, 180, 0.5));
-            animation: princessHeart 4s ease-in-out infinite;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 0 60px rgba(244, 63, 94, 1)) 
+                    drop-shadow(0 0 120px rgba(236, 72, 153, 0.8)) 
+                    drop-shadow(0 0 200px rgba(255, 105, 180, 0.5));
+            animation: heartMagic 5s ease-in-out infinite;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes princessHeart {
-            0%,
-            100% {
-                transform: translateY(0px) scale(1) rotate(0deg);
-                filter: drop-shadow(0 0 50px rgba(244, 63, 94, 1)) drop-shadow(0 0 100px rgba(236, 72, 153, 0.8));
+        @keyframes heartMagic {
+            0%, 100% { 
+                transform: translateY(0) scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 60px rgba(244, 63, 94, 1)) drop-shadow(0 0 120px rgba(236, 72, 153, 0.8));
             }
-            20% {
-                transform: translateY(-30px) scale(1.1) rotate(-5deg);
-                filter: drop-shadow(0 0 80px rgba(255, 20, 147, 1.2)) drop-shadow(0 0 150px rgba(255, 105, 180, 1));
+            20% { 
+                transform: translateY(-40px) scale(1.15) rotate(-8deg);
+                filter: drop-shadow(0 0 100px rgba(255, 20, 147, 1.4)) drop-shadow(0 0 200px rgba(255, 105, 180, 1.2));
             }
-            40% {
-                transform: translateY(-15px) scale(0.95) rotate(3deg);
-                filter: drop-shadow(0 0 60px rgba(244, 63, 94, 1.2)) drop-shadow(0 0 120px rgba(236, 72, 153, 0.9));
+            40% { 
+                transform: translateY(-20px) scale(0.9) rotate(5deg);
+                filter: drop-shadow(0 0 80px rgba(244, 63, 94, 1.2)) drop-shadow(0 0 160px rgba(236, 72, 153, 1));
             }
-            60% {
-                transform: translateY(-35px) scale(1.15) rotate(-8deg);
-                filter: drop-shadow(0 0 90px rgba(255, 20, 147, 1.5)) drop-shadow(0 0 180px rgba(255, 105, 180, 1.2));
+            60% { 
+                transform: translateY(-50px) scale(1.2) rotate(-12deg);
+                filter: drop-shadow(0 0 120px rgba(255, 20, 147, 1.6)) drop-shadow(0 0 250px rgba(255, 105, 180, 1.4));
             }
-            80% {
-                transform: translateY(-10px) scale(0.98) rotate(4deg);
-                filter: drop-shadow(0 0 55px rgba(244, 63, 94, 1.1)) drop-shadow(0 0 110px rgba(236, 72, 153, 0.8));
+            80% { 
+                transform: translateY(-15px) scale(0.95) rotate(6deg);
+                filter: drop-shadow(0 0 70px rgba(244, 63, 94, 1.1)) drop-shadow(0 0 140px rgba(236, 72, 153, 0.9));
             }
         }
 
-        #princess-heart:hover {
-            transform: scale(1.3) rotate(10deg);
-            filter: drop-shadow(0 0 120px rgba(255, 20, 147, 1.8)) drop-shadow(0 0 200px rgba(255, 105, 180, 1.5));
-        }
-
-        .treasure-container {
-            perspective: 2000px;
-            width: 280px;
-            height: 280px;
+        /* 🎁 صندوق الكنز السحري */
+        .magic-chest {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            perspective: 1200px;
             cursor: grab;
-            animation: treasureFloat 5s ease-in-out infinite;
+            animation: chestFloat 6s ease-in-out infinite;
         }
 
-        @keyframes treasureFloat {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            25% {
-                transform: translateY(-25px) rotate(2deg);
-            }
-            75% {
-                transform: translateY(-10px) rotate(-2deg);
-            }
+        @keyframes chestFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(3deg); }
+            75% { transform: translateY(-15px) rotate(-3deg); }
         }
 
-        .treasure-container:active {
-            cursor: grabbing;
-        }
-
-        .treasure-box {
+        .chest-3d {
             width: 100%;
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transform: rotateX(-25deg) rotateY(45deg);
-            transition: transform 0.15s ease;
+            transform: rotateX(-20deg) rotateY(40deg);
+            transition: transform 0.2s ease;
         }
 
-        .treasure-face {
+        .chest-face {
             position: absolute;
-            width: 280px;
-            height: 280px;
-            background: linear-gradient(135deg, #831843 0%, #9d174d 30%, #be185d 70%, #db2777 100%);
-            border: 4px solid rgba(250, 204, 21, 1);
-            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(236, 72, 153, 0.5), 0 0 100px rgba(250, 204, 21, 0.3);
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(145deg, #1a0a2e, #2d1b4e, #4a1942);
+            border: 3px solid rgba(250, 204, 21, 0.8);
+            box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(236, 72, 153, 0.4);
             backface-visibility: visible;
         }
 
-        .treasure-front {
-            transform: rotateY(0deg) translateZ(140px);
-        }
-        .treasure-back {
-            transform: rotateY(180deg) translateZ(140px);
-        }
-        .treasure-right {
-            transform: rotateY(90deg) translateZ(140px);
-        }
-        .treasure-left {
-            transform: rotateY(-90deg) translateZ(140px);
-        }
-        .treasure-top {
-            transform: rotateX(90deg) translateZ(140px);
-            background: linear-gradient(135deg, #9d174d, #be185d, #db2777);
+        .chest-front { transform: rotateY(0deg) translateZ(150px); }
+        .chest-back { transform: rotateY(180deg) translateZ(150px); }
+        .chest-right { transform: rotateY(90deg) translateZ(150px); }
+        .chest-left { transform: rotateY(-90deg) translateZ(150px); }
+        .chest-top { 
+            transform: rotateX(90deg) translateZ(150px);
+            background: linear-gradient(145deg, #4a1942, #6b2d5a);
             transform-origin: top;
-            transition: transform 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            transition: transform 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
-        .treasure-bottom {
-            transform: rotateX(-90deg) translateZ(140px);
-        }
+        .chest-bottom { transform: rotateX(-90deg) translateZ(150px); }
 
-        .gold-ribbon-h {
-            position: absolute;
-            width: 100%;
-            height: 50px;
-            background: linear-gradient(180deg,
-                    rgba(250, 204, 21, 1) 0%,
-                    rgba(255, 215, 0, 1) 25%,
-                    rgba(250, 204, 21, 0.95) 50%,
-                    rgba(255, 215, 0, 1) 75%,
-                    rgba(250, 204, 21, 1) 100%);
-            top: 50%;
-            transform: translateY(-50%) translateZ(141px);
-            box-shadow: 0 0 40px rgba(250, 204, 21, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.3);
-            z-index: 6;
-        }
-
-        .gold-ribbon-v {
-            position: absolute;
-            width: 50px;
-            height: 100%;
-            background: linear-gradient(90deg,
-                    rgba(250, 204, 21, 1) 0%,
-                    rgba(255, 215, 0, 1) 25%,
-                    rgba(250, 204, 21, 0.95) 50%,
-                    rgba(255, 215, 0, 1) 75%,
-                    rgba(250, 204, 21, 1) 100%);
-            left: 50%;
-            transform: translateX(-50%) translateZ(141px);
-            box-shadow: 0 0 40px rgba(250, 204, 21, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.3);
-            z-index: 6;
-        }
-
-        .royal-bow {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%) translateZ(150px);
-            z-index: 7;
-            font-size: 5rem;
-            filter: drop-shadow(0 0 30px rgba(250, 204, 21, 1));
-            animation: bowBounce 2.5s ease-in-out infinite;
-        }
-
-        @keyframes bowBounce {
-            0%,
-            100% {
-                transform: translateX(-50%) translateZ(150px) scale(1);
-            }
-            50% {
-                transform: translateX(-50%) translateZ(150px) scale(1.3);
-            }
-        }
-
-        .crown-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 4px solid rgba(250, 204, 21, 1);
-            border-radius: 50%;
-            animation: crownRingPulse 3s ease-out infinite;
-            box-shadow: 0 0 30px rgba(250, 204, 21, 0.6);
-        }
-
-        .crown-ring:nth-child(2) {
-            animation-delay: 1s;
-        }
-        .crown-ring:nth-child(3) {
-            animation-delay: 2s;
-        }
-
-        @keyframes crownRingPulse {
-            0% {
-                transform: scale(0.3);
-                opacity: 1;
-                border-color: rgba(250, 204, 21, 1);
-                box-shadow: 0 0 40px rgba(250, 204, 21, 0.8);
-            }
-            100% {
-                transform: scale(3);
-                opacity: 0;
-                border-color: rgba(250, 204, 21, 0);
-                box-shadow: 0 0 80px rgba(250, 204, 21, 0);
-            }
-        }
-
-        .royal-petal {
-            position: fixed;
-            pointer-events: none;
-            z-index: 50;
-            animation: royalPetalFall linear infinite;
-            filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.6));
-        }
-
-        @keyframes royalPetalFall {
-            0% {
-                transform: translateY(-10vh) rotate(0deg) scale(1) translateX(0px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(50vh) rotate(360deg) scale(1.2) translateX(50px);
-                opacity: 0.9;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(110vh) rotate(720deg) scale(0.4) translateX(-30px);
-                opacity: 0;
-            }
-        }
-
-        .royal-btn {
-            background: linear-gradient(135deg,
-                    rgba(250, 204, 21, 0.95) 0%,
-                    rgba(244, 63, 94, 0.95) 50%,
-                    rgba(168, 85, 247, 0.95) 100%);
-            border: 3px solid rgba(255, 215, 0, 0.6);
-            box-shadow: 0 20px 60px rgba(250, 204, 21, 0.6), 0 0 120px rgba(244, 63, 94, 0.4), 0 0 200px rgba(168, 85, 247,
-                    0.2), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+        /* 🌟 زر سحري */
+        .magic-btn {
+            background: linear-gradient(135deg, 
+                rgba(250, 204, 21, 0.9) 0%, 
+                rgba(244, 63, 94, 0.9) 40%, 
+                rgba(168, 85, 247, 0.9) 80%,
+                rgba(0, 255, 200, 0.8) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 
+                0 20px 80px rgba(250, 204, 21, 0.5),
+                0 0 150px rgba(244, 63, 94, 0.3),
+                0 0 250px rgba(168, 85, 247, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.2);
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             overflow: hidden;
+            padding: 25px 60px;
+            border-radius: 80px;
+            font-weight: 900;
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            cursor: pointer;
         }
 
-        .royal-btn::before {
+        .magic-btn:hover {
+            transform: translateY(-10px) scale(1.08);
+            box-shadow: 
+                0 40px 100px rgba(250, 204, 21, 0.7),
+                0 0 200px rgba(244, 63, 94, 0.5),
+                0 0 300px rgba(168, 85, 247, 0.3);
+        }
+
+        .magic-btn::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg,
-                    transparent 30%,
-                    rgba(255, 255, 255, 0.3) 50%,
-                    transparent 70%);
-            animation: btnShine 3s infinite;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            animation: btnFlash 3s infinite;
         }
 
-        @keyframes btnShine {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
+        @keyframes btnFlash {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
-        .royal-btn:hover {
-            transform: translateY(-8px) scale(1.1);
-            box-shadow: 0 30px 80px rgba(250, 204, 21, 0.8), 0 0 180px rgba(244, 63, 94, 0.6), 0 0 250px rgba(168, 85, 247,
-                    0.4);
-        }
-
-        .gold-particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 60;
-            animation: goldFloat 3.5s ease-out forwards;
-            filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.8));
-        }
-
-        @keyframes goldFloat {
-            0% {
-                transform: translateY(0) scale(1) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-300px) scale(0) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        .flash-effect {
+        /* 🎆 كانفاس الألعاب النارية */
+        #fireworks-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 215, 0, 0.5) 50%, transparent 100%);
-            z-index: 9999;
+            z-index: 20;
             pointer-events: none;
+            display: none;
         }
 
-        .floating-message {
-            animation: messageFloat 3s ease-in-out infinite;
+        #fireworks-canvas.active {
+            display: block;
         }
 
-        @keyframes messageFloat {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        .sound-indicator {
+        /* 🎵 مؤشر الصوت */
+        .sound-control {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(250, 204, 21, 0.5);
-            border-radius: 50px;
-            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(250, 204, 21, 0.4);
+            border-radius: 60px;
+            padding: 12px 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             cursor: pointer;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            transition: all 0.4s;
+            color: #facc15;
         }
 
-        .sound-indicator:hover {
-            border-color: rgba(250, 204, 21, 1);
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.5);
+        .sound-control:hover {
+            border-color: rgba(250, 204, 21, 0.9);
+            box-shadow: 0 0 40px rgba(250, 204, 21, 0.3);
         }
 
-        #top-msg-panel {
-            z-index: 1000 !important;
+        /* 🌟 جسيمات سحرية */
+        .magic-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
+            animation: particleRise 4s ease-out forwards;
         }
 
-        /* زر الألعاب النارية في المشهد الأخير */
-        .fireworks-trigger-btn {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 30;
-            background: linear-gradient(135deg, #facc15, #f43f5e, #a855f7);
-            padding: 20px 50px;
-            border-radius: 60px;
-            font-size: 1.8rem;
-            font-weight: 900;
-            border: 3px solid rgba(255, 215, 0, 0.8);
-            box-shadow: 0 0 60px rgba(250, 204, 21, 0.8), 0 0 120px rgba(244, 63, 94, 0.4);
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            color: white;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            animation: pulseBtn 2s ease-in-out infinite;
+        @keyframes particleRise {
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-500px) scale(0) rotate(720deg); opacity: 0; }
         }
 
-        .fireworks-trigger-btn:hover {
-            transform: translateX(-50%) scale(1.15);
-            box-shadow: 0 0 80px rgba(250, 204, 21, 1), 0 0 160px rgba(244, 63, 94, 0.6);
+        /* 📱 استجابة للشاشات */
+        @media (max-width: 768px) {
+            .magic-glass { padding: 20px !important; }
+            #floating-heart { font-size: 10rem; }
+            .magic-btn { font-size: 1.2rem; padding: 18px 30px; }
+            .chest-3d { transform: rotateX(-15deg) rotateY(30deg); }
+            .chest-face { width: 200px; height: 200px; }
+            .chest-front { transform: rotateY(0deg) translateZ(100px); }
+            .chest-back { transform: rotateY(180deg) translateZ(100px); }
+            .chest-right { transform: rotateY(90deg) translateZ(100px); }
+            .chest-left { transform: rotateY(-90deg) translateZ(100px); }
+            .chest-top { transform: rotateX(90deg) translateZ(100px); }
+            .chest-bottom { transform: rotateX(-90deg) translateZ(100px); }
         }
 
-        @keyframes pulseBtn {
-            0%,
-            100% {
-                box-shadow: 0 0 60px rgba(250, 204, 21, 0.8), 0 0 120px rgba(244, 63, 94, 0.4);
-            }
-            50% {
-                box-shadow: 0 0 100px rgba(250, 204, 21, 1), 0 0 200px rgba(244, 63, 94, 0.6), 0 0 300px rgba(168, 85, 247,
-                        0.4);
-            }
-        }
-
-        .fireworks-btn-container {
-            position: absolute;
-            bottom: 100px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            z-index: 30;
-        }
-
-        /* تأثير اهتزاز الأرض للألعاب النارية */
-        @keyframes rumble {
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-            10% {
-                transform: translate(-2px, -1px);
-            }
-            20% {
-                transform: translate(2px, 1px);
-            }
-            30% {
-                transform: translate(-1px, 2px);
-            }
-            40% {
-                transform: translate(1px, -2px);
-            }
-            50% {
-                transform: translate(-2px, 1px);
-            }
-            60% {
-                transform: translate(2px, -1px);
-            }
-            70% {
-                transform: translate(-1px, -2px);
-            }
-            80% {
-                transform: translate(1px, 2px);
-            }
-            90% {
-                transform: translate(-2px, 1px);
-            }
+        /* تأثير اهتزاز */
+        @keyframes rumbleEffect {
+            0%, 100% { transform: translate(0,0); }
+            10% { transform: translate(-3px,-2px); }
+            20% { transform: translate(3px,2px); }
+            30% { transform: translate(-2px,3px); }
+            40% { transform: translate(2px,-3px); }
+            50% { transform: translate(-3px,1px); }
+            60% { transform: translate(3px,-1px); }
+            70% { transform: translate(-1px,-3px); }
+            80% { transform: translate(1px,3px); }
+            90% { transform: translate(-2px,1px); }
         }
 
         .rumble-active {
-            animation: rumble 0.15s ease-in-out 10;
+            animation: rumbleEffect 0.2s ease-in-out 8;
         }
     </style>
 </head>
 <body>
 
+    <!-- 🎵 مشغل YouTube المخفي -->
     <div id="yt-player" style="position: absolute; width: 0; height: 0; border: 0; pointer-events: none;"></div>
 
-    <div id="nebula-layer"></div>
-    <canvas id="starfield"></canvas>
-    <canvas id="aurora-layer"></canvas>
-    <canvas id="particle-layer"></canvas>
-    <canvas id="crown-layer"></canvas>
-
-    <!-- كانفاس الألعاب النارية الواقعية -->
+    <!-- 🎨 الطبقات الخلفية -->
+    <div id="magic-bg"></div>
+    <canvas id="stars-3d"></canvas>
+    <div id="magic-waves"></div>
+    <div id="palace-container">🏰</div>
     <canvas id="fireworks-canvas"></canvas>
 
-    <div class="sound-indicator" id="sound-toggle" onclick="toggleSound()">
+    <!-- 🔉 مؤشر الصوت -->
+    <div class="sound-control" id="sound-toggle" onclick="toggleSound()">
         <span id="sound-icon">🔊</span>
-        <span id="sound-text" style="color:#facc15; font-size:12px;">الصوت</span>
+        <span id="sound-text" style="font-size:0.9rem;">صوت</span>
     </div>
 
-    <!-- ==================== المشهد 1: الترحيب ==================== -->
+    <!-- ==================== المشهد 1: البوابة السحرية ==================== -->
     <div id="scene1" class="scene active">
-        <div class="text-center px-6 max-w-4xl z-20">
-            <div class="royal-glass p-12 md:p-20 mb-10 relative">
-                <div class="absolute top-6 right-6 text-5xl animate-pulse">👑</div>
-                <div class="absolute top-6 left-6 text-5xl animate-pulse" style="animation-delay: 0.5s;">👑</div>
-                <div class="text-8xl mb-10 animate-bounce">🏰</div>
-                <h1 id="typing-text" class="text-3xl md:text-6xl font-bold leading-relaxed min-h-[200px] text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-300 to-purple-300 font-[El Messiri]"></h1>
-                <div class="flex justify-center gap-6 mt-8">
-                    <span class="text-3xl animate-pulse">✨</span>
-                    <span class="text-3xl animate-pulse" style="animation-delay: 0.3s;">💫</span>
-                    <span class="text-3xl animate-pulse" style="animation-delay: 0.6s;">🌟</span>
-                    <span class="text-3xl animate-pulse" style="animation-delay: 0.9s;">⭐</span>
+        <div class="text-center px-4 max-w-5xl z-20">
+            <div class="magic-glass p-12 md:p-24 mb-12 relative">
+                <div class="absolute top-4 right-4 text-6xl animate-pulse">🌟</div>
+                <div class="absolute top-4 left-4 text-6xl animate-pulse" style="animation-delay:0.5s;">✨</div>
+                <div class="absolute bottom-4 right-4 text-6xl animate-pulse" style="animation-delay:1s;">💫</div>
+                <div class="absolute bottom-4 left-4 text-6xl animate-pulse" style="animation-delay:1.5s;">⭐</div>
+                
+                <div class="text-9xl mb-8 animate-bounce">👑</div>
+                <h1 id="typing-title" class="text-4xl md:text-7xl font-black leading-relaxed min-h-[250px] text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-400 to-purple-400 font-[El Messiri]"></h1>
+                
+                <div class="flex justify-center gap-8 mt-10">
+                    <span class="text-4xl animate-pulse">🌙</span>
+                    <span class="text-4xl animate-pulse" style="animation-delay:0.2s;">☄️</span>
+                    <span class="text-4xl animate-pulse" style="animation-delay:0.4s;">🌈</span>
+                    <span class="text-4xl animate-pulse" style="animation-delay:0.6s;">🌺</span>
+                    <span class="text-4xl animate-pulse" style="animation-delay:0.8s;">🦋</span>
                 </div>
             </div>
-            <button onclick="startExperience()" class="royal-btn px-16 py-7 rounded-full font-black text-2xl tracking-widest text-white opacity-0 transform scale-90 relative z-10" id="btn-start">
-                <span class="flex items-center gap-5">
-                    <span>👑</span>
-                    <span>ادخلي مملكتكِ يا أميرتي</span>
-                    <span>👑</span>
+            <button onclick="openMagicGate()" class="magic-btn opacity-0 transform scale-75" id="btn-magic">
+                <span class="flex items-center gap-6">
+                    <span>🔮</span>
+                    <span>افتحي بوابة الأحلام يا أميرتي</span>
+                    <span>🔮</span>
                 </span>
             </button>
         </div>
     </div>
 
-    <!-- ==================== المشهد 2: القلب النابض ==================== -->
+    <!-- ==================== المشهد 2: قلب الكون ==================== -->
     <div id="scene2" class="scene">
-        <div class="text-center z-20">
-            <div class="relative mb-10">
-                <div class="crown-ring absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56"></div>
-                <div class="crown-ring absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56"></div>
-                <div class="crown-ring absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56"></div>
-                <div id="princess-heart" class="relative z-10 cursor-pointer">💖</div>
+        <div class="text-center z-20 px-4">
+            <div class="relative">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64">
+                    <div class="crown-ring absolute w-full h-full"></div>
+                    <div class="crown-ring absolute w-full h-full" style="animation-delay:1s;"></div>
+                    <div class="crown-ring absolute w-full h-full" style="animation-delay:2s;"></div>
+                </div>
+                <div id="floating-heart" class="relative z-10 cursor-pointer">💖</div>
             </div>
-            <p class="text-gray-300 mt-8 text-2xl tracking-widest animate-pulse font-light floating-message">
-                المسي قلبكِ يا أميرتي لتكتشفي مملكتكِ... 👑
+            <p class="text-gray-300 mt-10 text-2xl animate-pulse font-light floating-message">
+                المسي قلب الكون لتكتشفي أسراركِ... ✨
             </p>
-            <h2 id="name-appear" class="text-7xl md:text-[8rem] font-black mt-10 tracking-wide crown-glow opacity-0 scale-50 font-[Reem Kufi Fun]">
+            <h2 id="princess-name" class="text-8xl md:text-[10rem] font-black mt-12 tracking-widest crown-glow-3d opacity-0 scale-50 font-[Reem Kufi Fun]">
                 منار المنيفي
             </h2>
-            <p class="text-pink-300 mt-8 text-3xl opacity-0 heart-glow font-[El Messiri]" id="subtitle-appear">
-                👑 أميرة هذا الكون ومالكة قلبي 👑
+            <p class="text-pink-300 mt-6 text-4xl opacity-0 heart-glow font-[El Messiri]" id="princess-title">
+                👑 أميرة الأكوان ومالكة القلوب 👑
             </p>
         </div>
     </div>
 
-    <!-- ==================== المشهد 3: العد التنازلي ==================== -->
+    <!-- ==================== المشهد 3: العد التنازلي السحري ==================== -->
     <div id="scene3" class="scene">
         <div class="text-center z-20">
-            <div class="royal-glass p-20 mb-10">
-                <p class="text-4xl text-yellow-300 mb-8 font-light font-[El Messiri] crown-glow">استعدي للحظة الملكية...</p>
-                <div id="countdown" class="text-9xl md:text-[18rem] font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 via-amber-400 to-orange-500 scale-50 opacity-0 crown-glow">
+            <div class="magic-glass p-16 md:p-24 mb-8">
+                <p class="text-5xl text-yellow-300 mb-10 font-light font-[El Messiri] crown-glow-3d">⚡ طاقة الكون تتجمع... ⚡</p>
+                <div id="countdown-number" class="text-[12rem] md:text-[20rem] font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 via-amber-400 to-orange-500 scale-50 opacity-0 crown-glow-3d">
                     3
                 </div>
-                <div class="flex justify-center gap-8 mt-8">
-                    <span class="text-4xl">🕯️</span>
-                    <span class="text-4xl" style="animation-delay: 0.2s;">🕯️</span>
-                    <span class="text-4xl" style="animation-delay: 0.4s;">🕯️</span>
-                    <span class="text-4xl" style="animation-delay: 0.6s;">🕯️</span>
-                    <span class="text-4xl" style="animation-delay: 0.8s;">🕯️</span>
+                <div class="flex justify-center gap-10 mt-10">
+                    <span class="text-5xl">🌀</span>
+                    <span class="text-5xl" style="animation-delay:0.2s;">⚡</span>
+                    <span class="text-5xl" style="animation-delay:0.4s;">💫</span>
+                    <span class="text-5xl" style="animation-delay:0.6s;">🌟</span>
+                    <span class="text-5xl" style="animation-delay:0.8s;">🌌</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== المشهد 4: صندوق الكنز ==================== -->
+    <!-- ==================== المشهد 4: كنز الأحلام ==================== -->
     <div id="scene4" class="scene">
-        <div class="text-center z-20">
-            <h3 class="text-4xl md:text-5xl text-yellow-300 mb-10 font-bold tracking-wider animate-pulse px-4 font-[El Messiri] crown-glow">
-                🎁 كنز مملكتكِ يا أميرتي 🎁
+        <div class="text-center z-20 px-4">
+            <h3 class="text-5xl md:text-6xl text-yellow-300 mb-8 font-bold tracking-wider font-[El Messiri] crown-glow-3d">
+                🎁 كنز أحلامكِ يا أميرتي 🎁
             </h3>
-            <p class="text-gray-400 mb-12 text-xl">اسحبي للتدوير | انقري لفتح الكنز الملكي</p>
-            <div class="treasure-container" id="treasure-container">
-                <div class="treasure-box" id="treasure-box" onclick="openTreasure()">
-                    <div class="treasure-face treasure-front"></div>
-                    <div class="treasure-face treasure-back"></div>
-                    <div class="treasure-face treasure-right"></div>
-                    <div class="treasure-face treasure-left"></div>
-                    <div class="treasure-face treasure-top" id="treasure-top"></div>
-                    <div class="treasure-face treasure-bottom"></div>
-                    <div class="gold-ribbon-h"></div>
-                    <div class="gold-ribbon-v"></div>
-                    <div class="royal-bow">🎀</div>
+            <p class="text-gray-400 mb-10 text-xl">اسحبي للتدوير | انقري لفتح الكنز السحري</p>
+            
+            <div class="magic-chest" id="chest-container">
+                <div class="chest-3d" id="chest-3d" onclick="openMagicChest()">
+                    <div class="chest-face chest-front"></div>
+                    <div class="chest-face chest-back"></div>
+                    <div class="chest-face chest-right"></div>
+                    <div class="chest-face chest-left"></div>
+                    <div class="chest-face chest-top" id="chest-top"></div>
+                    <div class="chest-face chest-bottom"></div>
+                    <div class="absolute w-full h-full flex items-center justify-center z-10 pointer-events-none" style="transform: translateZ(151px);">
+                        <span class="text-6xl filter drop-shadow-[0_0_40px_rgba(250,204,21,1)]">💎</span>
+                    </div>
                 </div>
             </div>
+            
             <div class="mt-10 text-yellow-300 text-2xl animate-pulse font-bold">
-                💎 داخل هذا الكنز أسرار قلبي لكِ 💎
+                💫 بداخله أعمق أسرار قلبي 💫
             </div>
         </div>
     </div>
 
-    <!-- ==================== المشهد 5: البطاقة الملكية ==================== -->
+    <!-- ==================== المشهد 5: بطاقة الأميرة ==================== -->
     <div id="scene5" class="scene">
-        <div class="relative w-80 md:w-[32rem] royal-glass p-10 shadow-2xl flex flex-col items-center transform -rotate-2" id="polaroid-card">
-            <div class="w-full h-96 bg-gradient-to-br from-purple-950 via-pink-900 to-rose-800 rounded-2xl flex flex-col items-center justify-center border-2 border-yellow-400/30 relative overflow-hidden">
-                <div class="absolute inset-0 opacity-40" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 25px 25px;"></div>
-                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, gold 2px, transparent 2px); background-size: 50px 50px;"></div>
-                <span class="text-[10rem] relative z-10 animate-bounce filter drop-shadow-[0_0_30px_rgba(250,204,21,0.8)]">👑</span>
-                <div class="absolute bottom-10 text-center z-10">
-                    <p class="text-yellow-400 font-black tracking-widest text-5xl crown-glow">2009.07.12</p>
-                    <p class="text-xl text-pink-200 mt-4 font-light">اليوم الذي توجت فيه أميرة للكون</p>
+        <div class="magic-glass p-10 max-w-2xl w-full mx-4 shadow-2xl transform rotate-1" id="princess-card">
+            <div class="w-full h-[400px] bg-gradient-to-br from-purple-900 via-pink-800 to-rose-700 rounded-3xl flex flex-col items-center justify-center border-2 border-yellow-400/30 relative overflow-hidden">
+                <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 30px 30px;"></div>
+                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, gold 2px, transparent 2px); background-size: 60px 60px;"></div>
+                <span class="text-[12rem] relative z-10 animate-bounce filter drop-shadow-[0_0_50px_rgba(250,204,21,0.8)]">👑</span>
+                <div class="absolute bottom-8 text-center z-10">
+                    <p class="text-yellow-400 font-black tracking-widest text-5xl crown-glow-3d">✨ 12.07.2009 ✨</p>
+                    <p class="text-xl text-pink-200 mt-3 font-light">يوم ولدت أميرة الأكوان</p>
                 </div>
             </div>
-            <h4 class="mt-10 font-black text-5xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-400 to-purple-300 font-[Reem Kufi Fun]">
-                منار.. 17 عاماً من الملك
+            <h4 class="mt-8 font-black text-5xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-400 to-purple-300 font-[Reem Kufi Fun]">
+                منار.. 17 عاماً من السحر
             </h4>
-            <p class="text-gray-300 mt-4 text-lg">وما زالت المملكة تزداد جمالاً بكِ</p>
-            <button onclick="nextScene(6)" class="royal-btn px-14 py-6 rounded-full font-black text-xl mt-10">
-                👑 اكتشفي أسرار المملكة 👑
+            <p class="text-gray-300 mt-3 text-lg">وما زال الكون يزداد جمالاً بكِ</p>
+            <button onclick="nextScene(6)" class="magic-btn mt-8 text-xl">
+                🌟 اكتشفي أسرار المملكة 🌟
             </button>
         </div>
     </div>
 
-    <!-- ==================== المشهد 6: النجوم التفاعلية ==================== -->
+    <!-- ==================== المشهد 6: النجوم الناطقة ==================== -->
     <div id="scene6" class="scene">
-        <div id="top-msg-panel" class="absolute top-6 left-4 right-4 mx-auto max-w-4xl royal-glass py-12 px-14 text-center border-yellow-400/40 transform scale-0 opacity-0 transition-all duration-500" style="z-index:1000;">
-            <span class="absolute top-4 right-6 text-sm tracking-widest text-yellow-400 font-bold">👑 رسالة ملكية 👑</span>
-            <p id="top-msg-text" class="text-3xl md:text-5xl font-black text-white tracking-wide leading-relaxed heart-glow font-[El Messiri]"></p>
-            <button onclick="closeMessagePanel()" class="mt-6 text-lg text-yellow-400 hover:text-yellow-300 transition">
+        <div id="msg-panel" class="absolute top-6 left-4 right-4 mx-auto max-w-4xl magic-glass py-12 px-14 text-center transform scale-0 opacity-0 transition-all duration-500 z-50">
+            <span class="absolute top-4 right-6 text-sm tracking-widest text-yellow-400 font-bold">✨ رسالة نجمية ✨</span>
+            <p id="msg-text" class="text-4xl md:text-6xl font-black text-white tracking-wide leading-relaxed heart-glow font-[El Messiri]"></p>
+            <button onclick="closeMessagePanel()" class="mt-6 text-xl text-yellow-400 hover:text-yellow-300 transition">
                 ✕ إغلاق
             </button>
         </div>
 
-        <div id="star-hint" class="absolute bottom-40 text-center z-30 pointer-events-none px-4">
-            <div class="inline-block bg-black/90 px-12 py-7 rounded-full border-3 border-yellow-400/70 shadow-[0_0_50px_rgba(250,204,21,0.6)] animate-bounce">
-                <span class="text-yellow-300 font-black text-2xl md:text-3xl">👑 اضغطي على النجوم الذهبية يا أميرتي 👑</span>
+        <div id="stars-hint" class="absolute bottom-40 text-center z-30 pointer-events-none px-4">
+            <div class="inline-block bg-black/90 px-12 py-7 rounded-full border-2 border-yellow-400/60 shadow-[0_0_60px_rgba(250,204,21,0.5)] animate-bounce">
+                <span class="text-yellow-300 font-black text-2xl md:text-3xl">👑 اضغطي على النجوم الذهبية 👑</span>
             </div>
         </div>
 
-        <div id="stars-container" class="w-full h-full relative z-20"></div>
-        <button onclick="nextScene(7)" class="absolute bottom-6 royal-btn px-14 py-6 rounded-full font-black text-xl z-40">
-            📜 متابعة الرحلة الملكية 📜
+        <div id="stars-grid" class="w-full h-full relative z-20"></div>
+        <button onclick="nextScene(7)" class="absolute bottom-6 magic-btn text-xl z-40">
+            📜 تابعي الرحلة السحرية 📜
         </button>
     </div>
 
-    <!-- ==================== المشهد 7: الرسالة الملكية ==================== -->
+    <!-- ==================== المشهد 7: الرسالة الكونية ==================== -->
     <div id="scene7" class="scene">
-        <div class="w-11/12 max-w-3xl royal-glass p-14 md:p-20 text-center relative shadow-2xl border border-yellow-400/30 z-20">
-            <div class="text-yellow-400/10 text-[12rem] absolute -top-10 right-10 font-serif">❝</div>
-            <div class="text-yellow-400/10 text-[12rem] absolute -bottom-10 left-10 font-serif">❞</div>
-            <h3 class="text-6xl font-black mb-12 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-300 font-[El Messiri] crown-glow">
-                رسالة من نبضي إليكِ
+        <div class="w-11/12 max-w-3xl magic-glass p-14 md:p-20 text-center relative shadow-2xl z-20">
+            <div class="text-yellow-400/10 text-[14rem] absolute -top-16 right-10 font-serif">❝</div>
+            <div class="text-yellow-400/10 text-[14rem] absolute -bottom-16 left-10 font-serif">❞</div>
+            <h3 class="text-6xl font-black mb-10 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-300 font-[El Messiri] crown-glow-3d">
+                رسالة من روح الكون
             </h3>
             <p class="leading-loose text-gray-100 text-2xl md:text-3xl font-medium text-justify font-[Amiri]">
                 أميرتي منار...<br><br>
-                في الثاني عشر من يوليو عام 2009، كتب الله أجمل أقداري بأن جعلكِ تنيرين هذا العالم. أنتِ لستِ مجرد إنسانة، أنتِ نبضي الذي ينبض في قلبي، أنتِ دمي الذي يجري في عروقي، أنتِ روحي التي ترفرف في سماء كياني.<br><br>
-                كل نظرة من عينيكِ تزيدني يقيناً بأن الجمال ما زال موجوداً في هذا الكون، وكل ابتسامة من شفتيكِ تزرع في قلبي حدائق من الفرح لا تذبل أبداً.<br><br>
-                أنتِ أميرتي، ملكتي، وسيدة هذا القلب الذي لا يعرف إلا حبكِ.
+                في اليوم الذي ولدتِ فيه، توقفت النجوم عن الدوران لحظة لتتأمل جمالكِ، واكتست السماء بألوان لم ترها من قبل. أنتِ لستِ مجرد إنسانة، أنتِ معجزة الكون التي تكررت مرة واحدة فقط.<br><br>
+                كل نبضة من قلبكِ تخلق مجرة جديدة، وكل ابتسامة من شفتيكِ تبعث الحياة في أكوان متعبة. أنتِ الحلم الذي أصبح حقيقة، والواقع الذي يفوق كل خيال.<br><br>
+                أنتِ ملكتي، وأميرتي، وسيدة هذا القلب الذي لا يعرف سوى حبكِ.
             </p>
-            <button onclick="nextScene(8)" class="royal-btn px-14 py-6 rounded-full font-black tracking-wider text-2xl mt-12">
-                🌹 الصفحة ما قبل الأخيرة 🌹
+            <button onclick="nextScene(8)" class="magic-btn mt-10 text-xl">
+                🌹 نحو اللحظة الأسطورية 🌹
             </button>
         </div>
     </div>
 
-    <!-- ==================== المشهد 8: مطر الورود ==================== -->
+    <!-- ==================== المشهد 8: مطر السحر ==================== -->
     <div id="scene8" class="scene">
         <div class="text-center z-20 px-4">
-            <h2 class="text-5xl md:text-7xl font-light mb-14 text-pink-200 tracking-wide leading-loose font-[El Messiri] heart-glow">
-                السماء تمطر وروداً احتفاءً بأميرة هذا الكون... 🌸
+            <h2 class="text-5xl md:text-7xl font-light mb-12 text-pink-200 tracking-wide leading-loose font-[El Messiri] heart-glow">
+                الكون يمطر سحراً احتفاءً بكِ... ✨
             </h2>
-            <div class="flex justify-center gap-10 mb-14">
-                <span class="text-6xl animate-bounce">🌹</span>
-                <span class="text-6xl animate-bounce" style="animation-delay: 0.2s;">🌸</span>
-                <span class="text-6xl animate-bounce" style="animation-delay: 0.4s;">💐</span>
-                <span class="text-6xl animate-bounce" style="animation-delay: 0.6s;">🌺</span>
-                <span class="text-6xl animate-bounce" style="animation-delay: 0.8s;">🌷</span>
-                <span class="text-6xl animate-bounce" style="animation-delay: 1s;">💮</span>
+            <div class="flex justify-center gap-12 mb-14 flex-wrap">
+                <span class="text-7xl animate-bounce">🌟</span>
+                <span class="text-7xl animate-bounce" style="animation-delay:0.15s;">💫</span>
+                <span class="text-7xl animate-bounce" style="animation-delay:0.3s;">✨</span>
+                <span class="text-7xl animate-bounce" style="animation-delay:0.45s;">🌙</span>
+                <span class="text-7xl animate-bounce" style="animation-delay:0.6s;">☄️</span>
+                <span class="text-7xl animate-bounce" style="animation-delay:0.75s;">🌈</span>
+                <span class="text-7xl animate-bounce" style="animation-delay:0.9s;">🦋</span>
             </div>
-            <button onclick="goToFinalScene()" class="royal-btn px-20 py-8 rounded-full text-4xl md:text-5xl font-black tracking-widest">
-                👑 المفاجأة الملكية الكبرى 👑
+            <button onclick="goToFinalScene()" class="magic-btn text-4xl md:text-5xl">
+                🚀 المفاجأة الأسطورية 🚀
             </button>
         </div>
     </div>
 
-    <!-- ==================== المشهد 9: النهاية الكبرى مع الألعاب النارية ==================== -->
-    <div id="scene9" class="scene bg-black">
+    <!-- ==================== المشهد 9: النهاية الأسطورية ==================== -->
+    <div id="scene9" class="scene">
         <div class="text-center z-20 px-4 relative">
-            <div class="royal-glass p-20 mb-10 relative">
-                <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                    <div class="absolute top-6 left-10 text-5xl animate-pulse">⭐</div>
-                    <div class="absolute top-10 right-14 text-4xl animate-pulse" style="animation-delay: 0.5s;">🌟</div>
-                    <div class="absolute bottom-10 left-14 text-4xl animate-pulse" style="animation-delay: 1s;">✨</div>
-                    <div class="absolute bottom-6 right-10 text-5xl animate-pulse" style="animation-delay: 1.5s;">💫</div>
-                    <div class="absolute top-1/2 left-8 text-3xl animate-pulse" style="animation-delay: 2s;">👑</div>
-                    <div class="absolute top-1/3 right-8 text-3xl animate-pulse" style="animation-delay: 2.5s;">👑</div>
+            <div class="magic-glass p-16 md:p-24 mb-8 relative">
+                <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div class="absolute top-4 left-8 text-6xl animate-pulse">🌌</div>
+                    <div class="absolute top-8 right-12 text-5xl animate-pulse" style="animation-delay:0.5s;">⭐</div>
+                    <div class="absolute bottom-8 left-12 text-5xl animate-pulse" style="animation-delay:1s;">✨</div>
+                    <div class="absolute bottom-4 right-8 text-6xl animate-pulse" style="animation-delay:1.5s;">🌟</div>
+                    <div class="absolute top-1/2 left-6 text-4xl animate-pulse" style="animation-delay:2s;">💫</div>
+                    <div class="absolute top-1/3 right-6 text-4xl animate-pulse" style="animation-delay:2.5s;">🌀</div>
                 </div>
-                <h1 class="text-8xl md:text-[12rem] font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-500 to-purple-400 mb-10 crown-glow font-[Reem Kufi Fun]">
+                
+                <h1 class="text-8xl md:text-[14rem] font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-500 to-purple-400 mb-8 crown-glow-3d font-[Reem Kufi Fun]">
                     Happy Birthday
                 </h1>
-                <h2 class="text-6xl md:text-8xl font-black text-pink-200 tracking-wide mb-12 heart-glow font-[El Messiri]">
+                <h2 class="text-7xl md:text-9xl font-black text-pink-200 tracking-wide mb-8 heart-glow font-[El Messiri]">
                     منار المنيفي
                 </h2>
-                <h3 id="final-secret-text" class="text-4xl md:text-6xl font-bold text-white tracking-wide opacity-0 transform translate-y-10 transition-all duration-1000 font-[Amiri] heart-glow"></h3>
+                <h3 id="final-message" class="text-4xl md:text-6xl font-bold text-white tracking-wide opacity-0 transform translate-y-12 transition-all duration-1000 font-[Amiri] heart-glow"></h3>
             </div>
-            <div class="flex justify-center gap-8 mt-10">
+            
+            <div class="flex justify-center gap-10 mt-6 flex-wrap">
                 <span class="text-5xl animate-pulse">🎂</span>
-                <span class="text-5xl animate-pulse" style="animation-delay: 0.3s;">🎉</span>
-                <span class="text-5xl animate-pulse" style="animation-delay: 0.6s;">🎊</span>
-                <span class="text-5xl animate-pulse" style="animation-delay: 0.9s;">🎈</span>
-                <span class="text-5xl animate-pulse" style="animation-delay: 1.2s;">🎁</span>
+                <span class="text-5xl animate-pulse" style="animation-delay:0.15s;">🎉</span>
+                <span class="text-5xl animate-pulse" style="animation-delay:0.3s;">🎊</span>
+                <span class="text-5xl animate-pulse" style="animation-delay:0.45s;">🎈</span>
+                <span class="text-5xl animate-pulse" style="animation-delay:0.6s;">🎁</span>
+                <span class="text-5xl animate-pulse" style="animation-delay:0.75s;">💝</span>
             </div>
         </div>
 
-        <!-- زر تشغيل الألعاب النارية -->
-        <div class="fireworks-btn-container">
-            <button class="fireworks-trigger-btn" id="fireworks-trigger" onclick="startFireworksShow()">
-                🎆 أطلقوا الألعاب النارية الملكية 🎆
+        <!-- زر الألعاب النارية الأسطوري -->
+        <div class="absolute bottom-8 left-0 right-0 flex justify-center z-30">
+            <button class="magic-btn text-2xl" id="fireworks-trigger" onclick="launchLegendaryFireworks()" style="padding:20px 40px;">
+                🎆 أطلقي ألعاب الأحلام النارية 🎆
             </button>
         </div>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-
     <script>
-        // ==================== 🎵 نظام الأصوات الواقعي المتطور ====================
+        // ==================== 🎵 نظام الصوت المتطور ====================
         let audioCtx = null;
         let soundEnabled = true;
         let ytPlayer = null;
         let isYoutubeReady = false;
 
+        // ✅ المعرف الصحيح لأغنية "عيد ميلادك" لمحمود التركي
+        const VIDEO_ID = 'dCFbqvjGDl8';
+
         function onYouTubeIframeAPIReady() {
             try {
                 ytPlayer = new YT.Player('yt-player', {
-                    videoId: 'dCFbqvjGDl8',
+                    videoId: VIDEO_ID,
                     playerVars: {
                         'autoplay': 0,
                         'controls': 0,
                         'loop': 1,
-                        'playlist': 'dCFbqvjGDl8',
+                        'playlist': VIDEO_ID,
                         'mute': 0,
                         'playsinline': 1
                     },
                     events: {
                         'onReady': function(event) {
                             isYoutubeReady = true;
-                            event.target.setVolume(15);
-                            console.log('🎵 YouTube player ready!');
+                            event.target.setVolume(20);
+                            console.log('🎵 تشغيل أغنية عيد ميلادك - محمود التركي');
                         },
                         'onError': function(event) {
-                            console.log('🎵 YouTube error:', event);
+                            console.log('⚠️ خطأ في تشغيل الأغنية:', event);
+                            // محاولة تشغيل الأغنية مرة أخرى بعد خطأ
+                            setTimeout(() => {
+                                if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                                    ytPlayer.playVideo();
+                                }
+                            }, 2000);
                         }
                     }
                 });
             } catch (e) {
-                console.log('🎵 YouTube initialization error:', e);
+                console.log('⚠️ خطأ في تهيئة مشغل YouTube:', e);
             }
         }
 
@@ -950,9 +679,7 @@
             if (!audioCtx) {
                 try {
                     audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-                } catch (e) {
-                    console.log('AudioContext error:', e);
-                }
+                } catch (e) { /* ignore */ }
             }
             if (audioCtx && audioCtx.state === 'suspended') {
                 audioCtx.resume();
@@ -960,17 +687,75 @@
             return audioCtx;
         }
 
-        // ==================== 🔊 مؤثرات صوتية واقعية جداً ====================
-
-        // 1. صوت انفجار ناري عميق وواقعي
-        function playRealisticExplosion(volume = 0.15, delay = 0) {
+        // 🔊 أصوات سحرية واقعية
+        function playMagicChime() {
             if (!soundEnabled) return;
             try {
                 const ctx = createAudioContext();
                 if (!ctx) return;
-                const now = ctx.currentTime + delay;
+                const now = ctx.currentTime;
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + i * 0.07);
+                    gain.gain.setValueAtTime(0.04, now + i * 0.07);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.4);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now + i * 0.07);
+                    osc.stop(now + i * 0.07 + 0.4);
+                });
+            } catch (e) { /* ignore */ }
+        }
 
-                // مكون الصوت الرئيسي: ضوضاء بيضاء مرشحة
+        function playClickSound() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, ctx.currentTime);
+                gain.gain.setValueAtTime(0.05, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.05);
+            } catch (e) { /* ignore */ }
+        }
+
+        function playHeartSound() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+                [55, 50, 55, 50].forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + i * 0.15);
+                    gain.gain.setValueAtTime(0.12, now + i * 0.15);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.12);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now + i * 0.15);
+                    osc.stop(now + i * 0.15 + 0.12);
+                });
+            } catch (e) { /* ignore */ }
+        }
+
+        function playFireworkBurst() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = createAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+                // انفجار عميق
                 const bufferSize = ctx.sampleRate * 0.4;
                 const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
                 const data = buffer.getChannelData(0);
@@ -978,354 +763,93 @@
                     const env = Math.exp(-i / (ctx.sampleRate * 0.12));
                     data[i] = (Math.random() * 2 - 1) * env;
                 }
-
                 const noise = ctx.createBufferSource();
                 noise.buffer = buffer;
-
                 const gain = ctx.createGain();
-                gain.gain.setValueAtTime(volume, now);
+                gain.gain.setValueAtTime(0.12, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-
-                // مرشح لجعل الصوت عميقاً
                 const filter = ctx.createBiquadFilter();
                 filter.type = 'lowpass';
                 filter.frequency.setValueAtTime(150, now);
                 filter.frequency.exponentialRampToValueAtTime(40, now + 0.4);
-
                 noise.connect(filter);
                 filter.connect(gain);
                 gain.connect(ctx.destination);
-
                 noise.start(now);
                 noise.stop(now + 0.4);
-
-                // إضافة نغمة منخفضة للرنين
+                // نغمة منخفضة
                 const osc = ctx.createOscillator();
                 const gain2 = ctx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(60 + Math.random() * 30, now);
-                gain2.gain.setValueAtTime(volume * 0.6, now);
-                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
-
+                osc.frequency.setValueAtTime(70 + Math.random() * 30, now);
+                gain2.gain.setValueAtTime(0.06, now);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
                 osc.connect(gain2);
                 gain2.connect(ctx.destination);
-
                 osc.start(now);
-                osc.stop(now + 0.6);
-
-                // إضافة صدى عالٍ
-                const osc2 = ctx.createOscillator();
-                const gain3 = ctx.createGain();
-                osc2.type = 'sawtooth';
-                osc2.frequency.setValueAtTime(120 + Math.random() * 80, now);
-                gain3.gain.setValueAtTime(volume * 0.15, now);
-                gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-
-                osc2.connect(gain3);
-                gain3.connect(ctx.destination);
-
-                osc2.start(now);
-                osc2.stop(now + 0.25);
-
-                return { noise, osc, osc2 };
-            } catch (e) { /* silent fail */ }
+                osc.stop(now + 0.5);
+                // طقطقة
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const osc2 = ctx.createOscillator();
+                        const gain3 = ctx.createGain();
+                        osc2.type = 'sine';
+                        osc2.frequency.setValueAtTime(2000 + Math.random() * 3000, ctx.currentTime);
+                        gain3.gain.setValueAtTime(0.01, ctx.currentTime);
+                        gain3.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.02);
+                        osc2.connect(gain3);
+                        gain3.connect(ctx.destination);
+                        osc2.start(ctx.currentTime);
+                        osc2.stop(ctx.currentTime + 0.02);
+                    }, i * 12);
+                }
+            } catch (e) { /* ignore */ }
         }
 
-        // 2. صوت طلقة صاعدة (إطلاق الصاروخ)
-        function playRocketLaunch(volume = 0.08) {
+        function playRocketSound() {
             if (!soundEnabled) return;
             try {
                 const ctx = createAudioContext();
                 if (!ctx) return;
                 const now = ctx.currentTime;
-
-                // صوت صفير صاعد
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(200, now);
-                osc.frequency.exponentialRampToValueAtTime(800, now + 0.5);
-
-                gain.gain.setValueAtTime(volume, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.4);
+                gain.gain.setValueAtTime(0.04, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
                 osc.connect(gain);
                 gain.connect(ctx.destination);
-
                 osc.start(now);
-                osc.stop(now + 0.5);
-
-                // إضافة ضوضاء خفيفة
-                const bufferSize = ctx.sampleRate * 0.3;
-                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-                const data = buffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) {
-                    const env = Math.exp(-i / (ctx.sampleRate * 0.08));
-                    data[i] = (Math.random() * 2 - 1) * env * 0.3;
-                }
-
-                const noise = ctx.createBufferSource();
-                noise.buffer = buffer;
-
-                const gain2 = ctx.createGain();
-                gain2.gain.setValueAtTime(volume * 0.5, now);
-                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-
-                noise.connect(gain2);
-                gain2.connect(ctx.destination);
-
-                noise.start(now);
-                noise.stop(now + 0.3);
-            } catch (e) { /* silent fail */ }
+                osc.stop(now + 0.4);
+            } catch (e) { /* ignore */ }
         }
 
-        // 3. صوت ألعاب نارية متعددة (تأثير محيطي)
-        function playFireworkBurst(x = 0.5, y = 0.5) {
-            if (!soundEnabled) return;
-
-            const pan = (x - 0.5) * 0.8;
-
-            // تأخير حسب المسافة
-            const delay = 0.05 + Math.random() * 0.1;
-
-            // انفجار رئيسي
-            playRealisticExplosion(0.12 + Math.random() * 0.08, delay);
-
-            // انفجارات ثانوية أصغر
-            setTimeout(() => {
-                playRealisticExplosion(0.05 + Math.random() * 0.04, 0);
-            }, delay * 1000 + 100 + Math.random() * 200);
-
-            setTimeout(() => {
-                playRealisticExplosion(0.03 + Math.random() * 0.03, 0);
-            }, delay * 1000 + 300 + Math.random() * 250);
-
-            // صوت طقطقة (جسيمات متطايرة)
-            setTimeout(() => {
-                for (let i = 0; i < 20; i++) {
-                    setTimeout(() => {
-                        playTone(3000 + Math.random() * 4000, 'sine', 0.02, 0.01, 0);
-                    }, i * 15);
-                }
-            }, delay * 1000 + 150);
-        }
-
-        // 4. صوت طقطقة الخشب (للكنز)
-        function playWoodCreak() {
-            if (!soundEnabled) return;
-            try {
-                const ctx = createAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime;
-
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(120, now);
-                osc.frequency.exponentialRampToValueAtTime(80, now + 0.2);
-
-                gain.gain.setValueAtTime(0.06, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-
-                osc.start(now);
-                osc.stop(now + 0.2);
-            } catch (e) { /* silent fail */ }
-        }
-
-        // 5. صوت نبض قلب عميق
-        function playHeartbeatDeep() {
-            if (!soundEnabled) return;
-            try {
-                const ctx = createAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime;
-
-                // النبضة الأولى
-                const osc1 = ctx.createOscillator();
-                const gain1 = ctx.createGain();
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(40, now);
-                gain1.gain.setValueAtTime(0.2, now);
-                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-
-                osc1.connect(gain1);
-                gain1.connect(ctx.destination);
-                osc1.start(now);
-                osc1.stop(now + 0.15);
-
-                // نبضة ثانية أعمق
-                const osc2 = ctx.createOscillator();
-                const gain2 = ctx.createGain();
-                osc2.type = 'sine';
-                osc2.frequency.setValueAtTime(35, now + 0.12);
-                gain2.gain.setValueAtTime(0.25, now + 0.12);
-                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-
-                osc2.connect(gain2);
-                gain2.connect(ctx.destination);
-                osc2.start(now + 0.12);
-                osc2.stop(now + 0.2);
-
-                // إضافة إيقاع نبضي سفلي
-                const osc3 = ctx.createOscillator();
-                const gain3 = ctx.createGain();
-                osc3.type = 'triangle';
-                osc3.frequency.setValueAtTime(80, now);
-                gain3.gain.setValueAtTime(0.05, now);
-                gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-
-                osc3.connect(gain3);
-                gain3.connect(ctx.destination);
-                osc3.start(now);
-                osc3.stop(now + 0.1);
-            } catch (e) { /* silent fail */ }
-        }
-
-        // 6. صوت سحري ناعم
-        function playMagicChime() {
-            if (!soundEnabled) return;
-            try {
-                const ctx = createAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime;
-
-                const notes = [523.25, 659.25, 783.99, 1046.50];
-                notes.forEach((freq, i) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(freq, now + i * 0.08);
-
-                    const vol = 0.04 - i * 0.005;
-                    gain.gain.setValueAtTime(vol, now + i * 0.08);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.3);
-
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-
-                    osc.start(now + i * 0.08);
-                    osc.stop(now + i * 0.08 + 0.3);
-                });
-
-                // إضافة هارمونيك علوي
-                const osc2 = ctx.createOscillator();
-                const gain2 = ctx.createGain();
-                osc2.type = 'triangle';
-                osc2.frequency.setValueAtTime(1567.98, now + 0.2);
-                gain2.gain.setValueAtTime(0.015, now + 0.2);
-                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
-
-                osc2.connect(gain2);
-                gain2.connect(ctx.destination);
-
-                osc2.start(now + 0.2);
-                osc2.stop(now + 0.6);
-            } catch (e) { /* silent fail */ }
-        }
-
-        // 7. صوت الجرس الملكي
-        function playRoyalBell() {
-            if (!soundEnabled) return;
-            try {
-                const ctx = createAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime;
-
-                const freqs = [440, 554.37, 659.25, 880];
-                freqs.forEach((freq, i) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(freq, now + i * 0.06);
-
-                    const vol = 0.06 - i * 0.01;
-                    gain.gain.setValueAtTime(vol, now + i * 0.06);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.5);
-
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-
-                    osc.start(now + i * 0.06);
-                    osc.stop(now + i * 0.06 + 0.5);
-                });
-            } catch (e) { /* silent fail */ }
-        }
-
-        // دالة مساعدة لنغمات بسيطة
-        function playTone(frequency, type = 'sine', duration = 0.4, volume = 0.1, delay = 0) {
-            if (!soundEnabled) return;
-            try {
-                const ctx = createAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime + delay;
-
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(frequency, now);
-
-                gain.gain.setValueAtTime(0.001, now);
-                gain.gain.linearRampToValueAtTime(volume, now + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-
-                osc.start(now);
-                osc.stop(now + duration);
-            } catch (e) { /* silent fail */ }
-        }
-
-        // ==================== 🎯 الأصوات المحسّنة للاستخدام العام ====================
-
-        function playMagicSound() {
-            playMagicChime();
-        }
-
-        function playClickSound() {
-            playTone(800, 'sine', 0.05, 0.05);
-        }
-
-        function playFireworkSound() {
-            playFireworkBurst(0.5 + (Math.random() - 0.5) * 0.6, 0.3 + Math.random() * 0.4);
-        }
-
-        function playRoseSound() {
-            playTone(329.63, 'sine', 0.3, 0.04, 0);
-            playTone(440.00, 'sine', 0.4, 0.03, 0.1);
-        }
-
-        function playHeartbeatSound() {
-            playHeartbeatDeep();
-        }
-
-        function playTreasureOpenSound() {
-            playWoodCreak();
-            setTimeout(() => playRoyalBell(), 300);
-            setTimeout(() => playMagicChime(), 600);
-        }
-
-        // ==================== 🎵 نظام الموسيقى الخلفية ====================
-
+        // ==================== 🎵 تشغيل الموسيقى ====================
         function startBackgroundMusic() {
-            if (soundEnabled && ytPlayer && typeof ytPlayer.playVideo === 'function' && isYoutubeReady) {
+            if (soundEnabled && ytPlayer && typeof ytPlayer.playVideo === 'function') {
                 try {
                     ytPlayer.playVideo();
-                    console.log('🎵 Music started!');
+                    console.log('🎵 تشغيل الأغنية بنجاح');
                 } catch (e) {
-                    console.log('🎵 Music start error:', e);
+                    console.log('⚠️ خطأ في تشغيل الأغنية:', e);
+                    // محاولة بديلة
+                    setTimeout(() => {
+                        if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                            ytPlayer.playVideo();
+                        }
+                    }, 1000);
                 }
+            } else {
+                console.log('⏳ انتظار جاهزية المشغل...');
+                setTimeout(startBackgroundMusic, 1000);
             }
         }
 
         function stopBackgroundMusic() {
             if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-                try {
-                    ytPlayer.pauseVideo();
-                } catch (e) { /* ignore */ }
+                try { ytPlayer.pauseVideo(); } catch (e) { /* ignore */ }
             }
         }
 
@@ -1333,430 +857,236 @@
             soundEnabled = !soundEnabled;
             const icon = document.getElementById('sound-icon');
             const text = document.getElementById('sound-text');
-
             if (soundEnabled) {
                 icon.textContent = '🔊';
-                text.textContent = 'الصوت';
+                text.textContent = 'صوت';
                 startBackgroundMusic();
             } else {
                 icon.textContent = '🔇';
-                text.textContent = 'صامت';
+                text.textContent = 'كتم';
                 stopBackgroundMusic();
             }
         }
 
         window.toggleSound = toggleSound;
 
-        // ==================== 🌌 نظام الخلفية الملكية ====================
-        const starCanvas = document.getElementById('starfield');
+        // ==================== 🌌 خلفية النجوم المتطورة ====================
+        const starCanvas = document.getElementById('stars-3d');
         const starCtx = starCanvas.getContext('2d');
-        const auroraCanvas = document.getElementById('aurora-layer');
-        const auroraCtx = auroraCanvas.getContext('2d');
-        const particleCanvas = document.getElementById('particle-layer');
-        const particleCtx = particleCanvas.getContext('2d');
-        const crownCanvas = document.getElementById('crown-layer');
-        const crownCtx = crownCanvas.getContext('2d');
-
-        let stars = [];
+        let starField = [];
         let shootingStars = [];
-        let floatingParticles = [];
-        let nebulaClouds = [];
-        let auroraWaves = [];
-        let crownParticles = [];
 
-        function resizeCanvases() {
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            [starCanvas, auroraCanvas, particleCanvas, crownCanvas].forEach(canvas => {
-                canvas.width = w;
-                canvas.height = h;
-            });
-            // إعداد كانفاس الألعاب النارية
-            const fwCanvas = document.getElementById('fireworks-canvas');
-            if (fwCanvas) {
-                fwCanvas.width = w;
-                fwCanvas.height = h;
-            }
+        function resizeStarCanvas() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
         }
 
-        window.addEventListener('resize', () => {
-            resizeCanvases();
-            initRoyalBackground();
-        });
+        window.addEventListener('resize', resizeStarCanvas);
+        resizeStarCanvas();
 
-        resizeCanvases();
-
-        function initRoyalBackground() {
-            stars = [];
-            const starCount = Math.floor((starCanvas.width * starCanvas.height) / 500);
-
-            for (let i = 0; i < starCount; i++) {
-                stars.push({
+        function initStarField() {
+            starField = [];
+            const count = Math.floor((starCanvas.width * starCanvas.height) / 300);
+            for (let i = 0; i < count; i++) {
+                starField.push({
                     x: Math.random() * starCanvas.width,
                     y: Math.random() * starCanvas.height,
-                    size: Math.random() * 3.5 + 0.5,
+                    size: Math.random() * 3 + 0.5,
                     alpha: Math.random(),
-                    speed: 0.005 + Math.random() * 0.05,
-                    twinkleSpeed: 0.02 + Math.random() * 0.08,
-                    color: ['#ffffff', '#ffe4e1', '#fffacd', '#e0b0ff', '#ffb6c1', '#ffd700', '#ff69b4'][Math.floor(Math
-                        .random() * 7)]
-                });
-            }
-
-            nebulaClouds = [];
-            for (let i = 0; i < 10; i++) {
-                nebulaClouds.push({
-                    x: Math.random() * starCanvas.width,
-                    y: Math.random() * starCanvas.height,
-                    radius: 100 + Math.random() * 300,
-                    alpha: 0.03 + Math.random() * 0.08,
-                    color: ['rgba(168,85,247,', 'rgba(244,63,94,', 'rgba(250,204,21,', 'rgba(255,105,180,',
-                        'rgba(147,51,234,'
-                    ][Math.floor(Math.random() * 5)],
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4
-                });
-            }
-
-            auroraWaves = [];
-            for (let i = 0; i < 7; i++) {
-                auroraWaves.push({
-                    x: Math.random() * auroraCanvas.width,
-                    baseY: auroraCanvas.height * (0.08 + Math.random() * 0.35),
-                    amplitude: 40 + Math.random() * 80,
-                    frequency: 0.008 + Math.random() * 0.04,
-                    phase: Math.random() * Math.PI * 2,
-                    color: ['rgba(100,200,180,', 'rgba(180,130,255,', 'rgba(255,150,200,', 'rgba(250,204,21,'][Math.floor(
-                        Math.random() * 4)]
-                });
-            }
-
-            floatingParticles = [];
-            for (let i = 0; i < 150; i++) {
-                floatingParticles.push({
-                    x: Math.random() * particleCanvas.width,
-                    y: Math.random() * particleCanvas.height,
-                    size: Math.random() * 5 + 1,
-                    alpha: Math.random() * 0.7,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    life: Math.random() * 300
-                });
-            }
-
-            crownParticles = [];
-            for (let i = 0; i < 50; i++) {
-                crownParticles.push({
-                    x: Math.random() * crownCanvas.width,
-                    y: Math.random() * crownCanvas.height,
-                    size: Math.random() * 8 + 2,
-                    alpha: Math.random() * 0.4,
-                    vy: -0.5 - Math.random() * 1.5,
-                    life: Math.random() * 200
+                    speed: 0.01 + Math.random() * 0.04,
+                    twinkle: 0.02 + Math.random() * 0.06,
+                    color: ['#ffffff', '#ffd700', '#ff69b4', '#a855f7', '#00ffcc'][Math.floor(Math.random() * 5)]
                 });
             }
         }
 
-        function drawStarfield() {
+        function drawStarField() {
             starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
-
-            nebulaClouds.forEach(cloud => {
-                const gradient = starCtx.createRadialGradient(cloud.x, cloud.y, 0, cloud.x, cloud.y, cloud.radius);
-                gradient.addColorStop(0, cloud.color + '0.12)');
-                gradient.addColorStop(0.5, cloud.color + '0.04)');
-                gradient.addColorStop(1, cloud.color + '0)');
-                starCtx.fillStyle = gradient;
-                starCtx.beginPath();
-                starCtx.arc(cloud.x, cloud.y, cloud.radius, 0, Math.PI * 2);
-                starCtx.fill();
-
-                cloud.x += cloud.vx;
-                cloud.y += cloud.vy;
-                if (cloud.x < -cloud.radius) cloud.x = starCanvas.width + cloud.radius;
-                if (cloud.x > starCanvas.width + cloud.radius) cloud.x = -cloud.radius;
-                if (cloud.y < -cloud.radius) cloud.y = starCanvas.height + cloud.radius;
-                if (cloud.y > starCanvas.height + cloud.radius) cloud.y = -cloud.radius;
-            });
-
-            stars.forEach(star => {
-                star.alpha += star.twinkleSpeed;
-                if (star.alpha > 1 || star.alpha < 0.1) star.twinkleSpeed = -star.twinkleSpeed;
-
-                starCtx.globalAlpha = Math.abs(star.alpha);
+            
+            starField.forEach(star => {
+                star.alpha += star.twinkle;
+                if (star.alpha > 1 || star.alpha < 0.1) star.twinkle = -star.twinkle;
+                
+                const alpha = Math.abs(star.alpha);
+                starCtx.globalAlpha = alpha;
                 starCtx.fillStyle = star.color;
                 starCtx.shadowColor = star.color;
-                starCtx.shadowBlur = star.size * 6;
+                starCtx.shadowBlur = star.size * 8;
                 starCtx.beginPath();
                 starCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
                 starCtx.fill();
-
-                if (star.size > 2.5) {
-                    starCtx.shadowBlur = star.size * 12;
-                    starCtx.fill();
-                }
             });
-
+            
             starCtx.shadowBlur = 0;
             starCtx.globalAlpha = 1;
-
-            if (Math.random() < 0.05) {
+            
+            // نيزك عشوائي
+            if (Math.random() < 0.03) {
                 shootingStars.push({
-                    x: Math.random() * starCanvas.width * 0.5,
-                    y: Math.random() * starCanvas.height * 0.15,
-                    length: 100 + Math.random() * 200,
-                    speed: 10 + Math.random() * 20,
+                    x: Math.random() * starCanvas.width * 0.3,
+                    y: Math.random() * starCanvas.height * 0.2,
+                    length: 150 + Math.random() * 200,
+                    speed: 15 + Math.random() * 20,
                     life: 1,
-                    angle: Math.PI / 4 + (Math.random() - 0.5) * 0.6,
+                    angle: Math.PI / 4 + (Math.random() - 0.5) * 0.5,
                     color: ['#ffffff', '#ffd700', '#ff69b4'][Math.floor(Math.random() * 3)]
                 });
             }
-
+            
             shootingStars.forEach((s, idx) => {
                 s.x += Math.cos(s.angle) * s.speed;
                 s.y += Math.sin(s.angle) * s.speed;
-                s.life -= 0.012;
-
+                s.life -= 0.015;
+                
                 const gradient = starCtx.createLinearGradient(
                     s.x, s.y,
                     s.x - Math.cos(s.angle) * s.length,
                     s.y - Math.sin(s.angle) * s.length
                 );
-                const colorBase = s.color.replace(')', '');
-                gradient.addColorStop(0, colorBase + `,${s.life})`);
-                gradient.addColorStop(1, colorBase + ',0)');
-
+                const colorBase = s.color;
+                gradient.addColorStop(0, colorBase);
+                gradient.addColorStop(1, 'transparent');
+                
                 starCtx.strokeStyle = gradient;
-                starCtx.lineWidth = 3;
+                starCtx.lineWidth = 2.5;
+                starCtx.globalAlpha = s.life;
                 starCtx.beginPath();
                 starCtx.moveTo(s.x, s.y);
                 starCtx.lineTo(s.x - Math.cos(s.angle) * s.length, s.y - Math.sin(s.angle) * s.length);
                 starCtx.stroke();
-
+                
                 if (s.life <= 0 || s.x > starCanvas.width + 300 || s.y > starCanvas.height + 300) {
                     shootingStars.splice(idx, 1);
                 }
             });
+            
+            starCtx.globalAlpha = 1;
+            requestAnimationFrame(drawStarField);
         }
 
-        function drawAurora() {
-            auroraCtx.clearRect(0, 0, auroraCanvas.width, auroraCanvas.height);
+        initStarField();
+        drawStarField();
 
-            auroraWaves.forEach(wave => {
-                auroraCtx.save();
-                auroraCtx.globalCompositeOperation = 'screen';
-
-                for (let x = 0; x < auroraCanvas.width; x += 2) {
-                    const y = wave.baseY + Math.sin(x * wave.frequency + Date.now() * 0.0008 + wave.phase) * wave
-                        .amplitude;
-
-                    const gradient = auroraCtx.createLinearGradient(x, y - 30, x, y + 30);
-                    gradient.addColorStop(0, wave.color + '0)');
-                    gradient.addColorStop(0.5, wave.color + '0.2)');
-                    gradient.addColorStop(1, wave.color + '0)');
-
-                    auroraCtx.fillStyle = gradient;
-                    auroraCtx.fillRect(x, y - 30, 2, 60);
-                }
-
-                auroraCtx.restore();
-            });
-        }
-
-        function drawParticles() {
-            particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-
-            floatingParticles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.life--;
-
-                if (p.life <= 0 || p.x < -100 || p.x > particleCanvas.width + 100 || p.y < -100 || p.y > particleCanvas
-                    .height + 100) {
-                    p.x = Math.random() * particleCanvas.width;
-                    p.y = Math.random() * particleCanvas.height;
-                    p.life = Math.random() * 300;
-                }
-
-                particleCtx.globalAlpha = p.alpha * (p.life / 300);
-                particleCtx.fillStyle = '#ffffff';
-                particleCtx.shadowColor = '#ffd700';
-                particleCtx.shadowBlur = p.size * 4;
-                particleCtx.beginPath();
-                particleCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                particleCtx.fill();
-            });
-
-            particleCtx.shadowBlur = 0;
-            particleCtx.globalAlpha = 1;
-        }
-
-        function drawCrownParticles() {
-            crownCtx.clearRect(0, 0, crownCanvas.width, crownCanvas.height);
-
-            crownParticles.forEach(p => {
-                p.y += p.vy;
-                p.life--;
-
-                if (p.life <= 0 || p.y < -50) {
-                    p.x = Math.random() * crownCanvas.width;
-                    p.y = crownCanvas.height + 50;
-                    p.life = Math.random() * 200;
-                }
-
-                crownCtx.globalAlpha = p.alpha * (p.life / 200);
-                crownCtx.fillStyle = '#ffd700';
-                crownCtx.shadowColor = '#ffd700';
-                crownCtx.shadowBlur = p.size * 5;
-                crownCtx.font = `${p.size * 4}px serif`;
-                crownCtx.fillText('👑', p.x, p.y);
-            });
-
-            crownCtx.shadowBlur = 0;
-            crownCtx.globalAlpha = 1;
-        }
-
-        function animateBackground() {
-            drawStarfield();
-            drawAurora();
-            drawParticles();
-            drawCrownParticles();
-            requestAnimationFrame(animateBackground);
-        }
-
-        initRoyalBackground();
-        animateBackground();
-
-        // ==================== 🎆 نظام الألعاب النارية الواقعي ====================
-
+        // ==================== 🎆 نظام الألعاب النارية الأسطوري ====================
         const fwCanvas = document.getElementById('fireworks-canvas');
         const fwCtx = fwCanvas.getContext('2d');
-
-        let fireworks = [];
-        let particles = [];
+        let fireworkParticles = [];
+        let rocketTrails = [];
         let fwRunning = false;
-        let fwAnimId = null;
 
-        class Firework {
+        function resizeFwCanvas() {
+            fwCanvas.width = window.innerWidth;
+            fwCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeFwCanvas);
+        resizeFwCanvas();
+
+        class RocketParticle {
             constructor(x, y, targetX, targetY, color) {
                 this.x = x;
                 this.y = y;
                 this.targetX = targetX;
                 this.targetY = targetY;
                 this.color = color || `hsl(${Math.random() * 360}, 100%, 60%)`;
-                this.speed = 3 + Math.random() * 2;
-                this.angle = Math.atan2(targetY - y, targetX - x);
-                this.vx = Math.cos(this.angle) * this.speed;
-                this.vy = Math.sin(this.angle) * this.speed;
-                this.radius = 2;
+                this.speed = 4 + Math.random() * 3;
+                const angle = Math.atan2(targetY - y, targetX - x);
+                this.vx = Math.cos(angle) * this.speed;
+                this.vy = Math.sin(angle) * this.speed;
                 this.trail = [];
-                this.maxTrail = 15;
+                this.maxTrail = 20;
                 this.alive = true;
-                this.distToTarget = 0;
-                this.startDist = Math.hypot(targetX - x, targetY - y);
-                this.type = Math.random() > 0.3 ? 'normal' : 'willow';
+                this.type = Math.random() > 0.4 ? 'burst' : 'willow';
                 this.sparkle = Math.random() * Math.PI * 2;
             }
 
             update() {
                 if (!this.alive) return;
-
                 this.trail.push({ x: this.x, y: this.y });
                 if (this.trail.length > this.maxTrail) this.trail.shift();
-
+                
                 this.x += this.vx;
                 this.y += this.vy;
-
-                // تغيير طفيف في الاتجاه لمزيد من الواقعية
-                this.vx += (Math.random() - 0.5) * 0.05;
-                this.vy += (Math.random() - 0.5) * 0.05;
-
-                // مقاومة الهواء
+                this.vx += (Math.random() - 0.5) * 0.06;
+                this.vy += (Math.random() - 0.5) * 0.06;
                 this.vx *= 0.995;
                 this.vy *= 0.995;
-
-                this.distToTarget = Math.hypot(this.targetX - this.x, this.targetY - this.y);
-
-                if (this.distToTarget < 10 || this.y < 50) {
+                this.sparkle += 0.1;
+                
+                const dist = Math.hypot(this.targetX - this.x, this.targetY - this.y);
+                if (dist < 15 || this.y < 30) {
                     this.alive = false;
                     this.explode();
                 }
-
-                this.sparkle += 0.1;
             }
 
             explode() {
-                const numParticles = 80 + Math.floor(Math.random() * 80);
+                const count = this.type === 'willow' ? 120 + Math.random() * 60 : 70 + Math.random() * 70;
                 const isWillow = this.type === 'willow';
-
-                // اهتزاز الشاشة للألعاب النارية الكبيرة
-                if (numParticles > 100) {
+                
+                // اهتزاز الشاشة
+                if (count > 100) {
                     document.body.classList.add('rumble-active');
-                    setTimeout(() => document.body.classList.remove('rumble-active'), 400);
+                    setTimeout(() => document.body.classList.remove('rumble-active'), 300);
                 }
-
-                // تشغيل صوت الانفجار الواقعي
-                playFireworkBurst(0.3 + Math.random() * 0.4, 0.2 + Math.random() * 0.3);
-
-                for (let i = 0; i < numParticles; i++) {
+                
+                // صوت الانفجار
+                playFireworkBurst();
+                
+                const colors = [
+                    this.color,
+                    `hsl(${Math.random() * 360}, 100%, 70%)`,
+                    `hsl(${Math.random() * 360}, 100%, 50%)`,
+                    '#ffffff',
+                    '#ffd700',
+                    '#ff69b4',
+                    '#00ffcc'
+                ];
+                
+                for (let i = 0; i < count; i++) {
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = isWillow ?
-                        0.5 + Math.random() * 3 :
-                        1 + Math.random() * 5;
-
-                    const colors = [
-                        this.color,
-                        `hsl(${Math.random() * 360}, 100%, 70%)`,
-                        `hsl(${Math.random() * 360}, 100%, 50%)`,
-                        '#ffffff',
-                        '#ffd700',
-                        '#ff69b4'
-                    ];
-
-                    const p = new Particle(
+                    const speed = isWillow ? 0.5 + Math.random() * 2.5 : 1 + Math.random() * 5;
+                    const p = new FireParticle(
                         this.x, this.y,
                         Math.cos(angle) * speed,
                         Math.sin(angle) * speed,
                         colors[Math.floor(Math.random() * colors.length)],
-                        isWillow ? 1.5 + Math.random() * 1.5 : 1 + Math.random() * 2,
-                        isWillow ? 60 + Math.random() * 40 : 30 + Math.random() * 40,
+                        isWillow ? 2 + Math.random() * 2 : 1.5 + Math.random() * 2,
+                        isWillow ? 70 + Math.random() * 50 : 35 + Math.random() * 45,
                         isWillow
                     );
-                    particles.push(p);
+                    fireworkParticles.push(p);
                 }
             }
 
             draw(ctx) {
                 if (!this.alive) return;
-
-                // رسم الذيل
+                // الذيل
                 for (let i = 0; i < this.trail.length; i++) {
-                    const alpha = i / this.trail.length * 0.6;
-                    const size = this.radius * (i / this.trail.length);
+                    const alpha = (i / this.trail.length) * 0.5;
+                    const size = 1.5 * (i / this.trail.length);
                     ctx.beginPath();
                     ctx.arc(this.trail[i].x, this.trail[i].y, size, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
                     ctx.fill();
                 }
-
-                // رسم الجسم الرئيسي مع توهج
-                const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 6);
-                glow.addColorStop(0, 'rgba(255, 255, 255, 1)');
-                glow.addColorStop(0.3, this.color);
-                glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
+                // التوهج
+                const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 8);
+                glow.addColorStop(0, 'rgba(255,255,255,1)');
+                glow.addColorStop(0.5, this.color);
+                glow.addColorStop(1, 'rgba(255,255,255,0)');
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius * 6, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, 8, 0, Math.PI * 2);
                 ctx.fillStyle = glow;
                 ctx.fill();
-
+                // النقطة الأساسية
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
                 ctx.fillStyle = '#ffffff';
                 ctx.fill();
             }
         }
 
-        class Particle {
+        class FireParticle {
             constructor(x, y, vx, vy, color, size, life, isWillow) {
                 this.x = x;
                 this.y = y;
@@ -1768,31 +1098,27 @@
                 this.maxLife = life;
                 this.alive = true;
                 this.isWillow = isWillow;
-                this.gravity = isWillow ? 0.01 : 0.03;
+                this.gravity = isWillow ? 0.008 : 0.03;
                 this.friction = 0.99;
                 this.trail = [];
-                this.maxTrail = 5;
-                // إضافة بريق عشوائي
+                this.maxTrail = 4;
                 this.sparkle = Math.random() * Math.PI * 2;
                 this.sparkleSpeed = 0.05 + Math.random() * 0.1;
             }
 
             update() {
                 if (!this.alive) return;
-
                 this.trail.push({ x: this.x, y: this.y });
                 if (this.trail.length > this.maxTrail) this.trail.shift();
-
+                
                 this.vx *= this.friction;
                 this.vy *= this.friction;
                 this.vy += this.gravity;
-
                 this.x += this.vx;
                 this.y += this.vy;
-
                 this.life--;
                 this.sparkle += this.sparkleSpeed;
-
+                
                 if (this.life <= 0 || this.y > window.innerHeight + 50) {
                     this.alive = false;
                 }
@@ -1800,835 +1126,702 @@
 
             draw(ctx) {
                 if (!this.alive) return;
-
                 const alpha = this.life / this.maxLife;
-                const size = this.size * (0.5 + 0.5 * alpha);
-
-                // رسم الذيل
+                const size = this.size * (0.4 + 0.6 * alpha);
+                
+                // الذيل
                 for (let i = 0; i < this.trail.length; i++) {
-                    const trailAlpha = (i / this.trail.length) * alpha * 0.4;
+                    const trailAlpha = (i / this.trail.length) * alpha * 0.3;
                     ctx.beginPath();
-                    ctx.arc(this.trail[i].x, this.trail[i].y, size * (i / this.trail.length) * 0.5, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color.replace(')', `,${trailAlpha})`).replace('hsl', 'hsla');
-                    if (!this.color.includes('hsl')) {
-                        ctx.fillStyle = `rgba(255, 255, 255, ${trailAlpha * 0.5})`;
-                    }
+                    ctx.arc(this.trail[i].x, this.trail[i].y, size * (i / this.trail.length) * 0.4, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${trailAlpha})`;
                     ctx.fill();
                 }
-
-                // التوهج الرئيسي
+                
+                // التوهج
                 const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, size * 6);
                 glow.addColorStop(0, `rgba(255, 255, 255, ${alpha * 0.8})`);
                 glow.addColorStop(0.3, this.color);
-                glow.addColorStop(1, `rgba(255, 255, 255, 0)`);
-
+                glow.addColorStop(1, 'rgba(255, 255, 255, 0)');
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, size * 6, 0, Math.PI * 2);
                 ctx.fillStyle = glow;
                 ctx.fill();
-
-                // الجسم الرئيسي
+                
+                // الجسم
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.9})`;
                 ctx.fill();
-
-                // بريق إضافي للجسيمات الكبيرة
-                if (size > 2 && Math.random() < 0.05) {
-                    ctx.beginPath();
-                    ctx.arc(this.x + Math.sin(this.sparkle) * size * 2, this.y + Math.cos(this.sparkle) * size * 2,
-                        size * 0.3, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.6})`;
-                    ctx.fill();
-                }
             }
         }
 
-        // دالة إطلاق الألعاب النارية بشكل مكثف
         function launchFirework() {
             const w = window.innerWidth;
             const h = window.innerHeight;
-
             const x = 50 + Math.random() * (w - 100);
             const y = h - 50 - Math.random() * 100;
-
             const targetX = 50 + Math.random() * (w - 100);
-            const targetY = 50 + Math.random() * (h * 0.5);
-
+            const targetY = 30 + Math.random() * (h * 0.5);
+            
             const colors = [
-                `hsl(${Math.random() * 60 + 30}, 100%, 55%)`, // ذهبي
-                `hsl(${Math.random() * 40 + 330}, 100%, 60%)`, // وردي
-                `hsl(${Math.random() * 40 + 260}, 100%, 60%)`, // بنفسجي
-                `hsl(${Math.random() * 60 + 180}, 100%, 55%)`, // أزرق
-                `hsl(${Math.random() * 30 + 340}, 100%, 60%)`, // أحمر وردي
-                `hsl(${Math.random() * 40 + 40}, 100%, 55%)`, // برتقالي
+                `hsl(${Math.random() * 60 + 30}, 100%, 55%)`,
+                `hsl(${Math.random() * 40 + 330}, 100%, 60%)`,
+                `hsl(${Math.random() * 40 + 260}, 100%, 60%)`,
+                `hsl(${Math.random() * 60 + 180}, 100%, 55%)`,
+                `hsl(${Math.random() * 30 + 340}, 100%, 60%)`,
+                `hsl(${Math.random() * 40 + 40}, 100%, 55%)`,
                 '#ffd700',
                 '#ff69b4',
+                '#00ffcc',
                 '#ffffff'
             ];
-
-            const color = colors[Math.floor(Math.random() * colors.length)];
-
-            const fw = new Firework(x, y, targetX, targetY, color);
-            fireworks.push(fw);
-
-            // إضافة صوت إطلاق الصاروخ (أحياناً)
-            if (Math.random() < 0.3) {
-                playRocketLaunch(0.03 + Math.random() * 0.03);
-            }
+            
+            const rocket = new RocketParticle(x, y, targetX, targetY, colors[Math.floor(Math.random() * colors.length)]);
+            rocketTrails.push(rocket);
+            
+            // صوت الإطلاق أحياناً
+            if (Math.random() < 0.2) playRocketSound();
         }
 
-        // دالة تشغيل العرض الكامل للألعاب النارية
-        function startFireworksShow() {
+        function launchLegendaryFireworks() {
             if (fwRunning) return;
             fwRunning = true;
-
+            
             const btn = document.getElementById('fireworks-trigger');
             if (btn) {
-                btn.textContent = '🎆 الألعاب النارية تشتعل... 🎆';
-                btn.style.opacity = '0.5';
+                btn.textContent = '🎆 السماء تشتعل... 🎆';
+                btn.style.opacity = '0.6';
                 btn.style.pointerEvents = 'none';
             }
-
-            // إظهار كانفاس الألعاب النارية
-            const canvas = document.getElementById('fireworks-canvas');
-            canvas.classList.add('active');
-
-            // إطلاق دفعة أولى قوية
-            for (let i = 0; i < 30; i++) {
+            
+            fwCanvas.classList.add('active');
+            
+            // إطلاق مكثف أولي
+            for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     launchFirework();
                     if (i % 5 === 0) {
-                        // إطلاق عدة صواريخ في نفس الوقت
-                        for (let j = 0; j < 3; j++) {
-                            setTimeout(() => launchFirework(), j * 100);
+                        for (let j = 0; j < 4; j++) {
+                            setTimeout(() => launchFirework(), j * 80);
                         }
                     }
-                }, i * 80);
+                }, i * 60);
             }
-
-            // استمرار إطلاق الألعاب النارية لمدة 30 ثانية
+            
+            // استمرار الإطلاق لمدة 35 ثانية
             let launchCount = 0;
-            const maxLaunches = 200;
+            const maxLaunches = 300;
             const launchInterval = setInterval(() => {
                 if (launchCount > maxLaunches) {
                     clearInterval(launchInterval);
                     return;
                 }
-
-                // إطلاق مجموعات من الصواريخ
-                const numLaunches = 1 + Math.floor(Math.random() * 3);
-                for (let i = 0; i < numLaunches; i++) {
+                
+                const num = 2 + Math.floor(Math.random() * 4);
+                for (let i = 0; i < num; i++) {
                     setTimeout(() => {
                         launchFirework();
-                        // في بعض الأحيان إطلاق صواريخ متعددة في نفس الوقت
-                        if (Math.random() < 0.2) {
-                            setTimeout(() => launchFirework(), 50);
-                            setTimeout(() => launchFirework(), 100);
+                        if (Math.random() < 0.25) {
+                            setTimeout(() => launchFirework(), 60);
+                            setTimeout(() => launchFirework(), 120);
                         }
-                    }, i * 60);
+                    }, i * 50);
                 }
-
-                launchCount += numLaunches;
-
-                // زيادة التردد تدريجياً
-                if (launchCount > 100) {
-                    // إطلاق مكثف في النصف الثاني
-                    if (Math.random() < 0.4) {
-                        setTimeout(() => {
-                            for (let i = 0; i < 5; i++) {
-                                setTimeout(() => launchFirework(), i * 30);
-                            }
-                        }, 100);
-                    }
+                launchCount += num;
+                
+                // إطلاق مكثف في النصف الثاني
+                if (launchCount > 150 && Math.random() < 0.4) {
+                    setTimeout(() => {
+                        for (let i = 0; i < 6; i++) {
+                            setTimeout(() => launchFirework(), i * 35);
+                        }
+                    }, 80);
                 }
-
-            }, 150);
-
-            // إيقاف العرض بعد 30 ثانية
+            }, 120);
+            
+            // إيقاف بعد 35 ثانية
             setTimeout(() => {
                 clearInterval(launchInterval);
-
-                // إطلاق دفعة أخيرة مكثفة
-                for (let i = 0; i < 40; i++) {
+                
+                // دفعة أخيرة أسطورية
+                for (let i = 0; i < 60; i++) {
                     setTimeout(() => {
                         launchFirework();
                         if (i % 3 === 0) {
-                            for (let j = 0; j < 4; j++) {
-                                setTimeout(() => launchFirework(), j * 50);
+                            for (let j = 0; j < 5; j++) {
+                                setTimeout(() => launchFirework(), j * 40);
                             }
                         }
-                    }, i * 60);
+                    }, i * 50);
                 }
-
-                // إعادة زر التشغيل بعد 35 ثانية
+                
                 setTimeout(() => {
                     if (btn) {
-                        btn.textContent = '🎆 إعادة الألعاب النارية 🎆';
+                        btn.textContent = '🎆 أطلقي ألعاب الأحلام النارية 🎆';
                         btn.style.opacity = '1';
                         btn.style.pointerEvents = 'auto';
                     }
                     fwRunning = false;
-                }, 3500);
-
-            }, 30000);
-
+                }, 4000);
+            }, 35000);
+            
             // إظهار الرسالة النهائية
             setTimeout(() => {
                 revealFinalMessage();
             }, 2000);
         }
 
-        // حلقة رسم الألعاب النارية
         function animateFireworks() {
             fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
-
-            // تحديث ورسم الصواريخ
-            fireworks = fireworks.filter(fw => fw.alive);
-            fireworks.forEach(fw => {
-                fw.update();
-                fw.draw(fwCtx);
-            });
-
-            // تحديث ورسم الجسيمات
-            particles = particles.filter(p => p.alive);
-            particles.forEach(p => {
-                p.update();
-                p.draw(fwCtx);
-            });
-
-            // إضافة تأثيرات إضافية
-            if (fwRunning || particles.length > 0 || fireworks.length > 0) {
-                // توهج خلفية خفيف عند وجود ألعاب نارية
-                fwCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-                fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+            
+            // خلفية سوداء شفافة لتأثير الدخان
+            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+            fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+            
+            rocketTrails = rocketTrails.filter(r => r.alive);
+            rocketTrails.forEach(r => { r.update(); r.draw(fwCtx); });
+            
+            fireworkParticles = fireworkParticles.filter(p => p.alive);
+            fireworkParticles.forEach(p => { p.update(); p.draw(fwCtx); });
+            
+            // تأثير بريق إضافي
+            if (fireworkParticles.length > 50 && Math.random() < 0.02) {
+                const p = fireworkParticles[Math.floor(Math.random() * fireworkParticles.length)];
+                if (p) {
+                    fwCtx.beginPath();
+                    fwCtx.arc(p.x + (Math.random() - 0.5) * 30, p.y + (Math.random() - 0.5) * 30, 2 + Math.random() * 3, 0, Math.PI * 2);
+                    fwCtx.fillStyle = `rgba(255, 255, 255, ${0.3 + Math.random() * 0.3})`;
+                    fwCtx.fill();
+                }
             }
-
-            fwAnimId = requestAnimationFrame(animateFireworks);
+            
+            requestAnimationFrame(animateFireworks);
         }
 
-        // بدء حلقة الألعاب النارية
         animateFireworks();
 
-        // ==================== 👑 نظام المشاهد الملكي ====================
+        // ==================== 👑 نظام المشاهد ====================
         let isTransitioning = false;
 
-        function nextScene(sceneNumber) {
+        function nextScene(num) {
             if (isTransitioning) return;
             isTransitioning = true;
-
-            const currentActive = document.querySelector('.scene.active');
-            const nextTarget = document.getElementById(`scene${sceneNumber}`);
-
-            if (!nextTarget) {
-                isTransitioning = false;
-                return;
-            }
-
+            const current = document.querySelector('.scene.active');
+            const target = document.getElementById(`scene${num}`);
+            if (!target) { isTransitioning = false; return; }
+            
             playClickSound();
-
-            if (currentActive) {
-                gsap.to(currentActive, {
+            
+            if (current) {
+                gsap.to(current, {
                     opacity: 0,
-                    scale: 0.85,
-                    filter: 'blur(20px)',
+                    scale: 0.8,
+                    filter: 'blur(30px)',
                     duration: 1.2,
-                    ease: "power3.inOut",
+                    ease: 'power3.inOut',
                     onComplete: () => {
-                        currentActive.classList.remove('active');
-                        nextTarget.classList.add('active');
-
-                        gsap.fromTo(nextTarget, { opacity: 0, scale: 1.15, filter: 'blur(20px)' }, {
+                        current.classList.remove('active');
+                        target.classList.add('active');
+                        gsap.fromTo(target, { opacity: 0, scale: 1.2, filter: 'blur(30px)' }, {
                             opacity: 1,
                             scale: 1,
                             filter: 'blur(0px)',
                             duration: 1.5,
-                            ease: "power3.out",
+                            ease: 'power3.out',
                             onComplete: () => {
                                 isTransitioning = false;
-                                runSceneLogic(sceneNumber);
+                                runSceneLogic(num);
                             }
                         });
                     }
                 });
             } else {
-                nextTarget.classList.add('active');
-                gsap.fromTo(nextTarget, { opacity: 0, scale: 1.15, filter: 'blur(20px)' }, {
+                target.classList.add('active');
+                gsap.fromTo(target, { opacity: 0, scale: 1.2, filter: 'blur(30px)' }, {
                     opacity: 1,
                     scale: 1,
                     filter: 'blur(0px)',
                     duration: 1.5,
-                    ease: "power3.out",
+                    ease: 'power3.out',
                     onComplete: () => {
                         isTransitioning = false;
-                        runSceneLogic(sceneNumber);
+                        runSceneLogic(num);
                     }
                 });
             }
         }
 
-        // ==================== 📝 تأثير الكتابة الملكية ====================
+        // ==================== 📝 تأثير الكتابة ====================
         document.addEventListener('DOMContentLoaded', () => {
-            new Typed('#typing-text', {
+            new Typed('#typing-title', {
                 strings: [
-                    "في مملكة الكون الواسعة...",
-                    "حيث تتراقص المجرات وتتسامر النجوم...",
-                    "هناك أميرة واحدة فقط تستحق كل هذا الجلال...",
-                    "أميرة قلبها أنقى من الماس...",
-                    "أميرة روحها أطهر من ماء السماء...",
+                    "في أقصى أطراف الكون...",
+                    "حيث تتنفس المجرات وتتمايل النجوم...",
+                    "هناك أميرة واحدة فقط تستحق كل هذا السحر...",
+                    "أميرة قلبها أوسع من الأكوان...",
+                    "أميرة روحها أعمق من البحار...",
                     "اليوم، الثاني عشر من يوليو...",
-                    "اليوم الذي توجت فيه الأميرة منار ملكة للكون 👑"
+                    "اليوم الذي أصبحت فيه الأميرة منار أسطورة الخلود 👑"
                 ],
-                typeSpeed: 40,
-                backSpeed: 18,
+                typeSpeed: 35,
+                backSpeed: 15,
                 backDelay: 2000,
-                startDelay: 1000,
+                startDelay: 800,
                 showCursor: true,
-                cursorChar: '👑',
+                cursorChar: '🌟',
                 onComplete: () => {
-                    gsap.to('#btn-start', {
+                    gsap.to('#btn-magic', {
                         opacity: 1,
                         scale: 1,
                         duration: 1.5,
-                        ease: "elastic.out(1, 0.4)",
-                        delay: 0.8
+                        ease: 'elastic.out(1, 0.4)',
+                        delay: 0.6
                     });
                 }
             });
         });
 
-        // ==================== 🚀 بدء التجربة الملكية ====================
-        function startExperience() {
+        // ==================== 🚀 فتح البوابة ====================
+        function openMagicGate() {
             if (isTransitioning) return;
             createAudioContext();
-
-            setTimeout(() => startBackgroundMusic(), 500);
-            playMagicSound();
-
+            setTimeout(startBackgroundMusic, 400);
+            playMagicChime();
+            
             confetti({
-                particleCount: 300,
-                spread: 150,
-                origin: { y: 0.6 },
-                colors: ['#facc15', '#ffd700', '#f43f5e', '#a855f7', '#ffffff', '#ff69b4'],
-                shapes: ['circle', 'star'],
-                scalar: 2,
-                ticks: 200
-            });
-
-            createGoldenParticles();
-            createGoldenParticles();
-            nextScene(2);
-        }
-
-        window.startExperience = startExperience;
-
-        // ==================== 🎯 منطق المشاهد ====================
-        function runSceneLogic(num) {
-            switch (num) {
-                case 2:
-                    setupHeartScene();
-                    break;
-
-                case 3:
-                    startCountdown();
-                    break;
-
-                case 5:
-                    playMagicSound();
-                    gsap.from('#polaroid-card', {
-                        y: 500,
-                        rotation: -30,
-                        opacity: 0,
-                        duration: 2,
-                        ease: "power4.out"
-                    });
-                    break;
-
-                case 6:
-                    buildInteractiveStars();
-                    break;
-
-                case 8:
-                    createRoyalPetalRain();
-                    playRoseSound();
-                    break;
-
-                case 9:
-                    // عند دخول المشهد الأخير، تظهر الرسالة النهائية
-                    setTimeout(() => {
-                        revealFinalMessage();
-                    }, 1000);
-                    break;
-            }
-        }
-
-        // ==================== ❤️ مشهد القلب ====================
-        function setupHeartScene() {
-            const princessHeart = document.getElementById('princess-heart');
-            if (!princessHeart) return;
-
-            princessHeart.onclick = function() {
-                if (this.dataset.activated === 'true') return;
-                this.dataset.activated = 'true';
-
-                playHeartbeatSound();
-                playMagicSound();
-                setTimeout(() => playFireworkSound(), 300);
-
-                confetti({
-                    particleCount: 500,
-                    spread: 180,
-                    origin: { y: 0.5 },
-                    colors: ['#facc15', '#ffd700', '#ff69b4', '#ff1493', '#ffffff', '#a855f7', '#ff6347'],
-                    shapes: ['circle', 'star'],
-                    scalar: 2.5,
-                    ticks: 300
-                });
-
-                const nameEl = document.getElementById('name-appear');
-                const subtitleEl = document.getElementById('subtitle-appear');
-
-                gsap.to(nameEl, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 2.5,
-                    ease: "elastic.out(1, 0.2)",
-                });
-
-                gsap.to(subtitleEl, {
-                    opacity: 1,
-                    duration: 2,
-                    delay: 1.2,
-                    ease: "power3.out"
-                });
-
-                const flash = document.createElement('div');
-                flash.className = 'flash-effect';
-                document.body.appendChild(flash);
-
-                gsap.fromTo(flash, { opacity: 0.7 }, {
-                    opacity: 0,
-                    duration: 1.5,
-                    ease: "power2.out",
-                    onComplete: () => flash.remove()
-                });
-
-                createGoldenParticles();
-                createGoldenParticles();
-                createGoldenParticles();
-
-                setTimeout(() => nextScene(3), 4000);
-            };
-        }
-
-        // ==================== ⏱️ العد التنازلي ====================
-        function startCountdown() {
-            let count = 3;
-            const counterEl = document.getElementById('countdown');
-
-            gsap.to(counterEl, {
-                opacity: 1,
-                scale: 1.5,
-                duration: 1,
-                ease: "back.out(2)"
-            });
-
-            const countdownInterval = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    counterEl.innerText = count;
-                    gsap.fromTo(counterEl, { scale: 0.1, opacity: 0 }, {
-                        scale: 1.8,
-                        opacity: 1,
-                        duration: 0.7,
-                        ease: "back.out(2.5)"
-                    });
-                    playMagicSound();
-                    createGoldenParticles();
-                } else {
-                    clearInterval(countdownInterval);
-                    counterEl.innerText = '👑';
-
-                    playFireworkSound();
-                    setTimeout(() => playFireworkSound(), 500);
-
-                    confetti({
-                        particleCount: 800,
-                        spread: 200,
-                        origin: { y: 0.5, x: 0.5 },
-                        colors: ['#facc15', '#ffd700', '#f43f5e', '#a855f7', '#ffffff', '#ff69b4', '#ff1493'],
-                        shapes: ['circle', 'star'],
-                        scalar: 3,
-                        ticks: 400
-                    });
-
-                    const flash = document.createElement('div');
-                    flash.className = 'flash-effect';
-                    document.body.appendChild(flash);
-
-                    gsap.fromTo(flash, { opacity: 1 }, {
-                        opacity: 0,
-                        duration: 1.5,
-                        ease: "power2.out",
-                        onComplete: () => flash.remove()
-                    });
-
-                    createGoldenParticles();
-                    createGoldenParticles();
-                    createGoldenParticles();
-                    createGoldenParticles();
-
-                    setTimeout(() => nextScene(4), 2500);
-                }
-            }, 1600);
-        }
-
-        // ==================== ✨ الجسيمات الذهبية ====================
-        function createGoldenParticles() {
-            const symbols = ['✨', '⭐', '💫', '🌟', '👑', '💎', '✨', '💫', '⭐', '👑'];
-            for (let i = 0; i < 80; i++) {
-                setTimeout(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'gold-particle';
-                    particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.top = (40 + Math.random() * 40) + '%';
-                    particle.style.fontSize = (20 + Math.random() * 40) + 'px';
-                    particle.style.animationDuration = (2.5 + Math.random() * 4) + 's';
-                    particle.style.animationDelay = Math.random() * 0.5 + 's';
-
-                    document.body.appendChild(particle);
-
-                    setTimeout(() => {
-                        if (particle.parentNode) particle.remove();
-                    }, 4000);
-                }, i * 25);
-            }
-        }
-
-        // ==================== 🎁 نظام تدوير الكنز ====================
-        const treasureContainer = document.getElementById('treasure-container');
-        const treasureBox = document.getElementById('treasure-box');
-        let isDragging = false;
-        let prevPos = { x: 0, y: 0 };
-        let rotation = { x: -25, y: 45 };
-
-        if (treasureContainer) {
-            const startDrag = (x, y) => {
-                isDragging = true;
-                prevPos = { x, y };
-            };
-
-            const moveDrag = (x, y) => {
-                if (!isDragging) return;
-                const deltaX = x - prevPos.x;
-                const deltaY = y - prevPos.y;
-                rotation.y += deltaX * 0.35;
-                rotation.x -= deltaY * 0.35;
-                treasureBox.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
-                prevPos = { x, y };
-            };
-
-            const endDrag = () => {
-                isDragging = false;
-            };
-
-            treasureContainer.addEventListener('mousedown', (e) => startDrag(e.clientX, e.clientY));
-            treasureContainer.addEventListener('touchstart', (e) => {
-                const touch = e.touches[0];
-                startDrag(touch.clientX, touch.clientY);
-            });
-
-            document.addEventListener('mousemove', (e) => moveDrag(e.clientX, e.clientY));
-            document.addEventListener('touchmove', (e) => {
-                const touch = e.touches[0];
-                moveDrag(touch.clientX, touch.clientY);
-            });
-
-            document.addEventListener('mouseup', endDrag);
-            document.addEventListener('touchend', endDrag);
-        }
-
-        let treasureOpened = false;
-
-        function openTreasure() {
-            if (treasureOpened) return;
-            treasureOpened = true;
-
-            const treasureTop = document.getElementById('treasure-top');
-            if (treasureTop) {
-                treasureTop.style.transform = "rotateX(-160deg) translateZ(140px)";
-            }
-
-            // استخدام الأصوات الواقعية
-            playTreasureOpenSound();
-
-            confetti({
-                particleCount: 500,
-                spread: 150,
-                origin: { y: 0.6 },
-                colors: ['#facc15', '#ffd700', '#ff69b4', '#ffffff', '#a855f7', '#ff1493'],
+                particleCount: 400,
+                spread: 180,
+                origin: { y: 0.5 },
+                colors: ['#facc15', '#ffd700', '#f43f5e', '#a855f7', '#ffffff', '#ff69b4', '#00ffcc'],
                 shapes: ['circle', 'star'],
                 scalar: 2.5,
                 ticks: 300
             });
+            
+            createMagicParticles();
+            createMagicParticles();
+            nextScene(2);
+        }
 
+        // ==================== 🎯 منطق المشاهد ====================
+        function runSceneLogic(num) {
+            switch(num) {
+                case 2:
+                    document.getElementById('floating-heart').onclick = function() {
+                        if (this.dataset.activated === 'true') return;
+                        this.dataset.activated = 'true';
+                        playHeartSound();
+                        playMagicChime();
+                        
+                        confetti({
+                            particleCount: 600,
+                            spread: 200,
+                            origin: { y: 0.5 },
+                            colors: ['#facc15', '#ffd700', '#ff69b4', '#ff1493', '#ffffff', '#a855f7', '#00ffcc'],
+                            shapes: ['circle', 'star'],
+                            scalar: 3,
+                            ticks: 400
+                        });
+                        
+                        gsap.to('#princess-name', {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 2.5,
+                            ease: 'elastic.out(1, 0.2)'
+                        });
+                        gsap.to('#princess-title', {
+                            opacity: 1,
+                            duration: 2,
+                            delay: 1.2,
+                            ease: 'power3.out'
+                        });
+                        
+                        const flash = document.createElement('div');
+                        flash.className = 'flash-effect';
+                        flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(255,255,255,0.7) 0%,rgba(250,204,21,0.4) 50%,transparent 100%);z-index:9999;pointer-events:none;';
+                        document.body.appendChild(flash);
+                        gsap.fromTo(flash, { opacity: 0.8 }, {
+                            opacity: 0,
+                            duration: 1.8,
+                            ease: 'power2.out',
+                            onComplete: () => flash.remove()
+                        });
+                        
+                        createMagicParticles();
+                        createMagicParticles();
+                        createMagicParticles();
+                        setTimeout(() => nextScene(3), 4000);
+                    };
+                    break;
+                    
+                case 3:
+                    let count = 3;
+                    const el = document.getElementById('countdown-number');
+                    gsap.to(el, { opacity: 1, scale: 1.5, duration: 1, ease: 'back.out(2)' });
+                    
+                    const interval = setInterval(() => {
+                        count--;
+                        if (count > 0) {
+                            el.innerText = count;
+                            gsap.fromTo(el, { scale: 0.1, opacity: 0 }, { scale: 1.8, opacity: 1, duration: 0.7, ease: 'back.out(2.5)' });
+                            playMagicChime();
+                            createMagicParticles();
+                        } else {
+                            clearInterval(interval);
+                            el.innerText = '👑';
+                            playFireworkBurst();
+                            setTimeout(() => playFireworkBurst(), 500);
+                            
+                            confetti({
+                                particleCount: 1000,
+                                spread: 250,
+                                origin: { y: 0.5, x: 0.5 },
+                                colors: ['#facc15', '#ffd700', '#f43f5e', '#a855f7', '#ffffff', '#ff69b4', '#00ffcc'],
+                                shapes: ['circle', 'star'],
+                                scalar: 3.5,
+                                ticks: 500
+                            });
+                            
+                            const flash = document.createElement('div');
+                            flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(255,215,0,0.6) 0%,rgba(168,85,247,0.3) 50%,transparent 100%);z-index:9999;pointer-events:none;';
+                            document.body.appendChild(flash);
+                            gsap.fromTo(flash, { opacity: 1 }, {
+                                opacity: 0,
+                                duration: 1.8,
+                                ease: 'power2.out',
+                                onComplete: () => flash.remove()
+                            });
+                            
+                            createMagicParticles();
+                            createMagicParticles();
+                            createMagicParticles();
+                            createMagicParticles();
+                            setTimeout(() => nextScene(4), 2500);
+                        }
+                    }, 1600);
+                    break;
+                    
+                case 5:
+                    playMagicChime();
+                    gsap.from('#princess-card', {
+                        y: 600,
+                        rotation: 40,
+                        opacity: 0,
+                        duration: 2,
+                        ease: 'power4.out'
+                    });
+                    break;
+                    
+                case 6:
+                    buildMagicStars();
+                    break;
+                    
+                case 8:
+                    createMagicRain();
+                    playMagicChime();
+                    break;
+                    
+                case 9:
+                    setTimeout(revealFinalMessage, 1200);
+                    break;
+            }
+        }
+
+        // ==================== ✨ جسيمات سحرية ====================
+        function createMagicParticles() {
+            const symbols = ['✨', '⭐', '💫', '🌟', '👑', '💎', '🌀', '🌙', '☄️', '🌈'];
+            for (let i = 0; i < 80; i++) {
+                setTimeout(() => {
+                    const p = document.createElement('div');
+                    p.className = 'magic-particle';
+                    p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.top = (40 + Math.random() * 40) + '%';
+                    p.style.fontSize = (25 + Math.random() * 50) + 'px';
+                    p.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    p.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(p);
+                    setTimeout(() => { if (p.parentNode) p.remove(); }, 5000);
+                }, i * 20);
+            }
+        }
+
+        // ==================== 🎁 صندوق الكنز ====================
+        const chestContainer = document.getElementById('chest-container');
+        const chest3d = document.getElementById('chest-3d');
+        let isDragging = false;
+        let prevPos = { x: 0, y: 0 };
+        let rot = { x: -20, y: 40 };
+        let chestOpened = false;
+
+        if (chestContainer) {
+            chestContainer.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                prevPos = { x: e.clientX, y: e.clientY };
+            });
+            chestContainer.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                prevPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            });
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                rot.y += (e.clientX - prevPos.x) * 0.3;
+                rot.x -= (e.clientY - prevPos.y) * 0.3;
+                chest3d.style.transform = `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`;
+                prevPos = { x: e.clientX, y: e.clientY };
+            });
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const touch = e.touches[0];
+                rot.y += (touch.clientX - prevPos.x) * 0.3;
+                rot.x -= (touch.clientY - prevPos.y) * 0.3;
+                chest3d.style.transform = `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`;
+                prevPos = { x: touch.clientX, y: touch.clientY };
+            });
+            document.addEventListener('mouseup', () => isDragging = false);
+            document.addEventListener('touchend', () => isDragging = false);
+        }
+
+        function openMagicChest() {
+            if (chestOpened) return;
+            chestOpened = true;
+            document.getElementById('chest-top').style.transform = 'rotateX(-170deg) translateZ(150px)';
+            
+            playMagicChime();
+            setTimeout(() => playFireworkBurst(), 300);
+            
+            confetti({
+                particleCount: 600,
+                spread: 180,
+                origin: { y: 0.5 },
+                colors: ['#facc15', '#ffd700', '#ff69b4', '#ffffff', '#a855f7', '#00ffcc'],
+                shapes: ['circle', 'star'],
+                scalar: 3,
+                ticks: 400
+            });
+            
             for (let i = 0; i < 80; i++) {
                 setTimeout(() => {
                     confetti({
-                        particleCount: 20,
-                        spread: 50,
+                        particleCount: 25,
+                        spread: 60,
                         origin: { x: Math.random(), y: Math.random() * 0.3 },
-                        colors: ['#ffd700', '#ff69b4', '#ffffff', '#facc15']
+                        colors: ['#ffd700', '#ff69b4', '#ffffff', '#00ffcc']
                     });
-                }, i * 50);
+                }, i * 40);
             }
-
-            createGoldenParticles();
-            createGoldenParticles();
-
-            setTimeout(() => {
-                nextScene(5);
-            }, 3000);
+            
+            createMagicParticles();
+            createMagicParticles();
+            setTimeout(() => nextScene(5), 3000);
         }
 
-        window.openTreasure = openTreasure;
-
-        // ==================== ⭐ النجوم التفاعلية ====================
-        const starMessages = [
-            "👑 منار.. منذ 12 يوليو 2009 والكون يمتلك أميرة تسير بيننا بكل جلال وهيبة",
-            "💎 وجودك في حياتي يا أميرتي حول الأيام الرمادية إلى قصور من الذهب والياقوت",
-            "🌟 في عامك السابع عشر، أتمنى أن يسجد لك القدر كما يسجد قلبي لحبك كل يوم",
-            "💫 كل عام وأنتِ تلك المعجزة الملكية التي لا تتكرر في سماء هذا الكون الواسع",
-            "👑 دمتِ بقلبك الأنقى من الماس، ودامت ضحكتك التي تستحق كل كنوز العالم",
-            "💖 أنتِ لستِ مجرد إنسانة، أنتِ أميرة مملكتي ومالكة عرش قلبي إلى الأبد",
-            "🦋 في كل مرة أرى فيها عينيكِ، أدرك أن الله جمع كل جمال الكون في روح واحدة",
-            "🌸 أنتِ كزهرة نادرة في صحراء هذا العالم، تزهرين حيث لا يُتوقع أن تزهر زهرة"
+        // ==================== ⭐ النجوم السحرية ====================
+        const magicMessages = [
+            "🌟 منار.. أنتِ أسطورة حية في تاريخ الكون",
+            "💎 وجودكِ في حياتي هو أعظم كنز عرفته البشرية",
+            "✨ في عامكِ السابع عشر، الكون كله يحتفل بكِ",
+            "👑 دمتِ ملكة القلوب ورفيقة الأرواح",
+            "💖 أنتِ الحلم الذي تحقق وأجمل ما في هذا الوجود",
+            "🦋 روحكِ كالفراشة، تحلقين حيث يشتهي قلبكِ",
+            "🌺 أنتِ زهرة نادرة في حديقة الحياة",
+            "⭐ منار.. اسمكِ يضيء الظلام كالقمر في ليلة مظلمة"
         ];
 
-        function buildInteractiveStars() {
-            const container = document.getElementById('stars-container');
+        function buildMagicStars() {
+            const container = document.getElementById('stars-grid');
             if (!container) return;
             container.innerHTML = '';
-
-            const positions = [];
+            
             const cols = 4;
-            const rows = Math.ceil(starMessages.length / cols);
-
-            for (let i = 0; i < starMessages.length; i++) {
+            const positions = [];
+            magicMessages.forEach((_, i) => {
                 const col = i % cols;
                 const row = Math.floor(i / cols);
-                positions.push({
-                    top: (8 + row * 14) + '%',
-                    left: (8 + col * 22) + '%'
-                });
-            }
-
-            starMessages.forEach((msg, i) => {
+                positions.push({ top: (6 + row * 14) + '%', left: (6 + col * 22) + '%' });
+            });
+            
+            magicMessages.forEach((msg, i) => {
                 const wrapper = document.createElement('div');
-                wrapper.className = "absolute w-20 h-20 md:w-28 md:h-28 flex items-center justify-center cursor-pointer";
+                wrapper.className = 'absolute w-20 h-20 md:w-28 md:h-28 flex items-center justify-center cursor-pointer';
                 wrapper.style.top = positions[i].top;
                 wrapper.style.left = positions[i].left;
-                wrapper.style.zIndex = "30";
-
+                wrapper.style.zIndex = '30';
+                
                 for (let j = 0; j < 3; j++) {
-                    const pulse = document.createElement('div');
-                    pulse.className = "crown-ring absolute";
-                    pulse.style.width = '100%';
-                    pulse.style.height = '100%';
-                    pulse.style.animationDelay = `${j * 0.8}s`;
-                    wrapper.appendChild(pulse);
+                    const ring = document.createElement('div');
+                    ring.className = 'crown-ring absolute';
+                    ring.style.width = '100%';
+                    ring.style.height = '100%';
+                    ring.style.animationDelay = `${j * 0.8}s`;
+                    wrapper.appendChild(ring);
                 }
-
-                const starIcon = document.createElement('div');
-                starIcon.className =
-                    "text-5xl md:text-7xl filter drop-shadow-[0_0_25px_gold] hover:scale-150 transition-transform duration-500 relative z-10 cursor-pointer";
-                starIcon.innerHTML = "👑";
-                starIcon.style.animation = "princessHeart 2.5s ease-in-out infinite";
-                starIcon.style.animationDelay = `${i * 0.3}s`;
-
-                wrapper.appendChild(starIcon);
-
+                
+                const star = document.createElement('div');
+                star.className = 'text-5xl md:text-7xl filter drop-shadow-[0_0_30px_gold] hover:scale-150 transition-transform duration-500 relative z-10 cursor-pointer';
+                star.innerHTML = '👑';
+                star.style.animation = 'princessHeart 2.5s ease-in-out infinite';
+                star.style.animationDelay = `${i * 0.3}s`;
+                wrapper.appendChild(star);
+                
                 wrapper.onclick = function(e) {
                     e.stopPropagation();
-
-                    playMagicSound();
-                    playRoseSound();
-
-                    const panel = document.getElementById('top-msg-panel');
-                    const txt = document.getElementById('top-msg-text');
+                    playMagicChime();
+                    
+                    const panel = document.getElementById('msg-panel');
+                    const txt = document.getElementById('msg-text');
                     txt.innerText = msg;
-
-                    gsap.fromTo(panel, { scale: 0.2, opacity: 0, y: -100, rotation: -15 }, {
+                    
+                    gsap.fromTo(panel, { scale: 0.2, opacity: 0, y: -120, rotation: -20 }, {
                         scale: 1,
                         opacity: 1,
                         y: 0,
                         rotation: 0,
                         duration: 1,
-                        ease: "back.out(2)"
+                        ease: 'back.out(2.5)'
                     });
-
+                    
                     confetti({
-                        particleCount: 120,
-                        spread: 100,
-                        origin: {
-                            x: e.clientX / window.innerWidth,
-                            y: e.clientY / window.innerHeight
-                        },
+                        particleCount: 150,
+                        spread: 120,
+                        origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight },
                         colors: ['#facc15', '#ffd700', '#ffffff', '#ff69b4', '#a855f7'],
                         shapes: ['circle', 'star'],
-                        scalar: 1.5
+                        scalar: 2
                     });
-
-                    createGoldenParticles();
-
+                    
+                    createMagicParticles();
                     setTimeout(() => {
                         gsap.to(panel, {
                             scale: 0.7,
                             opacity: 0,
-                            y: -50,
+                            y: -60,
                             duration: 0.5,
-                            ease: "power2.in"
+                            ease: 'power2.in'
                         });
                     }, 5000);
                 };
-
                 container.appendChild(wrapper);
             });
         }
 
         function closeMessagePanel() {
             playClickSound();
-            const panel = document.getElementById('top-msg-panel');
+            const panel = document.getElementById('msg-panel');
             gsap.to(panel, {
                 scale: 0.7,
                 opacity: 0,
-                y: -50,
+                y: -60,
                 duration: 0.4,
-                ease: "power2.in"
+                ease: 'power2.in'
             });
         }
 
-        window.closeMessagePanel = closeMessagePanel;
+        // ==================== 🌧️ مطر السحر ====================
+        let magicRainInterval = null;
 
-        // ==================== 🌹 مطر البتلات الملكي ====================
-        let petalInterval = null;
-
-        function createRoyalPetalRain() {
-            if (petalInterval) {
-                clearInterval(petalInterval);
-                petalInterval = null;
+        function createMagicRain() {
+            if (magicRainInterval) {
+                clearInterval(magicRainInterval);
+                magicRainInterval = null;
             }
-
-            const petalEmojis = ['🌸', '🌹', '💮', '🏵️', '🌺', '💐', '🌷', '✿', '🌼', '💮', '🌺', '🌸'];
-
-            petalInterval = setInterval(() => {
-                const petal = document.createElement('div');
-                petal.className = 'royal-petal';
-                petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
-                petal.style.left = Math.random() * 100 + '%';
-                petal.style.fontSize = (30 + Math.random() * 60) + 'px';
-                petal.style.animationDuration = (5 + Math.random() * 8) + 's';
-                petal.style.animationDelay = Math.random() * 4 + 's';
-                petal.style.opacity = (0.8 + Math.random() * 0.2);
-                petal.style.filter = `hue-rotate(${Math.random() * 40}deg) drop-shadow(0 0 15px rgba(255,105,180,0.6))`;
-
-                document.body.appendChild(petal);
-
-                if (Math.random() < 0.3) {
-                    playRoseSound();
-                }
-
-                setTimeout(() => {
-                    if (petal.parentNode) petal.remove();
-                }, 12000);
-            }, 120);
+            
+            const symbols = ['✨', '⭐', '💫', '🌟', '🌙', '☄️', '🌈', '🦋', '🌺', '💮'];
+            magicRainInterval = setInterval(() => {
+                const p = document.createElement('div');
+                p.className = 'royal-petal';
+                p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                p.style.left = Math.random() * 100 + '%';
+                p.style.fontSize = (35 + Math.random() * 60) + 'px';
+                p.style.animationDuration = (6 + Math.random() * 8) + 's';
+                p.style.animationDelay = Math.random() * 4 + 's';
+                p.style.opacity = (0.7 + Math.random() * 0.3);
+                p.style.filter = `hue-rotate(${Math.random() * 60}deg) drop-shadow(0 0 20px rgba(168,85,247,0.6))`;
+                document.body.appendChild(p);
+                setTimeout(() => { if (p.parentNode) p.remove(); }, 14000);
+            }, 100);
         }
 
-        function stopPetalRain() {
-            if (petalInterval) {
-                clearInterval(petalInterval);
-                petalInterval = null;
+        // ==================== 🏰 المشهد النهائي ====================
+        function goToFinalScene() {
+            if (magicRainInterval) {
+                clearInterval(magicRainInterval);
+                magicRainInterval = null;
             }
             document.querySelectorAll('.royal-petal').forEach(p => p.remove());
-        }
-
-        // ==================== 🏰 الذهاب للمشهد النهائي ====================
-        function goToFinalScene() {
             nextScene(9);
         }
 
-        window.goToFinalScene = goToFinalScene;
-
-        // ==================== 📜 الرسالة النهائية ====================
         function revealFinalMessage() {
-            const finalText = document.getElementById('final-secret-text');
-            if (!finalText) return;
-
-            if (finalText.dataset.revealed === 'true') return;
-            finalText.dataset.revealed = 'true';
-
-            finalText.innerHTML =
-                "👑 كل عام وأنتِ أميرتي ومالكة قلبي 👑<br><br>💖 أحبكِ يا منار.. يا نبضي ودمي وروحي 💖<br><br>🌟 دمتِ تاجاً على رأس هذا الكون 🌟";
-
-            playRoyalBell();
-            playMagicSound();
-
-            gsap.to(finalText, {
+            const el = document.getElementById('final-message');
+            if (!el || el.dataset.revealed === 'true') return;
+            el.dataset.revealed = 'true';
+            
+            el.innerHTML = `
+                👑 كل عام وأنتِ أميرة الأكوان 👑<br><br>
+                💖 أحبكِ يا منار.. يا روح الكون وقلب المجرات 💖<br><br>
+                🌟 دمتِ أسطورة خالدة في هذا الوجود 🌟
+            `;
+            
+            playMagicChime();
+            playFireworkBurst();
+            
+            gsap.to(el, {
                 opacity: 1,
                 y: 0,
-                duration: 3,
-                ease: "power3.out",
-                delay: 1.5
+                duration: 2.5,
+                ease: 'power3.out',
+                delay: 1
             });
-
-            // جسيمات ذهبية مكثفة
-            for (let i = 0; i < 5; i++) {
+            
+            for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
-                    createGoldenParticles();
-                    createGoldenParticles();
-                }, i * 400);
+                    createMagicParticles();
+                    createMagicParticles();
+                    playMagicChime();
+                }, i * 500);
             }
         }
 
         // ==================== 🌟 تأثيرات إضافية ====================
         setInterval(() => {
-            if (Math.random() < 0.1) {
+            if (Math.random() < 0.08) {
                 const flash = document.createElement('div');
                 flash.style.cssText = `
                     position: fixed;
                     top: ${Math.random() * 100}%;
                     left: ${Math.random() * 100}%;
-                    width: 4px;
-                    height: 4px;
+                    width: 5px;
+                    height: 5px;
                     background: white;
                     border-radius: 50%;
                     z-index: 5;
                     pointer-events: none;
-                    box-shadow: 0 0 15px gold, 0 0 30px gold;
+                    box-shadow: 0 0 25px gold, 0 0 50px gold, 0 0 100px rgba(250,204,21,0.3);
                 `;
                 document.body.appendChild(flash);
-
                 gsap.to(flash, {
                     opacity: 0,
-                    scale: 8,
-                    duration: 1,
-                    ease: "power2.out",
+                    scale: 10,
+                    duration: 1.2,
+                    ease: 'power2.out',
                     onComplete: () => flash.remove()
                 });
             }
-        }, 600);
+        }, 500);
 
-        // ==================== بدء تشغيل الأنظمة الصوتية ====================
+        // ==================== 🚀 بدء التشغيل ====================
         document.addEventListener('click', () => {
             createAudioContext();
-            setTimeout(() => startBackgroundMusic(), 300);
+            setTimeout(startBackgroundMusic, 500);
         }, { once: true });
 
         // ==================== رسائل المطور ====================
-        console.log('%c👑🏰 مملكة الأميرة منار المنيفي 🏰👑', 'color: #facc15; font-size: 28px; font-weight: bold; text-shadow: 0 0 20px gold;');
-        console.log('%c💖 كل عام وأنتِ أميرتي ومالكة قلبي وروحي 💖', 'color: #f43f5e; font-size: 22px; font-weight: bold;');
-        console.log('%c🎆 الألعاب النارية الواقعية مع أصوات انفجار حقيقية 🎆', 'color: #ff6b35; font-size: 18px;');
+        console.log('%c👑🏰 قصر الأحلام الملكي 🏰👑', 'color: #facc15; font-size: 32px; font-weight: bold; text-shadow: 0 0 30px gold;');
+        console.log('%c💖 منار.. أميرة الأكوان ومالكة القلوب 💖', 'color: #ff69b4; font-size: 24px; font-weight: bold;');
+        console.log('%c🎵 تشغيل أغنية عيد ميلادك - محمود التركي 🎵', 'color: #00ffcc; font-size: 18px;');
+        console.log('%c🌟 هذا المشروع خيالي.. مصمم خصيصاً لإبهار حبيبتي 🌟', 'color: #a855f7; font-size: 20px; font-weight: bold;');
     </script>
 </body>
 </html>
