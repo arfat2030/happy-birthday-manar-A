@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>👑 مملكة منار | الأميرة الغالية 👑</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
-    </script>
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700;900&family=El+Messiri:wght@400;600;700&family=Reem+Kufi+Fun:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&display=swap');
@@ -587,18 +584,39 @@
         .floating-message {
             animation: messageFloat 3s ease-in-out infinite;
         }
+
+        /* مؤشر الصوت */
+        .sound-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(250, 204, 21, 0.5);
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .sound-indicator:hover {
+            border-color: rgba(250, 204, 21, 1);
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.5);
+        }
     </style>
 </head>
 <body>
 
-    <!-- 🎵 موسيقى ملكية هادئة -->
-    <audio id="royal-music" loop preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946f1a47c7.mp3" type="audio/mpeg">
-    </audio>
-
-    <audio id="magic-sfx" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_c6c8f3d3c5.mp3" type="audio/mpeg">
-    </audio>
+    <!-- 🎵 طبقة الصوت المخفية -->
+    <audio id="bg-music" loop preload="auto" style="display:none;"></audio>
+    <audio id="sfx-click" preload="auto" style="display:none;"></audio>
+    <audio id="sfx-magic" preload="auto" style="display:none;"></audio>
+    <audio id="sfx-firework" preload="auto" style="display:none;"></audio>
+    <audio id="sfx-rose" preload="auto" style="display:none;"></audio>
 
     <!-- طبقات الخلفية الملكية -->
     <div id="nebula-layer"></div>
@@ -606,6 +624,12 @@
     <canvas id="aurora-layer"></canvas>
     <canvas id="particle-layer"></canvas>
     <canvas id="crown-layer"></canvas>
+
+    <!-- مؤشر الصوت -->
+    <div class="sound-indicator" id="sound-toggle" onclick="toggleSound()">
+        <span id="sound-icon">🔊</span>
+        <span id="sound-text" style="color:#facc15; font-size:12px;">الصوت</span>
+    </div>
 
     <!-- 👑 المشهد الأول: بوابة المملكة 👑 -->
     <div id="scene1" class="scene active">
@@ -813,32 +837,134 @@
     </div>
 
     <script>
-        // ==================== 🎵 نظام الصوت الملكي ====================
-        let audioInitialized = false;
+        // ==================== 🎵 نظام الصوت المتكامل ====================
+        let audioCtx = null;
+        let soundEnabled = true;
+        let bgMusicGain = null;
+        let bgMusicSource = null;
 
-        function initRoyalAudio() {
-            if (audioInitialized) return;
-            audioInitialized = true;
+        // إنشاء AudioContext
+        function createAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                bgMusicGain = audioCtx.createGain();
+                bgMusicGain.gain.value = 0.15;
+                bgMusicGain.connect(audioCtx.destination);
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
 
-            const royalMusic = document.getElementById('royal-music');
-            royalMusic.volume = 0.3;
+        // توليد نغمة موسيقية
+        function playTone(frequency, type = 'sine', duration = 0.3, volume = 0.1, delay = 0) {
+            if (!soundEnabled) return;
+            const ctx = createAudioContext();
+            const now = ctx.currentTime + delay;
 
-            const playPromise = royalMusic.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => {
-                    document.addEventListener('click', () => {
-                        royalMusic.play().catch(() => {});
-                    }, { once: true });
-                });
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = type;
+            osc.frequency.setValueAtTime(frequency, now);
+
+            gain.gain.setValueAtTime(volume, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + duration);
+        }
+
+        // صوت سحري
+        function playMagicSound() {
+            playTone(800, 'sine', 0.1, 0.08);
+            playTone(1000, 'sine', 0.1, 0.08, 0.1);
+            playTone(1200, 'sine', 0.15, 0.06, 0.2);
+            playTone(600, 'triangle', 0.2, 0.05, 0.3);
+        }
+
+        // صوت نقرة
+        function playClickSound() {
+            playTone(500, 'sine', 0.05, 0.06);
+            playTone(700, 'sine', 0.05, 0.04, 0.05);
+        }
+
+        // صوت انفجار/ألعاب نارية
+        function playFireworkSound() {
+            for (let i = 0; i < 5; i++) {
+                const freq = 200 + Math.random() * 800;
+                playTone(freq, 'sine', 0.15, 0.04, i * 0.08);
+            }
+            playTone(100, 'triangle', 0.4, 0.06);
+        }
+
+        // صوت ورود
+        function playRoseSound() {
+            playTone(400, 'sine', 0.1, 0.04);
+            playTone(500, 'sine', 0.1, 0.04, 0.1);
+            playTone(600, 'sine', 0.15, 0.03, 0.2);
+            playTone(450, 'triangle', 0.2, 0.03, 0.3);
+        }
+
+        // صوت نبضات قلب
+        function playHeartbeatSound() {
+            playTone(60, 'sine', 0.15, 0.08);
+            playTone(70, 'sine', 0.1, 0.06, 0.15);
+            setTimeout(() => {
+                playTone(60, 'sine', 0.15, 0.08, 0.3);
+                playTone(70, 'sine', 0.1, 0.06, 0.45);
+            }, 300);
+        }
+
+        // موسيقى خلفية (نغمات هادئة متكررة)
+        let bgMusicInterval = null;
+
+        function startBackgroundMusic() {
+            if (bgMusicInterval) return;
+            createAudioContext();
+
+            bgMusicInterval = setInterval(() => {
+                if (!soundEnabled) return;
+                const notes = [262, 294, 330, 349, 392, 440, 494, 523]; // سلم دو ميجور
+                const note = notes[Math.floor(Math.random() * notes.length)];
+                playTone(note, 'sine', 0.8, 0.03);
+                setTimeout(() => {
+                    const note2 = notes[Math.floor(Math.random() * notes.length)];
+                    playTone(note2, 'sine', 0.8, 0.03);
+                }, 400);
+            }, 2000);
+        }
+
+        function stopBackgroundMusic() {
+            if (bgMusicInterval) {
+                clearInterval(bgMusicInterval);
+                bgMusicInterval = null;
             }
         }
 
-        function playRoyalMagic() {
-            const sfx = document.getElementById('magic-sfx');
-            sfx.volume = 0.5;
-            sfx.currentTime = 0;
-            sfx.play().catch(() => {});
+        // تبديل الصوت
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            const text = document.getElementById('sound-text');
+
+            if (soundEnabled) {
+                icon.textContent = '🔊';
+                text.textContent = 'الصوت';
+                startBackgroundMusic();
+            } else {
+                icon.textContent = '🔇';
+                text.textContent = 'صامت';
+                stopBackgroundMusic();
+            }
         }
+
+        // جعل toggleSound متاحة عالمياً
+        window.toggleSound = toggleSound;
 
         // ==================== 🌌 نظام الخلفية الملكية ====================
         const starCanvas = document.getElementById('starfield');
@@ -1008,9 +1134,9 @@
                     s.x - Math.cos(s.angle) * s.length,
                     s.y - Math.sin(s.angle) * s.length
                 );
-                gradient.addColorStop(0, s.color.replace(')', `,${s.life})`).replace('rgb',
-                'rgba'));
-                gradient.addColorStop(1, s.color.replace(')', ',0)').replace('rgb', 'rgba'));
+                const colorBase = s.color.replace(')', '');
+                gradient.addColorStop(0, colorBase + `,${s.life})`);
+                gradient.addColorStop(1, colorBase + ',0)');
 
                 starCtx.strokeStyle = gradient;
                 starCtx.lineWidth = 3;
@@ -1118,6 +1244,8 @@
             const currentActive = document.querySelector('.scene.active');
             const nextTarget = document.getElementById(`scene${sceneNumber}`);
 
+            playClickSound();
+
             if (currentActive) {
                 gsap.to(currentActive, {
                     opacity: 0,
@@ -1175,9 +1303,10 @@
 
         // ==================== 🚀 بدء التجربة الملكية ====================
         function startExperience() {
-            initRoyalAudio();
+            createAudioContext();
+            startBackgroundMusic();
+            playMagicSound();
 
-            // انفجار كونفيتي ملكي
             confetti({
                 particleCount: 300,
                 spread: 150,
@@ -1190,7 +1319,6 @@
 
             createGoldenParticles();
             createGoldenParticles();
-            playRoyalMagic();
             nextScene(2);
         }
 
@@ -1200,7 +1328,10 @@
                 case 2:
                     const princessHeart = document.getElementById('princess-heart');
                     princessHeart.onclick = function() {
-                        // انفجار كونفيتي هائل
+                        playHeartbeatSound();
+                        playMagicSound();
+                        setTimeout(() => playFireworkSound(), 300);
+
                         confetti({
                             particleCount: 500,
                             spread: 180,
@@ -1212,8 +1343,6 @@
                             scalar: 2.5,
                             ticks: 300
                         });
-
-                        playRoyalMagic();
 
                         const nameEl = document.getElementById('name-appear');
                         const subtitleEl = document.getElementById('subtitle-appear');
@@ -1232,7 +1361,6 @@
                             ease: "power3.out"
                         });
 
-                        // اهتزاز الشاشة
                         gsap.to('body', {
                             x: '+=20',
                             duration: 0.06,
@@ -1244,7 +1372,6 @@
                             }
                         });
 
-                        // وميض
                         const flash = document.createElement('div');
                         flash.className = 'flash-effect';
                         document.body.appendChild(flash);
@@ -1285,11 +1412,14 @@
                                 duration: 0.7,
                                 ease: "back.out(2.5)"
                             });
-                            playRoyalMagic();
+                            playMagicSound();
                             createGoldenParticles();
                         } else {
                             clearInterval(countdownInterval);
                             counterEl.innerText = '👑';
+
+                            playFireworkSound();
+                            setTimeout(() => playFireworkSound(), 500);
 
                             confetti({
                                 particleCount: 800,
@@ -1325,6 +1455,7 @@
                     break;
 
                 case 5:
+                    playMagicSound();
                     gsap.from('#polaroid-card', {
                         y: 500,
                         rotation: -30,
@@ -1340,6 +1471,7 @@
 
                 case 8:
                     createRoyalPetalRain();
+                    playRoseSound();
                     break;
             }
         }
@@ -1414,6 +1546,9 @@
             const treasureTop = document.getElementById('treasure-top');
             treasureTop.style.transform = "rotateX(-160deg) translateZ(140px)";
 
+            playMagicSound();
+            setTimeout(() => playFireworkSound(), 400);
+
             confetti({
                 particleCount: 500,
                 spread: 150,
@@ -1437,7 +1572,6 @@
 
             createGoldenParticles();
             createGoldenParticles();
-            playRoyalMagic();
 
             setTimeout(() => {
                 nextScene(5);
@@ -1497,6 +1631,9 @@
                 wrapper.onclick = function(e) {
                     e.stopPropagation();
 
+                    playMagicSound();
+                    playRoseSound();
+
                     const panel = document.getElementById('top-msg-panel');
                     const txt = document.getElementById('top-msg-text');
                     txt.innerText = msg;
@@ -1523,7 +1660,6 @@
                     });
 
                     createGoldenParticles();
-                    playRoyalMagic();
 
                     setTimeout(() => {
                         gsap.to(panel, {
@@ -1541,6 +1677,7 @@
         }
 
         function closeMessagePanel() {
+            playClickSound();
             const panel = document.getElementById('top-msg-panel');
             gsap.to(panel, {
                 scale: 0.7,
@@ -1569,6 +1706,11 @@
 
                 document.body.appendChild(petal);
 
+                // صوت خفيف مع كل وردة
+                if (Math.random() < 0.3) {
+                    playRoseSound();
+                }
+
                 setTimeout(() => {
                     if (petal.parentNode) petal.remove();
                 }, 12000);
@@ -1589,6 +1731,10 @@
             petals.forEach(p => {
                 gsap.to(p, { opacity: 0, duration: 0.5, onComplete: () => p.remove() });
             });
+
+            playFireworkSound();
+            setTimeout(() => playFireworkSound(), 500);
+            setTimeout(() => playFireworkSound(), 1000);
 
             let duration = 12000;
             let end = Date.now() + duration;
@@ -1613,6 +1759,10 @@
                     scalar: 2
                 });
 
+                if (Math.random() < 0.3) {
+                    playFireworkSound();
+                }
+
                 if (Date.now() > end) {
                     clearInterval(fireworksInterval);
                     revealFinalMessage();
@@ -1624,6 +1774,9 @@
             const finalText = document.getElementById('final-secret-text');
             finalText.innerHTML =
                 "👑 كل عام وأنتِ أميرتي ومالكة قلبي 👑<br><br>💖 أحبكِ يا منار.. يا نبضي ودمي وروحي 💖<br><br>🌟 دمتِ تاجاً على رأس هذا الكون 🌟";
+
+            playMagicSound();
+            playFireworkSound();
 
             gsap.to(finalText, {
                 opacity: 1,
@@ -1647,6 +1800,7 @@
             for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
                     createGoldenParticles();
+                    playMagicSound();
                 }, i * 1200);
             }
 
@@ -1669,10 +1823,6 @@
                 ease: "power3.out",
                 onComplete: () => goldenFlash.remove()
             });
-
-            playRoyalMagic();
-            setTimeout(() => playRoyalMagic(), 1000);
-            setTimeout(() => playRoyalMagic(), 2000);
         }
 
         // ==================== 🌟 تأثيرات إضافية ====================
@@ -1703,6 +1853,12 @@
             }
         }, 600);
 
+        // بدء الموسيقى الخلفية عند أول تفاعل
+        document.addEventListener('click', () => {
+            createAudioContext();
+            startBackgroundMusic();
+        }, { once: true });
+
         // ==================== 🎉 رسائل المطور ====================
         console.log('%c👑🏰 مملكة الأميرة منار المنيفي 🏰👑',
             'color: #facc15; font-size: 28px; font-weight: bold; text-shadow: 0 0 20px gold;');
@@ -1712,6 +1868,8 @@
             'color: #ff69b4; font-size: 18px;');
         console.log('%c👑 مع حبي الأبدي لكِ يا منار 👑',
             'color: #a855f7; font-size: 16px;');
+        console.log('%c🔊 الأصوات التفاعلية تعمل الآن! استمتعي بالتجربة الكاملة 🔊',
+            'color: #00ff00; font-size: 14px;');
     </script>
-   </body>
-</html>
+</body>
+    </html>
