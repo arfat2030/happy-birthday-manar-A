@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;700;900&family=El+Messiri:wght@400;600;700&family=Reem+Kufi+Fun:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght=200;400;700;900&family=El+Messiri:wght=400;600;700&family=Reem+Kufi+Fun:wght=400;700&family=Aref+Ruqaa:wght=400;700&family=Amiri:wght=400;700&display=swap');
 
         :root {
             --royal-gold: #facc15;
@@ -611,27 +611,19 @@
 </head>
 <body>
 
-    <!-- 🎵 طبقة الصوت المخفية -->
-    <audio id="bg-music" loop preload="auto" style="display:none;"></audio>
-    <audio id="sfx-click" preload="auto" style="display:none;"></audio>
-    <audio id="sfx-magic" preload="auto" style="display:none;"></audio>
-    <audio id="sfx-firework" preload="auto" style="display:none;"></audio>
-    <audio id="sfx-rose" preload="auto" style="display:none;"></audio>
+    <div id="yt-player" style="position: absolute; width: 0; height: 0; border: 0; pointer-events: none;"></div>
 
-    <!-- طبقات الخلفية الملكية -->
     <div id="nebula-layer"></div>
     <canvas id="starfield"></canvas>
     <canvas id="aurora-layer"></canvas>
     <canvas id="particle-layer"></canvas>
     <canvas id="crown-layer"></canvas>
 
-    <!-- مؤشر الصوت -->
     <div class="sound-indicator" id="sound-toggle" onclick="toggleSound()">
         <span id="sound-icon">🔊</span>
         <span id="sound-text" style="color:#facc15; font-size:12px;">الصوت</span>
     </div>
 
-    <!-- 👑 المشهد الأول: بوابة المملكة 👑 -->
     <div id="scene1" class="scene active">
         <div class="text-center px-6 max-w-4xl z-20">
             <div class="royal-glass p-12 md:p-20 mb-10 relative">
@@ -656,7 +648,6 @@
         </div>
     </div>
 
-    <!-- ❤️ المشهد الثاني: قلب الأميرة ❤️ -->
     <div id="scene2" class="scene">
         <div class="text-center z-20">
             <div class="relative mb-10">
@@ -677,7 +668,6 @@
         </div>
     </div>
 
-    <!-- ⏰ المشهد الثالث: العد التنازلي الملكي ⏰ -->
     <div id="scene3" class="scene">
         <div class="text-center z-20">
             <div class="royal-glass p-20 mb-10">
@@ -696,7 +686,6 @@
         </div>
     </div>
 
-    <!-- 🎁 المشهد الرابع: كنز الأميرة 🎁 -->
     <div id="scene4" class="scene">
         <div class="text-center z-20">
             <h3 class="text-4xl md:text-5xl text-yellow-300 mb-10 font-bold tracking-wider animate-pulse px-4 font-[El Messiri] crown-glow">
@@ -722,7 +711,6 @@
         </div>
     </div>
 
-    <!-- 📸 المشهد الخامس: لوحة الذكرى الملكية 📸 -->
     <div id="scene5" class="scene">
         <div class="relative w-80 md:w-[32rem] royal-glass p-10 shadow-2xl flex flex-col items-center transform -rotate-2" id="polaroid-card">
             <div class="w-full h-96 bg-gradient-to-br from-purple-950 via-pink-900 to-rose-800 rounded-2xl flex flex-col items-center justify-center border-2 border-yellow-400/30 relative overflow-hidden">
@@ -744,7 +732,6 @@
         </div>
     </div>
 
-    <!-- ⭐ المشهد السادس: نجوم الأسرار ⭐ -->
     <div id="scene6" class="scene">
         <div id="top-msg-panel" class="absolute top-6 left-4 right-4 mx-auto max-w-4xl royal-glass py-12 px-14 text-center border-yellow-400/40 transform scale-0 opacity-0 transition-all duration-500 z-50">
             <span class="absolute top-4 right-6 text-sm tracking-widest text-yellow-400 font-bold">👑 رسالة ملكية 👑</span>
@@ -766,7 +753,6 @@
         </button>
     </div>
 
-    <!-- 💌 المشهد السابع: رسالة من القلب 💌 -->
     <div id="scene7" class="scene">
         <div class="w-11/12 max-w-3xl royal-glass p-14 md:p-20 text-center relative shadow-2xl border border-yellow-400/30 z-20">
             <div class="text-yellow-400/10 text-[12rem] absolute -top-10 right-10 font-serif">❝</div>
@@ -786,7 +772,6 @@
         </div>
     </div>
 
-    <!-- 🌹 المشهد الثامن: مملكة الورود 🌹 -->
     <div id="scene8" class="scene">
         <div class="text-center z-20 px-4">
             <h2 class="text-5xl md:text-7xl font-light mb-14 text-pink-200 tracking-wide leading-loose font-[El Messiri] heart-glow">
@@ -806,7 +791,6 @@
         </div>
     </div>
 
-    <!-- 🏰 المشهد التاسع: المملكة السماوية 🏰 -->
     <div id="scene9" class="scene bg-black">
         <div class="text-center z-20 px-4">
             <div class="royal-glass p-20 mb-10 relative">
@@ -836,20 +820,42 @@
         </div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
-        // ==================== 🎵 نظام الصوت المتكامل ====================
+        // ==================== 🎵 نظام الصوت المطور والذكي ====================
         let audioCtx = null;
         let soundEnabled = true;
-        let bgMusicGain = null;
-        let bgMusicSource = null;
+        let ytPlayer = null;
 
-        // إنشاء AudioContext
+        // دالة الـ Callback الرسمية الخاصة بـ YouTube API لتجهيز المشغل المخفي
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('yt-player', {
+                // هُنا وضعت لك معرف فيديو (موسيقى بيانو كلاسيكية ملكية هادئة لعيد الميلاد مناسبة جداً لاسم الصفحة)
+                // إذا أردت تغيير الأغنية مستقبلاً، فقط استبدل المعرف المكون من 11 حرفاً أدناه (uz8wkWfWwKE) بمعرف أي فيديو آخر من اليوتيوب.
+                videoId: 'uz8wkWfWwKE', 
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'uz8wkWfWwKE', // ضروري للتكرار التلقائي للموسيقى
+                    'mute': 0,
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // يتم ضبط مستوى الصوت الابتدائي للموسيقى (15%) لكي لا يكون مزعجاً ويبقى هادئاً خلف المؤثرات
+            event.target.setVolume(15); 
+        }
+
         function createAudioContext() {
             if (!audioCtx) {
                 audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-                bgMusicGain = audioCtx.createGain();
-                bgMusicGain.gain.value = 0.15;
-                bgMusicGain.connect(audioCtx.destination);
             }
             if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
@@ -857,8 +863,8 @@
             return audioCtx;
         }
 
-        // توليد نغمة موسيقية
-        function playTone(frequency, type = 'sine', duration = 0.3, volume = 0.1, delay = 0) {
+        // توليد نغمات مخملية ملكية محسنة (Soft Chimes) عبر استخدام الحسابات الرياضية للموجات الصوتية
+        function playTone(frequency, type = 'sine', duration = 0.4, volume = 0.1, delay = 0) {
             if (!soundEnabled) return;
             const ctx = createAudioContext();
             const now = ctx.currentTime + delay;
@@ -869,7 +875,9 @@
             osc.type = type;
             osc.frequency.setValueAtTime(frequency, now);
 
-            gain.gain.setValueAtTime(volume, now);
+            // تعديل نعومة الصوت لمنع الخشونة والبدء السريع المزعج
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(volume, now + 0.05); 
             gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
             osc.connect(gain);
@@ -879,74 +887,56 @@
             osc.stop(now + duration);
         }
 
-        // صوت سحري
+        // ✨ مؤثرات تفاعلية ناعمة وراقية جداً تناسب الأجواء الملكية
         function playMagicSound() {
-            playTone(800, 'sine', 0.1, 0.08);
-            playTone(1000, 'sine', 0.1, 0.08, 0.1);
-            playTone(1200, 'sine', 0.15, 0.06, 0.2);
-            playTone(600, 'triangle', 0.2, 0.05, 0.3);
+            // نغمات متصاعدة هارمونية تشبه علبة الموسيقى الكلاسيكية القديمة
+            playTone(523.25, 'sine', 0.4, 0.05, 0);   // Do
+            playTone(659.25, 'sine', 0.4, 0.05, 0.15); // Mi
+            playTone(783.99, 'sine', 0.5, 0.05, 0.3);  // Sol
+            playTone(1046.50, 'sine', 0.6, 0.04, 0.45); // Do تالٍ
         }
 
-        // صوت نقرة
         function playClickSound() {
-            playTone(500, 'sine', 0.05, 0.06);
-            playTone(700, 'sine', 0.05, 0.04, 0.05);
+            playTone(600, 'sine', 0.08, 0.06);
         }
 
-        // صوت انفجار/ألعاب نارية
         function playFireworkSound() {
-            for (let i = 0; i < 5; i++) {
-                const freq = 200 + Math.random() * 800;
-                playTone(freq, 'sine', 0.15, 0.04, i * 0.08);
+            // محاكاة رائعة لصوت ألعاب نارية بعيدة ومبهجة عبر تداخل نغمات عشوائية منخفضة وعالية التردد
+            for (let i = 0; i < 6; i++) {
+                const freq = 150 + Math.random() * 450;
+                playTone(freq, 'triangle', 0.25, 0.04, i * 0.06);
             }
-            playTone(100, 'triangle', 0.4, 0.06);
+            playTone(80, 'sine', 0.5, 0.08, 0.02); // الصدى الأساسي للانفجار
         }
 
-        // صوت ورود
         function playRoseSound() {
-            playTone(400, 'sine', 0.1, 0.04);
-            playTone(500, 'sine', 0.1, 0.04, 0.1);
-            playTone(600, 'sine', 0.15, 0.03, 0.2);
-            playTone(450, 'triangle', 0.2, 0.03, 0.3);
+            playTone(329.63, 'sine', 0.3, 0.04, 0); 
+            playTone(440.00, 'sine', 0.4, 0.03, 0.1); 
         }
 
-        // صوت نبضات قلب
         function playHeartbeatSound() {
-            playTone(60, 'sine', 0.15, 0.08);
-            playTone(70, 'sine', 0.1, 0.06, 0.15);
+            // محاكاة نبض قلب عميق ودافئ
+            playTone(55, 'sine', 0.18, 0.12, 0);
+            playTone(50, 'sine', 0.15, 0.09, 0.12);
             setTimeout(() => {
-                playTone(60, 'sine', 0.15, 0.08, 0.3);
-                playTone(70, 'sine', 0.1, 0.06, 0.45);
-            }, 300);
+                playTone(55, 'sine', 0.18, 0.12, 0);
+                playTone(50, 'sine', 0.15, 0.09, 0.12);
+            }, 350);
         }
-
-        // موسيقى خلفية (نغمات هادئة متكررة)
-        let bgMusicInterval = null;
 
         function startBackgroundMusic() {
-            if (bgMusicInterval) return;
-            createAudioContext();
-
-            bgMusicInterval = setInterval(() => {
-                if (!soundEnabled) return;
-                const notes = [262, 294, 330, 349, 392, 440, 494, 523]; // سلم دو ميجور
-                const note = notes[Math.floor(Math.random() * notes.length)];
-                playTone(note, 'sine', 0.8, 0.03);
-                setTimeout(() => {
-                    const note2 = notes[Math.floor(Math.random() * notes.length)];
-                    playTone(note2, 'sine', 0.8, 0.03);
-                }, 400);
-            }, 2000);
+            if (soundEnabled && ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                ytPlayer.playVideo();
+            }
         }
 
         function stopBackgroundMusic() {
-            if (bgMusicInterval) {
-                clearInterval(bgMusicInterval);
-                bgMusicInterval = null;
+            if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+                ytPlayer.pauseVideo();
             }
         }
 
-        // تبديل الصوت
+        // تبديل حالة الصوت العام للموقع ومزامنتها مع فيديو اليوتيوب والمؤثرات
         function toggleSound() {
             soundEnabled = !soundEnabled;
             const icon = document.getElementById('sound-icon');
@@ -963,7 +953,6 @@
             }
         }
 
-        // جعل toggleSound متاحة عالمياً
         window.toggleSound = toggleSound;
 
         // ==================== 🌌 نظام الخلفية الملكية ====================
@@ -1304,7 +1293,7 @@
         // ==================== 🚀 بدء التجربة الملكية ====================
         function startExperience() {
             createAudioContext();
-            startBackgroundMusic();
+            startBackgroundMusic(); // يتم تشغيل أغنية اليوتيوب هنا فور تفاعل المستخدم
             playMagicSound();
 
             confetti({
@@ -1706,7 +1695,6 @@
 
                 document.body.appendChild(petal);
 
-                // صوت خفيف مع كل وردة
                 if (Math.random() < 0.3) {
                     playRoseSound();
                 }
@@ -1853,23 +1841,14 @@
             }
         }, 600);
 
-        // بدء الموسيقى الخلفية عند أول تفاعل
+        // بدء تشغيل الأنظمة الصوتية عند أول تفاعل حقيقي مع الصفحة لضمان تجاوز قيود المتصفح
         document.addEventListener('click', () => {
             createAudioContext();
-            startBackgroundMusic();
         }, { once: true });
 
-        // ==================== 🎉 رسائل المطور ====================
-        console.log('%c👑🏰 مملكة الأميرة منار المنيفي 🏰👑',
-            'color: #facc15; font-size: 28px; font-weight: bold; text-shadow: 0 0 20px gold;');
-        console.log('%c💖 كل عام وأنتِ أميرتي ومالكة قلبي وروحي 💖',
-            'color: #f43f5e; font-size: 22px; font-weight: bold;');
-        console.log('%c🌟 أنتِ النبض والدم والروح.. أنتِ كل شيء 🌟',
-            'color: #ff69b4; font-size: 18px;');
-        console.log('%c👑 مع حبي الأبدي لكِ يا منار 👑',
-            'color: #a855f7; font-size: 16px;');
-        console.log('%c🔊 الأصوات التفاعلية تعمل الآن! استمتعي بالتجربة الكاملة 🔊',
-            'color: #00ff00; font-size: 14px;');
+        // 🎉 رسائل المطور الكونسول الفاخرة
+        console.log('%c👑🏰 مملكة الأميرة منار المنيفي 🏰👑', 'color: #facc15; font-size: 28px; font-weight: bold; text-shadow: 0 0 20px gold;');
+        console.log('%c💖 كل عام وأنتِ أميرتي ومالكة قلبي وروحي 💖', 'color: #f43f5e; font-size: 22px; font-weight: bold;');
     </script>
 </body>
-    </html>
+</html>
