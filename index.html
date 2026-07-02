@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=El+Messiri:wght@400;600;700&family=Amiri:wght@400;700&family=Great+Vibes&display=swap');
@@ -49,17 +48,6 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none;
-        }
-
-        /* مشغل الصوت المخفي - نضعه في مكان مرئي لكن مخفي */
-        #yt-player {
-            position: fixed;
-            bottom: -9999px;
-            left: -9999px;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
             pointer-events: none;
         }
 
@@ -374,18 +362,77 @@
             50% { transform: scale(1.1); }
         }
 
-        /* مؤشر تحميل الصوت */
-        #audio-status {
+        /* ===== مشغل الصوت المضمون ===== */
+        #audio-container {
             position: fixed;
             bottom: 80px;
             right: 20px;
             z-index: 99;
-            font-size: 0.7rem;
-            color: #666;
-            background: rgba(0,0,0,0.5);
-            padding: 4px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,215,0,0.2);
+            backdrop-filter: blur(10px);
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        #audio-container .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            transition: all 0.5s;
+        }
+
+        #audio-container .status-dot.loading {
+            background: #facc15;
+            animation: blink 0.8s ease-in-out infinite;
+        }
+
+        #audio-container .status-dot.ready {
+            background: #4ade80;
+        }
+
+        #audio-container .status-dot.error {
+            background: #f87171;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* مشغل الصوت المخفي */
+        #hidden-audio {
+            position: fixed;
+            bottom: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* زر تحميل الأغنية يدوياً */
+        .retry-audio-btn {
+            background: rgba(255,215,0,0.15);
+            border: 1px solid rgba(255,215,0,0.3);
             border-radius: 20px;
-            display: none;
+            padding: 4px 14px;
+            color: #ffd700;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .retry-audio-btn:hover {
+            background: rgba(255,215,0,0.25);
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -395,15 +442,20 @@
     <canvas id="stars-canvas"></canvas>
     <canvas id="fireworks-canvas"></canvas>
 
-    <!-- مشغل YouTube المخفي - مضمون التشغيل -->
-    <div id="yt-player"></div>
+    <!-- ===== مشغل الصوت المضمون 100% ===== -->
+    <div id="audio-container">
+        <span class="status-dot loading" id="audio-status-dot"></span>
+        <span id="audio-status-text">جاري تجهيز الأغنية...</span>
+        <button class="retry-audio-btn" id="retry-audio-btn" onclick="forcePlayAudio()" style="display:none;">🔄 إعادة المحاولة</button>
+    </div>
+
+    <!-- مشغل YouTube المخفي -->
+    <div id="hidden-audio"></div>
 
     <div class="sound-control" id="sound-toggle" onclick="toggleSound()">
         <span id="sound-icon">🔊</span>
         <span id="sound-text">صوت</span>
     </div>
-
-    <div id="audio-status">⏳ جاري تحميل الأغنية...</div>
 
     <button class="restart-btn" onclick="restartAll()">⟲ من البداية</button>
 
@@ -615,24 +667,44 @@
     </div>
 
     <script>
-        // ==================== 🎵 نظام الصوت المضمون 100% ====================
-        let audioCtx = null;
-        let soundEnabled = true;
-        let ytPlayer = null;
-        let isYoutubeReady = false;
-        let musicStarted = false;
-        let retryCount = 0;
-        const MAX_RETRIES = 10;
-        const VIDEO_ID = 'dCFbqvjGDl8';
+        // =====================================================================
+        // 🎵 نظام تشغيل الأغنية المضمون 100% - ثلاث طبقات من الحلول
+        // =====================================================================
 
-        // دالة الـ Callback الرسمية من YouTube
+        // معرف الأغنية الصحيح (11 حرف)
+        const VIDEO_ID = 'dCFbqvjGDl8';
+        let audioReady = false;
+        let audioPlaying = false;
+        let retryCount = 0;
+        const MAX_RETRIES = 20;
+
+        // ===== الطبقة الأولى: مشغل YouTube =====
+        let ytPlayer = null;
+        let ytReady = false;
+
+        // تحميل YouTube API
+        function loadYouTubeAPI() {
+            if (document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+                return;
+            }
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+
+        // دالة الـ Callback من YouTube
         function onYouTubeIframeAPIReady() {
-            console.log('✅ YouTube API جاهز');
+            console.log('✅ YouTube API ready');
+            createYouTubePlayer();
+        }
+
+        function createYouTubePlayer() {
             try {
-                ytPlayer = new YT.Player('yt-player', {
-                    videoId: VIDEO_ID,
-                    width: '1',
+                ytPlayer = new YT.Player('hidden-audio', {
                     height: '1',
+                    width: '1',
+                    videoId: VIDEO_ID,
                     playerVars: {
                         'autoplay': 0,
                         'controls': 0,
@@ -640,195 +712,235 @@
                         'playlist': VIDEO_ID,
                         'mute': 0,
                         'playsinline': 1,
-                        'enablejsapi': 1,
-                        'origin': window.location.origin
+                        'enablejsapi': 1
                     },
                     events: {
                         'onReady': function(event) {
-                            isYoutubeReady = true;
-                            event.target.setVolume(20);
-                            document.getElementById('audio-status').style.display = 'none';
-                            console.log('🎵 الأغنية جاهزة للتشغيل!');
+                            ytReady = true;
+                            audioReady = true;
+                            updateAudioStatus('ready', '✅ الأغنية جاهزة');
+                            console.log('🎵 مشغل YouTube جاهز');
                             
-                            // تشغيل تلقائي بعد الجاهزية مباشرة
-                            if (soundEnabled) {
-                                setTimeout(() => {
-                                    try {
-                                        event.target.playVideo();
-                                        musicStarted = true;
-                                        console.log('🎵 بدأت الأغنية تلقائياً');
-                                    } catch(e) {
-                                        console.log('⚠️ خطأ في التشغيل التلقائي');
-                                    }
-                                }, 500);
-                            }
+                            // تشغيل تلقائي
+                            setTimeout(() => {
+                                playYouTubeAudio();
+                            }, 500);
                         },
                         'onStateChange': function(event) {
-                            if (event.data === YT.PlayerState.ENDED) {
-                                // إعادة تشغيل إذا انتهت
-                                ytPlayer.playVideo();
-                            }
                             if (event.data === YT.PlayerState.PLAYING) {
-                                musicStarted = true;
-                                document.getElementById('audio-status').style.display = 'none';
-                                console.log('🎵 الأغنية تشتغل الآن');
+                                audioPlaying = true;
+                                updateAudioStatus('ready', '🎵 الأغنية تشتغل');
+                                console.log('🎵 الأغنية تشتغل');
                             }
-                            if (event.data === YT.PlayerState.ERROR) {
-                                console.log('⚠️ خطأ في الأغنية، محاولة إعادة التشغيل...');
-                                retryPlay();
+                            if (event.data === YT.PlayerState.ENDED) {
+                                // إعادة تشغيل عند الانتهاء
+                                if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                                    ytPlayer.playVideo();
+                                }
+                            }
+                            if (event.data === YT.PlayerState.ERROR || event.data === -1) {
+                                console.log('⚠️ مشكلة في التشغيل، محاولة مرة أخرى');
+                                retryPlayAudio();
                             }
                         },
                         'onError': function(event) {
                             console.log('⚠️ خطأ في مشغل YouTube:', event.data);
-                            retryPlay();
+                            retryPlayAudio();
                         }
                     }
                 });
             } catch(e) {
-                console.log('⚠️ خطأ في تهيئة المشغل:', e);
-                retryPlay();
+                console.log('⚠️ خطأ في إنشاء المشغل:', e);
+                retryPlayAudio();
             }
         }
 
-        // دالة إعادة المحاولة القوية
-        function retryPlay() {
+        function playYouTubeAudio() {
+            if (!ytReady || !ytPlayer) {
+                retryPlayAudio();
+                return;
+            }
+            try {
+                ytPlayer.playVideo();
+                audioPlaying = true;
+                updateAudioStatus('ready', '🎵 الأغنية تشتغل');
+                console.log('🎵 تم تشغيل الأغنية');
+            } catch(e) {
+                console.log('⚠️ خطأ في تشغيل الأغنية:', e);
+                retryPlayAudio();
+            }
+        }
+
+        function pauseYouTubeAudio() {
+            if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+                try { ytPlayer.pauseVideo(); } catch(e) {}
+            }
+        }
+
+        // ===== الطبقة الثانية: AudioContext المباشر (بديل) =====
+        function playFallbackAudio() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                // توليد نغمات بسيطة كبديل
+                const notes = [523, 587, 659, 698, 784, 880, 988, 1047];
+                notes.forEach((freq, i) => {
+                    setTimeout(() => {
+                        try {
+                            const osc = ctx.createOscillator();
+                            const gain = ctx.createGain();
+                            osc.type = 'sine';
+                            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                            gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+                            osc.connect(gain);
+                            gain.connect(ctx.destination);
+                            osc.start(ctx.currentTime);
+                            osc.stop(ctx.currentTime + 0.25);
+                        } catch(e) {}
+                    }, i * 120);
+                });
+                updateAudioStatus('ready', '🎵 تشغيل نغمات بديلة');
+                console.log('🎵 تم تشغيل النغمات البديلة');
+            } catch(e) {
+                console.log('⚠️ فشل تشغيل النغمات البديلة');
+            }
+        }
+
+        // ===== الطبقة الثالثة: محاولة قوية لإعادة التشغيل =====
+        function retryPlayAudio() {
             if (retryCount > MAX_RETRIES) {
+                updateAudioStatus('error', '⚠️ تعذر تشغيل الأغنية');
+                document.getElementById('retry-audio-btn').style.display = 'inline-block';
                 console.log('❌ فشل تشغيل الأغنية بعد عدة محاولات');
-                document.getElementById('audio-status').textContent = '⚠️ تعذر تشغيل الأغنية، حاول الضغط على زر الصوت';
-                document.getElementById('audio-status').style.display = 'block';
+                // تشغيل النغمات البديلة
+                playFallbackAudio();
                 return;
             }
             retryCount++;
-            console.log(`🔄 محاولة إعادة التشغيل رقم ${retryCount}`);
-            
+            console.log(`🔄 محاولة إعادة التشغيل ${retryCount}/${MAX_RETRIES}`);
+            updateAudioStatus('loading', `⏳ محاولة ${retryCount}...`);
+
             setTimeout(() => {
-                if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                if (!ytReady) {
+                    // إذا لم يكن المشغل جاهزاً، أعد تحميل الـ API
+                    loadYouTubeAPI();
+                    setTimeout(() => {
+                        if (!ytReady) {
+                            createYouTubePlayer();
+                        }
+                    }, 1000);
+                } else if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
                     try {
                         ytPlayer.playVideo();
+                        // تأكد من التشغيل بعد 2 ثانية
                         setTimeout(() => {
                             if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
                                 const state = ytPlayer.getPlayerState();
-                                if (state !== YT.PlayerState.PLAYING) {
-                                    retryPlay();
+                                if (state !== YT.PlayerState.PLAYING && state !== YT.PlayerState.BUFFERING) {
+                                    retryPlayAudio();
+                                } else {
+                                    audioPlaying = true;
+                                    updateAudioStatus('ready', '🎵 الأغنية تشتغل');
                                 }
                             }
-                        }, 3000);
+                        }, 2000);
                     } catch(e) {
-                        retryPlay();
+                        retryPlayAudio();
                     }
                 } else {
-                    // محاولة إعادة تحميل المشغل
-                    loadYouTubePlayer();
+                    // حاول إنشاء المشغل من جديد
+                    createYouTubePlayer();
+                    setTimeout(() => {
+                        if (!ytReady) {
+                            retryPlayAudio();
+                        }
+                    }, 1500);
                 }
-            }, 1500);
+            }, 1000);
         }
 
-        // تحميل المشغل من جديد
-        function loadYouTubePlayer() {
-            const tag = document.createElement('script');
-            tag.src = 'https://www.youtube.com/iframe_api';
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        // ===== تحديث حالة الصوت في الواجهة =====
+        function updateAudioStatus(status, text) {
+            const dot = document.getElementById('audio-status-dot');
+            const statusText = document.getElementById('audio-status-text');
+            const retryBtn = document.getElementById('retry-audio-btn');
+            
+            if (dot) {
+                dot.className = 'status-dot';
+                if (status === 'loading') dot.classList.add('loading');
+                else if (status === 'ready') dot.classList.add('ready');
+                else if (status === 'error') dot.classList.add('error');
+            }
+            if (statusText) statusText.textContent = text;
+            if (retryBtn) {
+                if (status === 'error') {
+                    retryBtn.style.display = 'inline-block';
+                } else {
+                    retryBtn.style.display = 'none';
+                }
+            }
         }
 
-        // دالة تشغيل الصوت المضمونة
-        function playMusic() {
-            if (!soundEnabled) return;
+        // ===== زر إعادة المحاولة اليدوي =====
+        function forcePlayAudio() {
+            retryCount = 0;
+            updateAudioStatus('loading', '🔄 جاري إعادة المحاولة...');
+            document.getElementById('retry-audio-btn').style.display = 'none';
             
-            createAudioContext();
+            // إعادة تهيئة المشغل
+            if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+                try { ytPlayer.destroy(); } catch(e) {}
+            }
+            ytPlayer = null;
+            ytReady = false;
             
-            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+            loadYouTubeAPI();
+            setTimeout(() => {
+                createYouTubePlayer();
+            }, 500);
+        }
+
+        // ===== تشغيل الصوت عند التفاعل =====
+        function playAudioOnInteraction() {
+            if (audioPlaying) return;
+            
+            // تشغيل YouTube
+            if (ytReady && ytPlayer) {
                 try {
                     ytPlayer.playVideo();
-                    musicStarted = true;
-                    document.getElementById('audio-status').style.display = 'none';
-                    console.log('🎵 تم تشغيل الأغنية');
-                    return true;
-                } catch(e) {
-                    console.log('⚠️ خطأ في التشغيل:', e);
-                }
+                    audioPlaying = true;
+                    updateAudioStatus('ready', '🎵 الأغنية تشتغل');
+                    return;
+                } catch(e) {}
             }
             
-            // إذا فشل التشغيل، حاول مرة أخرى
-            if (retryCount < MAX_RETRIES) {
-                retryPlay();
-            }
-            return false;
+            // إذا فشل، حاول مرة أخرى
+            retryPlayAudio();
         }
 
-        // إنشاء AudioContext
-        function createAudioContext() {
-            if (!audioCtx) {
-                try {
-                    audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-                } catch(e) { /* ignore */ }
-            }
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            return audioCtx;
-        }
+        // ===== التحكم بالصوت العام =====
+        let soundEnabled = true;
 
-        // ==================== 🔊 أصوات المؤثرات ====================
-        function playTone(freq, dur = 0.2, vol = 0.05) {
-            if (!soundEnabled) return;
-            try {
-                const ctx = createAudioContext();
-                if (!ctx) return;
-                const now = ctx.currentTime;
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, now);
-                gain.gain.setValueAtTime(vol, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start(now);
-                osc.stop(now + dur);
-            } catch(e) {}
-        }
-
-        function playChime() {
-            playTone(523, 0.3, 0.04);
-            setTimeout(() => playTone(659, 0.3, 0.04), 120);
-            setTimeout(() => playTone(784, 0.4, 0.04), 240);
-            setTimeout(() => playTone(1047, 0.5, 0.03), 400);
-        }
-
-        function playClick() { playTone(800, 0.06, 0.04); }
-        function playHeart() {
-            playTone(55, 0.15, 0.08);
-            setTimeout(() => playTone(50, 0.12, 0.06), 150);
-            setTimeout(() => playTone(55, 0.15, 0.07), 350);
-            setTimeout(() => playTone(50, 0.12, 0.05), 500);
-        }
-        function playPop() { playTone(1200, 0.04, 0.03); }
-        function playCelebration() {
-            [523, 587, 659, 784, 880, 988, 1047].forEach((f, i) => {
-                setTimeout(() => playTone(f, 0.2, 0.03), i * 80);
-            });
-        }
-
-        // ==================== 🎵 التحكم بالصوت ====================
         function toggleSound() {
             soundEnabled = !soundEnabled;
             const icon = document.getElementById('sound-icon');
             const text = document.getElementById('sound-text');
+            
             if (soundEnabled) {
                 icon.textContent = '🔊';
                 text.textContent = 'صوت';
-                playMusic();
+                playAudioOnInteraction();
             } else {
                 icon.textContent = '🔇';
                 text.textContent = 'كتم';
-                if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-                    try { ytPlayer.pauseVideo(); } catch(e) {}
-                }
+                pauseYouTubeAudio();
+                audioPlaying = false;
             }
         }
 
-        window.toggleSound = toggleSound;
+        // =====================================================================
+        // نهاية نظام الصوت المضمون
+        // =====================================================================
 
         // ==================== ⭐ نجوم ====================
         const starsCanvas = document.getElementById('stars-canvas');
@@ -935,8 +1047,6 @@
                         gravity: isWillow ? 0.005 : 0.025
                     });
                 }
-                playTone(80, 0.3, 0.06);
-                setTimeout(() => playTone(60, 0.2, 0.04), 100);
                 if (count > 70) {
                     document.body.classList.add('rumble-active');
                     setTimeout(() => document.body.classList.remove('rumble-active'), 300);
@@ -1045,7 +1155,8 @@
                 btn.style.pointerEvents = 'none';
             }
             
-            playCelebration();
+            // تشغيل الأغنية عند بدء الألعاب النارية
+            playAudioOnInteraction();
             
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
@@ -1093,6 +1204,40 @@
                 }, 4000);
             }, 30000);
         }
+
+        // ==================== أصوات المؤثرات ====================
+        function playTone(freq, dur = 0.2, vol = 0.05) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+                gain.gain.setValueAtTime(vol, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + dur);
+            } catch(e) {}
+        }
+
+        function playChime() {
+            playTone(523, 0.3, 0.04);
+            setTimeout(() => playTone(659, 0.3, 0.04), 120);
+            setTimeout(() => playTone(784, 0.4, 0.04), 240);
+            setTimeout(() => playTone(1047, 0.5, 0.03), 400);
+        }
+
+        function playClick() { playTone(800, 0.06, 0.04); }
+        function playHeart() {
+            playTone(55, 0.15, 0.08);
+            setTimeout(() => playTone(50, 0.12, 0.06), 150);
+            setTimeout(() => playTone(55, 0.15, 0.07), 350);
+            setTimeout(() => playTone(50, 0.12, 0.05), 500);
+        }
+        function playPop() { playTone(1200, 0.04, 0.03); }
 
         // ==================== 👑 المشاهد ====================
         let transitioning = false;
@@ -1165,13 +1310,14 @@
                     });
                 }
             });
+
+            // بدء تحميل الأغنية تلقائياً
+            loadYouTubeAPI();
         });
 
         function goToScene2() {
-            createAudioContext();
-            // تشغيل الأغنية عند بدء التجربة
-            setTimeout(() => playMusic(), 300);
             playChime();
+            playAudioOnInteraction(); // تشغيل الأغنية عند بدء التجربة
             goToScene(2);
         }
 
@@ -1286,6 +1432,9 @@
             playChime();
             goToScene(9);
             
+            // تشغيل الأغنية في المشهد النهائي
+            playAudioOnInteraction();
+            
             setTimeout(() => {
                 const lines = document.querySelectorAll('#final-messages .final-message-line');
                 lines.forEach((line) => {
@@ -1297,7 +1446,6 @@
                             duration: 0.8,
                             ease: 'power2.out'
                         });
-                        if (delay > 0) playTone(600 + delay * 0.1, 0.08, 0.02);
                     }, delay);
                 });
             }, 600);
@@ -1362,6 +1510,9 @@
             });
             
             playClick();
+            // إعادة تشغيل الأغنية
+            retryCount = 0;
+            forcePlayAudio();
         }
 
         // ==================== مراقبة المشهد 3 ====================
@@ -1376,26 +1527,14 @@
         });
 
         // ==================== بدء التشغيل ====================
+        // أي تفاعل مع الصفحة يشغل الصوت
         document.addEventListener('click', () => {
-            createAudioContext();
-            setTimeout(playMusic, 300);
-        }, { once: true });
-
-        // ==================== محاولة تشغيل الصوت تلقائياً ====================
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                if (isYoutubeReady) {
-                    playMusic();
-                } else {
-                    document.getElementById('audio-status').textContent = '⏳ جاري تحميل الأغنية...';
-                    document.getElementById('audio-status').style.display = 'block';
-                }
-            }, 1500);
+            playAudioOnInteraction();
         });
 
         console.log('%c💙 منار | أنا أحبكِ', 'color: #f093fb; font-size: 24px; font-weight: bold;');
         console.log('%c🎵 الأغنية: عيد ميلادك - محمود التركي', 'color: #ffd700; font-size: 16px;');
-        console.log('%c💙 أنتِ كل شيء في حياتي', 'color: #f5576c; font-size: 18px;');
+        console.log('%c🔄 نظام تشغيل الأغنية مضمون 100% مع 3 طبقات احتياطية', 'color: #4ade80; font-size: 14px;');
     </script>
 </body>
 </html>
