@@ -11,7 +11,7 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=El+Messiri:wght@400;600&family=Amiri:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=El+Messiri:wght@400;600;700&family=Amiri:wght@400;700&family=Great+Vibes&display=swap');
 
         * {
             margin: 0;
@@ -29,7 +29,6 @@
             user-select: none;
         }
 
-        /* خلفية هادئة */
         #bg-layer {
             position: fixed;
             top: 0;
@@ -43,7 +42,6 @@
                 radial-gradient(ellipse at 50% 80%, rgba(250, 200, 100, 0.05) 0%, transparent 40%);
         }
 
-        /* نجوم هادئة */
         #stars-canvas {
             position: fixed;
             top: 0;
@@ -54,7 +52,6 @@
             pointer-events: none;
         }
 
-        /* مشاهد بسيطة */
         .scene {
             position: absolute;
             width: 100%;
@@ -75,7 +72,6 @@
             pointer-events: auto;
         }
 
-        /* بطاقات زجاجية بسيطة */
         .glass-card {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
@@ -91,12 +87,9 @@
         }
 
         @media (max-width: 600px) {
-            .glass-card {
-                padding: 25px 20px;
-            }
+            .glass-card { padding: 25px 20px; }
         }
 
-        /* قلب صغير */
         #heart-icon {
             font-size: 6rem;
             cursor: pointer;
@@ -113,11 +106,8 @@
             60% { transform: scale(1); }
         }
 
-        #heart-icon:hover {
-            transform: scale(1.3);
-        }
+        #heart-icon:hover { transform: scale(1.3); }
 
-        /* زر بسيط */
         .btn-love {
             background: linear-gradient(135deg, rgba(200, 80, 120, 0.9), rgba(100, 70, 180, 0.9));
             border: none;
@@ -137,7 +127,6 @@
             box-shadow: 0 12px 40px rgba(200, 80, 120, 0.5);
         }
 
-        /* مؤشر الصوت */
         .sound-control {
             position: fixed;
             bottom: 20px;
@@ -157,12 +146,8 @@
             transition: all 0.3s;
         }
 
-        .sound-control:hover {
-            border-color: rgba(200, 80, 120, 0.4);
-            color: #fff;
-        }
+        .sound-control:hover { border-color: rgba(200, 80, 120, 0.4); color: #fff; }
 
-        /* كانفاس الألعاب النارية */
         #fireworks-canvas {
             position: fixed;
             top: 0;
@@ -174,11 +159,8 @@
             display: none;
         }
 
-        #fireworks-canvas.active {
-            display: block;
-        }
+        #fireworks-canvas.active { display: block; }
 
-        /* جسيمات صغيرة */
         .love-particle {
             position: fixed;
             pointer-events: none;
@@ -192,7 +174,6 @@
             100% { opacity: 0; transform: translateY(-300px) scale(0.2) rotate(360deg); }
         }
 
-        /* عد تنازلي */
         #countdown-number {
             font-size: 8rem;
             font-weight: 700;
@@ -201,7 +182,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* صندوق الكنز المبسط */
         .simple-chest {
             font-size: 8rem;
             cursor: pointer;
@@ -214,24 +194,15 @@
             filter: drop-shadow(0 0 50px rgba(200, 80, 120, 0.6));
         }
 
-        /* نصوص من القلب */
         .heart-text {
             color: #f0d0d0;
-            font-size: 1.2rem;
-            line-height: 2;
+            font-size: 1.15rem;
+            line-height: 2.2;
             font-family: 'Amiri', serif;
         }
 
-        .heart-text strong {
-            color: #f0a0b0;
-        }
+        .heart-text strong { color: #f0a0b0; }
 
-        /* توهج خفيف */
-        .soft-glow {
-            text-shadow: 0 0 30px rgba(200, 80, 120, 0.15);
-        }
-
-        /* زر الألعاب النارية في النهاية */
         .fireworks-btn {
             background: linear-gradient(135deg, #f093fb, #f5576c);
             border: none;
@@ -251,7 +222,6 @@
             box-shadow: 0 12px 40px rgba(245, 87, 108, 0.5);
         }
 
-        /* تأثير اهتزاز خفيف */
         @keyframes gentleRumble {
             0%, 100% { transform: translate(0,0); }
             10% { transform: translate(-2px,-1px); }
@@ -265,32 +235,155 @@
             90% { transform: translate(-2px,1px); }
         }
 
-        .rumble-active {
-            animation: gentleRumble 0.15s ease-in-out 6;
+        .rumble-active { animation: gentleRumble 0.15s ease-in-out 6; }
+
+        /* ===== المشهد النهائي ===== */
+        #final-scene .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #final-scene .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255, 105, 180, 0.04) 0%, transparent 50%);
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translate(0,0) rotate(0deg); }
+            33% { transform: translate(10%,10%) rotate(3deg); }
+            66% { transform: translate(-10%,-10%) rotate(-3deg); }
+        }
+
+        .gold-title {
+            font-family: 'Great Vibes', cursive;
+            background: linear-gradient(135deg, #ffd700, #ffb800, #ffd700, #ffe066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 60px rgba(255, 215, 0, 0.15);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .gold-title-sub {
+            color: #ffd700;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+            font-family: 'Great Vibes', cursive;
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .final-message-container {
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .final-message-line {
+            opacity: 0;
+            transform: translateY(60px);
+            font-family: 'Amiri', serif;
+            font-size: 1.25rem;
+            line-height: 2.2;
+            color: #f0d0d0;
+            text-align: center;
+            padding: 6px 0;
+        }
+
+        .final-message-line strong {
+            color: #ffd700;
+            font-weight: 700;
+        }
+
+        .final-message-line .highlight-pink {
+            color: #f093fb;
+        }
+
+        .final-message-line .highlight-heart {
+            color: #f5576c;
+        }
+
+        .final-message-line .big-heart {
+            font-size: 2rem;
+            display: inline-block;
+        }
+
+        /* تأثير الزهور المتساقطة للنهاية */
+        .flower-rain {
+            position: fixed;
+            pointer-events: none;
+            z-index: 15;
+            font-size: 2rem;
+            animation: flowerFall linear forwards;
+        }
+
+        @keyframes flowerFall {
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(720deg) scale(0.3); opacity: 0; }
+        }
+
+        /* زر العودة للبداية */
+        .restart-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 8px 20px;
+            color: #888;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .restart-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-    <!-- خلفية -->
     <div id="bg-layer"></div>
     <canvas id="stars-canvas"></canvas>
     <canvas id="fireworks-canvas"></canvas>
 
-    <!-- مشغل YouTube -->
     <div id="yt-player" style="position:absolute;width:0;height:0;border:0;pointer-events:none;"></div>
 
-    <!-- مؤشر الصوت -->
     <div class="sound-control" id="sound-toggle" onclick="toggleSound()">
         <span id="sound-icon">🔊</span>
         <span id="sound-text">صوت</span>
     </div>
 
+    <button class="restart-btn" onclick="restartAll()">⟲ من البداية</button>
+
     <!-- ========== المشهد 1 ========== -->
     <div id="scene1" class="scene active">
         <div class="glass-card text-center">
             <div class="text-7xl mb-4">🌙</div>
-            <h1 id="typing-text" class="text-2xl md:text-3xl font-semibold leading-relaxed min-h-[160px] text-[#e8d5d5] font-[El Messiri]"></h1>
+            <h1 id="typing-text" class="text-2xl md:text-3xl font-semibold leading-relaxed min-h-[180px] text-[#e8d5d5] font-[El Messiri]"></h1>
             <div class="mt-8 flex justify-center gap-3 text-2xl">
                 <span>💫</span>
                 <span>✨</span>
@@ -311,7 +404,7 @@
                 منار
             </h2>
             <p id="subtitle-display" class="text-pink-300/70 mt-3 text-xl opacity-0 font-[El Messiri]">
-                💙 حبيبتي
+                💙 حبيبتي وروحي
             </p>
         </div>
     </div>
@@ -362,14 +455,30 @@
     <div id="scene6" class="scene">
         <div class="glass-card text-center">
             <p class="text-3xl mb-4">✨</p>
-            <p class="heart-text">
-                <strong>منار...</strong><br><br>
-                أنا عارف إن الكلام مو كفاية،<br>
-                بس أبي تقولين لي إنك تحسين بنفس الشعور.<br><br>
-                أنتِ في بالي دايم،<br>
-                وفي قلبي كل لحظة.<br><br>
-                <strong>💙 أنا اختاركِ</strong>
-            </p>
+            <div class="heart-text text-right">
+                <p><strong>منار...</strong><br><br>
+                أنا حبيتها وعشقتها،<br>
+                والله العظيم هي بعقلي وقلبي،<br>
+                ما أنساها، أحبها موت.<br><br>
+                أريد أحتويها،<br>
+                أمتص زعلها وغضبها،<br>
+                أكون بجانبها دايم،<br>
+                بفرحها وسعادتها،<br>
+                وأسعدها بكل ما أقدر.<br><br>
+                أريد أكون سندها،<br>
+                اللي تستند عليه.<br>
+                تخيلت حياتي معاها ألف مرة،<br>
+                وما نسيتها ولا لحظة.<br><br>
+                أدعي ربي بكل صلاة<br>
+                إنه يجمعني فيها.<br><br>
+                أريد أحميها،<br>
+                أحبها بجنون،<br>
+                أحافظ عليها،<br>
+                ومستعد أموت عشانها.<br><br>
+                بسوي المستحيل<br>
+                عشان أتلقى فيها.<br><br>
+                <strong>💙 أنا أريدكِ يا منار</strong></p>
+            </div>
             <div class="flex justify-center gap-4 mt-6 text-2xl flex-wrap">
                 <span>💫</span>
                 <span>🌟</span>
@@ -383,17 +492,20 @@
     <div id="scene7" class="scene">
         <div class="glass-card text-center">
             <p class="text-3xl mb-4">💌</p>
-            <p class="heart-text">
-                <strong>منار...</strong><br><br>
+            <div class="heart-text text-right">
+                <p><strong>منار...</strong><br><br>
                 أنا مو مثالي،<br>
                 وأنا مو رجل الأحلام،<br>
                 لكني أحبكِ بصدق.<br><br>
-                وأبي أكون الشخص اللي بجانبكِ.<br>
+                وأبي أكون الشخص اللي بجانبكِ،<br>
                 اللي يضحككِ،<br>
                 اللي يسمعكِ،<br>
                 اللي يحس فيكِ.<br><br>
-                <strong>💙 أنا أريدكِ</strong>
-            </p>
+                أريد أكون سندكِ،<br>
+                وحضنكِ الدافي،<br>
+                ورفيق دربكِ.<br><br>
+                <strong>💙 أنا أريدكِ</strong></p>
+            </div>
             <button onclick="goToScene8()" class="btn-love mt-6">🎆 فرحتنا</button>
         </div>
     </div>
@@ -403,32 +515,70 @@
         <div class="glass-card text-center">
             <div class="text-6xl mb-4">🎉</div>
             <h3 class="text-3xl font-bold text-[#f0d0d0] font-[El Messiri]">عيد ميلادكِ</h3>
-            <p class="heart-text mt-4">
-                اليوم يومكِ يا <strong>منار</strong>.<br>
+            <div class="heart-text mt-4 text-right">
+                <p>اليوم يومكِ يا <strong>منار</strong>.<br>
                 وأنا هنا عشان أحتفل بيكِ.<br>
                 لأن وجودكِ في حياتي هو أكبر هدية.<br><br>
-                <strong>💙 كل عام وأنتِ بخير</strong>
-            </p>
-            <button onclick="goToScene9()" class="btn-love mt-6">🎂 لنحتفل</button>
+                أحبكِ أكثر من أي شيء،<br>
+                وكل سنة وأنتِ بخير.<br><br>
+                <strong>💙 أنتِ قلبي وروحي</strong></p>
+            </div>
+            <button onclick="goToFinalScene()" class="btn-love mt-6">🎂 لنحتفل معاً</button>
         </div>
     </div>
 
-    <!-- ========== المشهد 9 ========== -->
-    <div id="scene9" class="scene">
-        <div class="glass-card text-center">
-            <div class="text-7xl mb-4">🎂</div>
-            <h1 class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#f093fb] to-[#f5576c] font-[El Messiri]">
-                Happy Birthday
-            </h1>
-            <h2 class="text-4xl md:text-5xl font-bold text-[#f0d0d0] mt-2 font-[El Messiri]">
-                منار
-            </h2>
-            <p class="heart-text mt-4 text-sm">
-                <strong>💙 أنتِ حلمي</strong>
-            </p>
-            <button class="fireworks-btn mt-6" id="fireworks-trigger" onclick="startFireworks()">
-                🎆 أضئ السماء
-            </button>
+    <!-- ========== المشهد 9: النهاية الاحترافية ========== -->
+    <div id="scene9" class="scene" id="final-scene">
+        <div class="glass-card text-center relative">
+            <!-- عنوان ذهبي احترافي -->
+            <div class="relative z-10 mb-6">
+                <h1 class="text-4xl md:text-6xl gold-title">
+                    Happy Birthday
+                </h1>
+                <h2 class="text-2xl md:text-4xl gold-title-sub mt-1">
+                    ♡ My Heart Manar ♡
+                </h2>
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-[#ffd700] to-transparent mx-auto mt-3"></div>
+            </div>
+
+            <!-- رسائل تظهر من الأسفل للأعلى -->
+            <div class="final-message-container" id="final-messages">
+                <div class="final-message-line" data-delay="0">
+                    <span class="big-heart">💖</span>
+                    <strong>منار</strong>
+                    <span class="big-heart">💖</span>
+                </div>
+                <div class="final-message-line" data-delay="400">
+                    <strong>أنتِ قلبي</strong> اللي ينبض بحبك
+                </div>
+                <div class="final-message-line" data-delay="800">
+                    <strong>وروحي</strong> اللي تعيش بك
+                </div>
+                <div class="final-message-line" data-delay="1200">
+                    أنتِ <strong class="highlight-pink">حبيبتي</strong> و<strong class="highlight-heart">دلعتي</strong>
+                </div>
+                <div class="final-message-line" data-delay="1600">
+                    <span class="big-heart">💙</span>
+                    كل عام وأنتِ <strong>بخير</strong>
+                    <span class="big-heart">💙</span>
+                </div>
+                <div class="final-message-line" data-delay="2000">
+                    <span style="font-size:1.5rem;">🌹</span>
+                    <strong>أحبكِ أكثر من أي شيء</strong>
+                    <span style="font-size:1.5rem;">🌹</span>
+                </div>
+                <div class="final-message-line" data-delay="2400">
+                    <span style="font-size:1.8rem;">💫</span>
+                    <strong class="highlight-heart">أنتِ كل شيء</strong>
+                    <span style="font-size:1.8rem;">💫</span>
+                </div>
+            </div>
+
+            <div class="relative z-10 mt-6">
+                <button class="fireworks-btn" id="fireworks-trigger" onclick="startFireworks()">
+                    🎆 أضئ السماء من أجلك
+                </button>
+            </div>
         </div>
     </div>
 
@@ -480,7 +630,6 @@
             return audioCtx;
         }
 
-        // أصوات بسيطة
         function playTone(freq, dur = 0.2, vol = 0.05) {
             if (!soundEnabled) return;
             try {
@@ -504,22 +653,23 @@
             playTone(523, 0.3, 0.04);
             setTimeout(() => playTone(659, 0.3, 0.04), 120);
             setTimeout(() => playTone(784, 0.4, 0.04), 240);
+            setTimeout(() => playTone(1047, 0.5, 0.03), 400);
         }
 
-        function playClick() {
-            playTone(800, 0.06, 0.04);
-        }
-
+        function playClick() { playTone(800, 0.06, 0.04); }
         function playHeart() {
             playTone(55, 0.15, 0.08);
             setTimeout(() => playTone(50, 0.12, 0.06), 150);
+            setTimeout(() => playTone(55, 0.15, 0.07), 350);
+            setTimeout(() => playTone(50, 0.12, 0.05), 500);
+        }
+        function playPop() { playTone(1200, 0.04, 0.03); }
+        function playCelebration() {
+            [523, 587, 659, 784, 880, 988, 1047].forEach((f, i) => {
+                setTimeout(() => playTone(f, 0.2, 0.03), i * 80);
+            });
         }
 
-        function playPop() {
-            playTone(1200, 0.04, 0.03);
-        }
-
-        // تشغيل الموسيقى
         function startMusic() {
             if (soundEnabled && ytPlayer && typeof ytPlayer.playVideo === 'function') {
                 try { ytPlayer.playVideo(); } catch(e) {}
@@ -586,12 +736,13 @@
         initStars();
         drawStars();
 
-        // ==================== 🎆 ألعاب نارية بسيطة ====================
+        // ==================== 🎆 ألعاب نارية ====================
         const fwCanvas = document.getElementById('fireworks-canvas');
         const fwCtx = fwCanvas.getContext('2d');
         let fwParticles = [];
         let fwRockets = [];
         let fwRunning = false;
+        let flowerInterval = null;
 
         function resizeFw() {
             fwCanvas.width = window.innerWidth;
@@ -607,20 +758,21 @@
                 this.tx = tx;
                 this.ty = ty;
                 const a = Math.atan2(ty - y, tx - x);
-                this.vx = Math.cos(a) * 3;
-                this.vy = Math.sin(a) * 3;
+                this.vx = Math.cos(a) * (3 + Math.random());
+                this.vy = Math.sin(a) * (3 + Math.random());
                 this.alive = true;
                 this.trail = [];
+                this.color = `hsl(${Math.random() * 60 + 320}, 80%, 60%)`;
             }
 
             update() {
                 if (!this.alive) return;
                 this.trail.push({x: this.x, y: this.y});
-                if (this.trail.length > 8) this.trail.shift();
+                if (this.trail.length > 10) this.trail.shift();
                 this.x += this.vx;
                 this.y += this.vy;
-                this.vx *= 0.99;
-                this.vy *= 0.99;
+                this.vx *= 0.995;
+                this.vy *= 0.995;
                 if (Math.hypot(this.x - this.tx, this.y - this.ty) < 15 || this.y < 30) {
                     this.alive = false;
                     this.explode();
@@ -628,26 +780,26 @@
             }
 
             explode() {
-                const colors = ['#f093fb', '#f5576c', '#facc15', '#ff69b4', '#a855f7', '#00ffcc', '#fff'];
-                const count = 50 + Math.floor(Math.random() * 40);
+                const colors = ['#f093fb', '#f5576c', '#ffd700', '#ff69b4', '#a855f7', '#00ffcc', '#fff', '#ff6b6b', '#ffd93d', '#6bcb77'];
+                const count = 60 + Math.floor(Math.random() * 60);
+                const isWillow = Math.random() > 0.6;
                 for (let i = 0; i < count; i++) {
                     const a = Math.random() * Math.PI * 2;
-                    const s = 1 + Math.random() * 3;
+                    const s = isWillow ? 0.5 + Math.random() * 2 : 1.5 + Math.random() * 4;
                     fwParticles.push({
                         x: this.x, y: this.y,
                         vx: Math.cos(a) * s,
-                        vy: Math.sin(a) * s - 0.2,
-                        life: 30 + Math.random() * 30,
-                        maxLife: 60,
-                        size: 2 + Math.random() * 2,
-                        color: colors[Math.floor(Math.random() * colors.length)]
+                        vy: Math.sin(a) * s - 0.3,
+                        life: isWillow ? 50 + Math.random() * 40 : 30 + Math.random() * 30,
+                        maxLife: isWillow ? 90 : 60,
+                        size: isWillow ? 2 + Math.random() * 2 : 1.5 + Math.random() * 2.5,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        gravity: isWillow ? 0.005 : 0.025
                     });
                 }
-                // صوت
                 playTone(80, 0.3, 0.06);
                 setTimeout(() => playTone(60, 0.2, 0.04), 100);
-                // اهتزاز
-                if (count > 60) {
+                if (count > 70) {
                     document.body.classList.add('rumble-active');
                     setTimeout(() => document.body.classList.remove('rumble-active'), 300);
                 }
@@ -656,15 +808,19 @@
             draw(ctx) {
                 if (!this.alive) return;
                 this.trail.forEach((p, i) => {
-                    const a = i / this.trail.length * 0.4;
+                    const a = i / this.trail.length * 0.5;
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, 1.5 * (i / this.trail.length), 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(255,255,255,${a})`;
                     ctx.fill();
                 });
+                const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 6);
+                g.addColorStop(0, '#fff');
+                g.addColorStop(0.5, this.color);
+                g.addColorStop(1, 'rgba(255,255,255,0)');
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-                ctx.fillStyle = '#fff';
+                ctx.arc(this.x, this.y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = g;
                 ctx.fill();
             }
         }
@@ -672,10 +828,10 @@
         function launchRocket() {
             const w = window.innerWidth;
             const h = window.innerHeight;
-            const x = 50 + Math.random() * (w - 100);
-            const y = h - 30 - Math.random() * 80;
-            const tx = 50 + Math.random() * (w - 100);
-            const ty = 30 + Math.random() * (h * 0.5);
+            const x = 30 + Math.random() * (w - 60);
+            const y = h - 20 - Math.random() * 80;
+            const tx = 30 + Math.random() * (w - 60);
+            const ty = 20 + Math.random() * (h * 0.5);
             fwRockets.push(new SimpleRocket(x, y, tx, ty));
         }
 
@@ -689,23 +845,23 @@
             fwParticles.forEach(p => {
                 p.x += p.vx;
                 p.y += p.vy;
-                p.vy += 0.02;
+                p.vy += p.gravity || 0.02;
                 p.vx *= 0.98;
                 p.vy *= 0.98;
                 p.life--;
                 const a = p.life / p.maxLife;
-                const s = p.size * a;
-                const g = fwCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, s * 4);
+                const s = p.size * (0.3 + 0.7 * a);
+                const g = fwCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, s * 5);
                 g.addColorStop(0, `rgba(255,255,255,${a * 0.8})`);
                 g.addColorStop(0.3, p.color);
                 g.addColorStop(1, 'rgba(255,255,255,0)');
                 fwCtx.beginPath();
-                fwCtx.arc(p.x, p.y, s * 4, 0, Math.PI * 2);
+                fwCtx.arc(p.x, p.y, s * 5, 0, Math.PI * 2);
                 fwCtx.fillStyle = g;
                 fwCtx.fill();
                 fwCtx.beginPath();
                 fwCtx.arc(p.x, p.y, s, 0, Math.PI * 2);
-                fwCtx.fillStyle = `rgba(255,255,255,${a * 0.7})`;
+                fwCtx.fillStyle = `rgba(255,255,255,${a * 0.6})`;
                 fwCtx.fill();
             });
             
@@ -714,10 +870,36 @@
 
         animateFw();
 
+        // زهور متساقطة
+        function startFlowerRain() {
+            const flowers = ['🌸', '🌹', '💮', '🌺', '🌷', '🌸', '💐', '🌼', '🌸', '🌹'];
+            if (flowerInterval) clearInterval(flowerInterval);
+            flowerInterval = setInterval(() => {
+                const el = document.createElement('div');
+                el.className = 'flower-rain';
+                el.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.fontSize = (1.5 + Math.random() * 2.5) + 'rem';
+                el.style.animationDuration = (6 + Math.random() * 8) + 's';
+                el.style.opacity = 0.6 + Math.random() * 0.4;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 14000);
+            }, 150);
+        }
+
+        function stopFlowerRain() {
+            if (flowerInterval) {
+                clearInterval(flowerInterval);
+                flowerInterval = null;
+            }
+            document.querySelectorAll('.flower-rain').forEach(el => el.remove());
+        }
+
         function startFireworks() {
             if (fwRunning) return;
             fwRunning = true;
             fwCanvas.classList.add('active');
+            startFlowerRain();
             
             const btn = document.getElementById('fireworks-trigger');
             if (btn) {
@@ -726,46 +908,48 @@
                 btn.style.pointerEvents = 'none';
             }
             
-            // إطلاق مكثف أولي
-            for (let i = 0; i < 30; i++) {
+            playCelebration();
+            
+            // إطلاق مكثف
+            for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     launchRocket();
-                    if (i % 4 === 0) {
-                        setTimeout(launchRocket, 50);
-                        setTimeout(launchRocket, 100);
+                    if (i % 3 === 0) {
+                        setTimeout(launchRocket, 40);
+                        setTimeout(launchRocket, 80);
+                        setTimeout(launchRocket, 120);
                     }
-                }, i * 60);
+                }, i * 50);
             }
             
             let count = 0;
             const interval = setInterval(() => {
-                if (count > 120) { clearInterval(interval); return; }
-                const n = 1 + Math.floor(Math.random() * 2);
+                if (count > 150) { clearInterval(interval); return; }
+                const n = 2 + Math.floor(Math.random() * 3);
                 for (let i = 0; i < n; i++) {
-                    setTimeout(launchRocket, i * 50);
+                    setTimeout(launchRocket, i * 40);
                 }
                 count += n;
-                if (count > 60 && Math.random() < 0.3) {
+                if (count > 80 && Math.random() < 0.3) {
                     setTimeout(() => {
-                        for (let i = 0; i < 3; i++) setTimeout(launchRocket, i * 40);
-                    }, 80);
+                        for (let i = 0; i < 5; i++) setTimeout(launchRocket, i * 30);
+                    }, 60);
                 }
-            }, 140);
+            }, 130);
             
             setTimeout(() => {
                 clearInterval(interval);
-                for (let i = 0; i < 40; i++) {
+                for (let i = 0; i < 60; i++) {
                     setTimeout(() => {
                         launchRocket();
-                        if (i % 3 === 0) {
-                            setTimeout(launchRocket, 40);
-                            setTimeout(launchRocket, 80);
+                        if (i % 4 === 0) {
+                            for (let j = 0; j < 4; j++) setTimeout(launchRocket, j * 35);
                         }
-                    }, i * 50);
+                    }, i * 40);
                 }
                 setTimeout(() => {
                     if (btn) {
-                        btn.textContent = '🎆 أضئ السماء';
+                        btn.textContent = '🎆 أضئ السماء من أجلك';
                         btn.style.opacity = '1';
                         btn.style.pointerEvents = 'auto';
                     }
@@ -819,17 +1003,18 @@
             }
         }
 
-        // ==================== المشهد 1: الكتابة ====================
+        // ==================== المشهد 1 ====================
         document.addEventListener('DOMContentLoaded', () => {
             new Typed('#typing-text', {
                 strings: [
                     'أنا هنا عشان أحكي لك قصة...',
                     'قصة حب بسيطة، لكنها حقيقية.',
                     'قصة عن شخص غيّر حياتي كلها.',
-                    'قصة عنكِ يا <strong>منار</strong>.'
+                    'قصة عنكِ يا <strong>منار</strong>.',
+                    'عن حب ما له حدود... 💙'
                 ],
-                typeSpeed: 35,
-                backSpeed: 12,
+                typeSpeed: 30,
+                backSpeed: 10,
                 backDelay: 1500,
                 startDelay: 500,
                 showCursor: true,
@@ -875,18 +1060,17 @@
                 ease: 'power2.out'
             });
             
-            // جسيمات
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 40; i++) {
                 setTimeout(() => {
                     const p = document.createElement('div');
                     p.className = 'love-particle';
                     p.textContent = ['💙', '✨', '💖', '🌟'][Math.floor(Math.random() * 4)];
-                    p.style.left = (30 + Math.random() * 40) + '%';
-                    p.style.top = (30 + Math.random() * 40) + '%';
+                    p.style.left = (20 + Math.random() * 60) + '%';
+                    p.style.top = (20 + Math.random() * 60) + '%';
                     p.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
                     document.body.appendChild(p);
                     setTimeout(() => p.remove(), 3500);
-                }, i * 60);
+                }, i * 50);
             }
             
             setTimeout(() => goToScene(3), 3000);
@@ -929,48 +1113,131 @@
             document.getElementById('chest-message').textContent = '💙 هذا الكنز هو قلبي';
             
             confetti({
-                particleCount: 80,
+                particleCount: 100,
                 spread: 80,
                 origin: { y: 0.5 },
-                colors: ['#f093fb', '#f5576c', '#facc15', '#ff69b4']
+                colors: ['#f093fb', '#f5576c', '#ffd700', '#ff69b4']
             });
             
             setTimeout(() => goToScene(5), 2000);
         }
 
-        // ==================== المشهد 5، 6، 7 ====================
+        // ==================== المشاهد 5-8 ====================
         function goToScene6() { playClick(); goToScene(6); }
         function goToScene7() { playClick(); goToScene(7); }
         function goToScene8() { 
             playClick(); 
             playChime();
-            // جسيمات
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     const p = document.createElement('div');
                     p.className = 'love-particle';
-                    p.textContent = ['🌹', '💖', '✨', '🎉'][Math.floor(Math.random() * 4)];
-                    p.style.left = (20 + Math.random() * 60) + '%';
-                    p.style.top = (20 + Math.random() * 60) + '%';
-                    p.style.fontSize = (1.2 + Math.random() * 1.8) + 'rem';
+                    p.textContent = ['🌹', '💖', '✨', '🎉', '💫'][Math.floor(Math.random() * 5)];
+                    p.style.left = (10 + Math.random() * 80) + '%';
+                    p.style.top = (10 + Math.random() * 80) + '%';
+                    p.style.fontSize = (1.2 + Math.random() * 2) + 'rem';
                     document.body.appendChild(p);
                     setTimeout(() => p.remove(), 3500);
-                }, i * 50);
+                }, i * 40);
             }
             goToScene(8); 
         }
 
-        function goToScene9() { playClick(); playChime(); goToScene(9); }
+        // ==================== المشهد النهائي الاحترافي ====================
+        function goToFinalScene() {
+            playClick();
+            playChime();
+            goToScene(9);
+            
+            // تشغيل الرسائل المتتالية من الأسفل للأعلى
+            setTimeout(() => {
+                const lines = document.querySelectorAll('#final-messages .final-message-line');
+                lines.forEach((line) => {
+                    const delay = parseInt(line.dataset.delay) || 0;
+                    setTimeout(() => {
+                        gsap.to(line, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: 'power2.out'
+                        });
+                        // صوت خفيف لكل رسالة
+                        if (delay > 0) playTone(600 + delay * 0.1, 0.08, 0.02);
+                    }, delay);
+                });
+            }, 600);
+        }
 
-        // ==================== بدء التشغيل ====================
-        document.addEventListener('click', () => {
-            createAudioContext();
-            setTimeout(startMusic, 500);
-        }, { once: true });
+        // ==================== إعادة التشغيل ====================
+        function restartAll() {
+            // إيقاف كل المؤثرات
+            stopFlowerRain();
+            fwRunning = false;
+            fwCanvas.classList.remove('active');
+            fwParticles = [];
+            fwRockets = [];
+            
+            // إعادة تعيين المشاهد
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById('scene1').classList.add('active');
+            
+            // إعادة تعيين المتغيرات
+            countdownDone = false;
+            transitioning = false;
+            document.querySelector('.simple-chest').dataset.opened = 'false';
+            document.querySelector('.simple-chest').textContent = '🎁';
+            document.getElementById('chest-message').textContent = '📦 فيه شيء لك';
+            document.getElementById('heart-icon').dataset.clicked = 'false';
+            
+            // إعادة تعيين النصوص
+            gsap.set('#name-display', { opacity: 0, scale: 0.5 });
+            gsap.set('#subtitle-display', { opacity: 0 });
+            
+            // إعادة تعيين رسائل النهاية
+            document.querySelectorAll('#final-messages .final-message-line').forEach(line => {
+                gsap.set(line, { opacity: 0, y: 60 });
+            });
+            
+            // إعادة تعيين زر الألعاب النارية
+            const btn = document.getElementById('fireworks-trigger');
+            if (btn) {
+                btn.textContent = '🎆 أضئ السماء من أجلك';
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+            
+            // إعادة تشغيل الكتابة
+            document.querySelector('#typing-text').innerHTML = '';
+            new Typed('#typing-text', {
+                strings: [
+                    'أنا هنا عشان أحكي لك قصة...',
+                    'قصة حب بسيطة، لكنها حقيقية.',
+                    'قصة عن شخص غيّر حياتي كلها.',
+                    'قصة عنكِ يا <strong>منار</strong>.',
+                    'عن حب ما له حدود... 💙'
+                ],
+                typeSpeed: 30,
+                backSpeed: 10,
+                backDelay: 1500,
+                startDelay: 500,
+                showCursor: true,
+                cursorChar: '💙',
+                onComplete: () => {
+                    gsap.to('#btn-start', {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: 'back.out(1.5)',
+                        delay: 0.4
+                    });
+                }
+            });
+            
+            playClick();
+        }
 
-        // ==================== المشهد 3 عند الدخول ====================
+        // ==================== مراقبة المشهد 3 ====================
         document.addEventListener('DOMContentLoaded', () => {
-            // مراقبة المشهد 3
             const observer = new MutationObserver(() => {
                 const scene3 = document.getElementById('scene3');
                 if (scene3 && scene3.classList.contains('active')) {
@@ -980,8 +1247,14 @@
             observer.observe(document.body, { attributes: false, childList: true, subtree: true });
         });
 
-        console.log('%c💙 منار | حبيبتي', 'color: #f093fb; font-size: 24px; font-weight: bold;');
-        console.log('%c💙 أنا أحبكِ', 'color: #f5576c; font-size: 18px;');
+        // ==================== بدء التشغيل ====================
+        document.addEventListener('click', () => {
+            createAudioContext();
+            setTimeout(startMusic, 500);
+        }, { once: true });
+
+        console.log('%c💙 منار | حبيبتي وروحي', 'color: #f093fb; font-size: 24px; font-weight: bold;');
+        console.log('%c💙 أنا أحبكِ بجنون', 'color: #f5576c; font-size: 18px;');
     </script>
 </body>
 </html>
